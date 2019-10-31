@@ -1,5 +1,11 @@
 fancyss_arm Changelog
 ===========================================
+4.2.1
+   - Description：	This version only for update online test.
+                    I do this for myself, update ss only, please check author hq450 for other versions.
+   - change	change hnd url from hq450 to fastbash;.
+   - fix	Fixed DNS server address function __get_server_resolver(),set 114.114.114 as default DNS resolution.
+
 4.2.0
    - update 更新shadowsocks-libev到最新3.3.0 （2019年6月20日 编译）；
 
