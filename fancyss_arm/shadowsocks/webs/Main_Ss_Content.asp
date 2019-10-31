@@ -153,7 +153,7 @@ function pop_help() {
 				<b>梅林固件 - 科学上网插件 - ' + db_ss["ss_basic_version_local"] + '</b><br><br>\
 				本插件是支持<a target="_blank" href="https://github.com/shadowsocks/shadowsocks-libev" ><u>SS</u></a>、<a target="_blank" href="https://github.com/shadowsocksrr/shadowsocksr-libev"><u>SSR</u></a>、<a target="_blank" href="http://firmware.koolshare.cn/binary/koolgame"><u>KoolGame</u></a>、<a target="_blank" href="https://github.com/v2ray/v2ray-core"><u>V2Ray</u></a>四种客户端的科学上网、游戏加速工具。<br>\
 				本插件仅支持Merlin AM380 2.6.36.4内核的固件，请不要用于其它固件安装。<br>\
-				使用本插件有任何问题，可以前往<a style="color:#e7bd16" target="_blank" href="https://github.com/hq450/fancyss/issues"><u>github的issue页面</u></a>反馈~<br><br>\
+				使用本插件有任何问题，可以前往<a style="color:#e7bd16" target="_blank" href="https://github.com/fastbash/fancyss/issues"><u>github的issue页面</u></a>反馈~<br><br>\
 				● SS/SSR一键脚本：<a style="color:#e7bd16" target="_blank" href="https://github.com/onekeyshell/kcptun_for_ss_ssr/tree/master"><u>一键安装KCPTUN for SS/SSR on Linux</u></a><br>\
 				● koolgame一键脚本：<a style="color:#e7bd16" target="_blank" href="https://github.com/clangcn/game-server"><u>一键安装koolgame服务器端脚本，完美支持nat2</u></a><br>\
 				● V2Ray一键脚本：<a style="color:#e7bd16" target="_blank" href="https://233blog.com/post/17/"><u>V2Ray 搭建和优化详细图文教程</u></a><br>\
@@ -1954,7 +1954,7 @@ function updatelist(action) {
 
 function version_show() {
 	$.ajax({
-		url: 'https://raw.githubusercontent.com/hq450/fancyss/master/fancyss_arm/config.json.js',
+		url: 'https://raw.githubusercontent.com/fastbash/fancyss/master/fancyss_arm/config.json.js',
 		type: 'GET',
 		dataType: 'json',
 		success: function(res) {
@@ -2333,7 +2333,7 @@ function toggle_func() {
 		});
 	$("#update_log").click(
 		function() {
-			window.open("https://github.com/hq450/fancyss/blob/master/fancyss_arm/Changelog.txt");
+			window.open("https://github.com/fastbash/fancyss/blob/master/fancyss_arm/Changelog.txt");
 		});
 	$("#log_content2").click(
 		function() {
@@ -3093,7 +3093,7 @@ function set_cron(action) {
 															</a>
 														</div>
 														<div style="display:table-cell;float: left;margin-left:270px;position: absolute;padding: 5.5px 0px;">
-															<a type="button" class="ss_btn" target="_blank" href="https://github.com/hq450/fancyss/blob/master/fancyss_arm/Changelog.txt">更新日志</a>
+															<a type="button" class="ss_btn" target="_blank" href="https://github.com/fastbash/fancyss/blob/master/fancyss_arm/Changelog.txt">更新日志</a>
 														</div>
 														<div style="display:table-cell;float: left;margin-left:350px;position: absolute;padding: 5.5px 0px;">
 															<a type="button" class="ss_btn" href="javascript:void(0);" onclick="pop_help()">插件帮助</a>
@@ -4438,7 +4438,7 @@ taobao.com
 													<th id="gfw_nu1" width="35%">gfwlist域名数量</th>
 													<td id="gfw_nu2">
 															<% nvram_get("ipset_numbers"); %>&nbsp;条，最后更新版本：
-															<a href="https://github.com/hq450/fancyss/blob/master/rules/gfwlist.conf" target="_blank">
+															<a href="https://github.com/fastbash/fancyss/blob/master/rules/gfwlist.conf" target="_blank">
 																<i><% nvram_get("update_ipset"); %></i>
 														</a>
 													</td>
@@ -4448,7 +4448,7 @@ taobao.com
 												<td id="chn_nu2">
 													<p>
 														<% nvram_get("chnroute_numbers"); %>&nbsp;行，最后更新版本：
-														<a href="https://github.com/hq450/fancyss/blob/master/rules/chnroute.txt" target="_blank">
+														<a href="https://github.com/fastbash/fancyss/blob/master/rules/chnroute.txt" target="_blank">
 															<i><% nvram_get("update_chnroute"); %></i>
 														</a>
 													</p>
@@ -4459,7 +4459,7 @@ taobao.com
 													<td id="cdn_nu2">		
 														<p>		
 														<% nvram_get("cdn_numbers"); %>&nbsp;条，最后更新版本：		
-															<a href="https://github.com/hq450/fancyss/blob/master/rules/cdn.txt" target="_blank">		
+															<a href="https://github.com/fastbash/fancyss/blob/master/rules/cdn.txt" target="_blank">
 																<i><% nvram_get("update_cdn"); %></i>		
 															</a>		
 														</p>		

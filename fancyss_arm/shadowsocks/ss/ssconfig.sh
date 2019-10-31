@@ -72,26 +72,51 @@ get_wan0_cidr(){
 }
 
 get_server_resolver(){
-	if [ "$ss_basic_server_resolver" == "1" ];then
-		if [ -n "$IFIP_DNS1" ];then
+  case "$ss_basic_server_resolver" in
+  "1")
+    if [ -n "$IFIP_DNS1" ];then
 			RESOLVER="$ISP_DNS1"
 		else
 			RESOLVER="114.114.114.114"
 		fi
-	fi
-	[ "$ss_basic_server_resolver" == "2" ] && RESOLVER="223.5.5.5"
-	[ "$ss_basic_server_resolver" == "3" ] && RESOLVER="223.6.6.6"
-	[ "$ss_basic_server_resolver" == "4" ] && RESOLVER="114.114.114.114"
-	[ "$ss_basic_server_resolver" == "5" ] && RESOLVER="114.114.115.115"
-	[ "$ss_basic_server_resolver" == "6" ] && RESOLVER="1.2.4.8"
-	[ "$ss_basic_server_resolver" == "7" ] && RESOLVER="210.2.4.8"
-	[ "$ss_basic_server_resolver" == "8" ] && RESOLVER="117.50.11.11"
-	[ "$ss_basic_server_resolver" == "9" ] && RESOLVER="117.50.22.22"
-	[ "$ss_basic_server_resolver" == "10" ] && RESOLVER="180.76.76.76"
-	[ "$ss_basic_server_resolver" == "11" ] && RESOLVER="119.29.29.29"
-	[ "$ss_basic_server_resolver" == "12" ] && {
-		[ -n "$ss_basic_server_resolver_user" ] && RESOLVER="$ss_basic_server_resolver_user" || RESOLVER="114.114.114.114"
-	}
+		;;
+  "2")
+    RESOLVER="223.5.5.5"
+    ;;
+  "3")
+    RESOLVER="223.6.6.6"
+    ;;
+  "4")
+    RESOLVER="114.114.114.114"
+    ;;
+  "5")
+    RESOLVER="114.114.115.115"
+    ;;
+  "6")
+    RESOLVER="1.2.4.8"
+    ;;
+  "7")
+    RESOLVER="210.2.4.8"
+    ;;
+  "8")
+    RESOLVER="117.50.11.11"
+    ;;
+  "9")
+    RESOLVER="117.50.22.22"
+    ;;
+  "10")
+    RESOLVER="180.76.76.76"
+    ;;
+  "11")
+    RESOLVER="119.29.29.29"
+    ;;
+  "12")
+    [ -n "$ss_basic_server_resolver_user" ] && RESOLVER="$ss_basic_server_resolver_user" || RESOLVER="114.114.114.114"
+    ;;
+  *)
+    RESOLVER="114.114.114.114"
+    ;;
+  esac
 	echo $RESOLVER
 }
 
