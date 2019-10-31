@@ -1,5 +1,11 @@
 fancyss_hnd Changelog
 ===========================================
+1.7.4
+   - Description：	This version only for update online test.
+                    I do this for myself, update ss only, please check author hq450 for other versions.
+   - fix	Fixed DNS server address function, set 223.5.5.5 as default DNS resolution.
+   - add	Try added ss public funtcions, this version only include '__get_server_resolver|__get_server_resolver_port|__resolve_ip'.
+
 1.7.3
    - update	更新v2ray-plugin二进制到1.2.0
 1.7.2
