@@ -10,6 +10,7 @@
 export KSROOT=/koolshare
 source $KSROOT/scripts/base.sh
 source helper.sh
+source $KSROOT/scripts/functions_ss.sh
 eval `dbus export ss`
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 
