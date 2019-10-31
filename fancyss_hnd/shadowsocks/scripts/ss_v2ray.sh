@@ -6,7 +6,7 @@ source /koolshare/scripts/base.sh
 eval $(dbus export ss_basic_)
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 V2RAY_CONFIG_FILE="/koolshare/ss/v2ray.json"
-url_main="https://raw.githubusercontent.com/hq450/fancyss/master/v2ray_binary"
+url_main="https://raw.githubusercontent.com/fastbash/fancyss/master/v2ray_binary"
 url_back=""
 
 get_latest_version(){
