@@ -2,34 +2,59 @@ __get_server_resolver() {
 	local value_1="$ss_basic_server_resolver"
 	local value_2="$ss_basic_server_resolver_user"
 	local res
-	if [ "$value_1" == "1" ]; then
-		if [ -n "$IFIP_DNS1" ]; then
-			res="$ISP_DNS1"
-		else
-			res="114.114.114.114"
-		fi
-	fi
-	[ "$value_1" == "2" ] && res="223.5.5.5"
-	[ "$value_1" == "3" ] && res="223.6.6.6"
-	[ "$value_1" == "4" ] && res="114.114.114.114"
-	[ "$value_1" == "5" ] && res="114.114.115.115"
-	[ "$value_1" == "6" ] && res="1.2.4.8"
-	[ "$value_1" == "7" ] && res="210.2.4.8"
-	[ "$value_1" == "8" ] && res="117.50.11.11"
-	[ "$value_1" == "9" ] && res="117.50.22.22"
-	[ "$value_1" == "10" ] && res="180.76.76.76"
-	[ "$value_1" == "11" ] && res="119.29.29.29"
-  if [ "$value_1" == "12" ]; then
-		if [ -n "$value_2" ]; then
-			res=$(__valid_ip "$value_2")
-			[ -z "$res" ] && res="114.114.114.114"
-		else
-			res="114.114.114.114"
-		fi
-  else
-    res="223.5.5.5"
-  fi
 
+	case "$value_1" in
+	  "1")
+      if [ -n "$IFIP_DNS1" ]; then
+        res="$ISP_DNS1"
+      else
+        res="114.114.114.114"
+      fi
+		;;
+	  "2")
+      res="223.5.5.5"
+		;;
+	  "3")
+      res="223.6.6.6"
+		;;
+	  "4")
+      res="114.114.114.114"
+		;;
+	  "5")
+      res="114.114.115.115"
+		;;
+	  "6")
+      res="1.2.4.8"
+		;;
+	  "7")
+      res="210.2.4.8"
+		;;
+	  "8")
+      res="117.50.11.11"
+		;;
+	  "9")
+      res="117.50.22.22"
+		;;
+	  "10")
+      res="180.76.76.76"
+		;;
+	  "11")
+      res="119.29.29.29"
+		;;
+	  "12")
+      if [ "$value_1" == "12" ]; then
+        if [ -n "$value_2" ]; then
+          res=$(__valid_ip "$value_2")
+          [ -z "$res" ] && res="114.114.114.114"
+        else
+          res="114.114.114.114"
+        fi
+		  fi
+		;;
+		*)
+		  res="223.5.5.5"
+    ;;
+  esac
 	echo $res
 }
 
