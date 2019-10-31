@@ -38,14 +38,14 @@
 |  固件下载-3   | [GT-AC5300 官改固件](http://koolshare.cn/thread-130902-1-1.html) |                                                              | [linksys EA系列](https://koolshare.cn/thread-139325-1-1.html) |                                                              |                                                              |
 |  固件下载-4   | [RT-AX88U 梅林改版](http://koolshare.cn/thread-158199-1-1.html) |                                                              |     [华为](https://koolshare.cn/thread-139322-1-1.html)      |                                                              |                                                              |
 |  固件下载-5   | [GT-AX11000 官改固件](http://koolshare.cn/thread-159465-1-1.html) |                                                              |                                                              |                                                              |                                                              |
-|   更新日志    | [Changelog.txt](https://github.com/hq450/fancyss/blob/master/fancyss_hnd/Changelog.txt) | [Changelog.txt](https://github.com/hq450/fancyss/blob/master/fancyss_arm384/Changelog.txt) | [Changelog.txt](https://github.com/hq450/fancyss/blob/master/fancyss_arm/Changelog.txt) |                             null                             | [Changelog.txt](https://github.com/hq450/fancyss/blob/master/fancyss_X64/Changelog.txt) |
-|  离线包下载   | [fancyss_hnd](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_hnd) | [fancyss_arm384](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_arm384) | [fancyss_arm](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_arm) | [fancyss_mipsel](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_mipsel) | [fancyss_x64](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_X64) |
+|   更新日志    | [Changelog.txt](https://github.com/fastbash/fancyss/blob/master/fancyss_hnd/Changelog.txt) | [Changelog.txt](https://github.com/hq450/fancyss/blob/master/fancyss_arm384/Changelog.txt) | [Changelog.txt](https://github.com/fastbash/fancyss/blob/master/fancyss_arm/Changelog.txt) |                             null                             | [Changelog.txt](https://github.com/hq450/fancyss/blob/master/fancyss_X64/Changelog.txt) |
+|  离线包下载   | [fancyss_hnd](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_hnd) | [fancyss_arm384](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_arm384) | [fancyss_arm](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_arm) | [fancyss_mipsel](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_mipsel) | [fancyss_x64](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_X64) |
 
 
 
 ## 机型/固件支持（文字版）
 
-### [fancyss_hnd](https://github.com/hq450/fancyss/tree/master/fancyss_hnd)
+### [fancyss_hnd](https://github.com/fastbash/fancyss/tree/master/fancyss_hnd)
 
 > **fancyss_hnd**离线安装包仅能在koolshare 梅林/官改 hnd/axhnd 384平台，且linux内核为4.1.27/4.1.51的armv8架构机器上使用！
 
@@ -66,8 +66,8 @@
 
 #### 相关链接：
 
-* hnd机型的科学上网离线包：[https://github.com/hq450/fancyss_history_package/tree/master/fancyss_hnd](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_hnd)
-* hnd机型的科学上网更新日志：https://github.com/hq450/fancyss/blob/master/fancyss_hnd/Changelog.txt
+* hnd机型的科学上网离线包：[https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_hnd](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_hnd)
+* hnd机型的科学上网更新日志：https://github.com/fastbash/fancyss/blob/master/fancyss_hnd/Changelog.txt
 * hnd机型的固件下载地址：[http://koolshare.cn/forum-96-1.html](http://koolshare.cn/forum-96-1.html)
 
 ----
@@ -114,8 +114,8 @@
 
 #### 相关链接：
 
-* arm机型的科学上网离线包：[https://github.com/hq450/fancyss_history_package/tree/master/fancyss_arm](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_arm)
-* arm机型的科学上网更新日志：https://github.com/hq450/fancyss/blob/master/fancyss_arm/Changelog.txt
+* arm机型的科学上网离线包：[https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_arm](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_arm)
+* arm机型的科学上网更新日志：https://github.com/fastbash/fancyss/blob/master/fancyss_arm/Changelog.txt
 * arm机型的固件下载地址：[http://koolshare.cn/forum-96-1.html](http://koolshare.cn/forum-96-1.html)
 
 ----
