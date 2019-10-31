@@ -1,5 +1,10 @@
 fancyss_hnd Changelog
 ===========================================
+1.7.5
+   - fix	Put the function back where it was;
+   - fix	get back __get_server_resolver(), add case value 13~15;
+   - fix	set 114.114.114.114 as default DNS Server;
+
 1.7.4
    - Description：	This version only for update online test.
                     I do this for myself, update ss only, please check author hq450 for other versions.

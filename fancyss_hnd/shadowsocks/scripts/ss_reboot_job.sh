@@ -67,6 +67,8 @@ set_ss_trigger_job(){
 
 #-------------------
 
+source $KSROOT/scripts/functions_ss.sh
+
 __get_type_abbr_name() {
 	case "$ss_basic_type" in
 		0)

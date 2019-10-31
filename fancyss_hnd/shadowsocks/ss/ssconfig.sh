@@ -114,6 +114,8 @@ __get_type_abbr_name() {
 	esac
 }
 
+source $KSROOT/scripts/functions_ss.sh
+
 # ================================= ss stop ===============================
 restore_conf() {
 	echo_date 删除ss相关的名单配置文件.

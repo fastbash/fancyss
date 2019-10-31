@@ -11,6 +11,8 @@ ISP_DNS2=$(nvram get wan0_dns|sed 's/ /\n/g'|grep -v 0.0.0.0|grep -v 127.0.0.1|s
 IFIP_DNS1=`echo $ISP_DNS1|grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}|:"`
 IFIP_DNS2=`echo $ISP_DNS2|grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}|:"`
 
+source $KSROOT/scripts/functions_ss.sh
+
 write_haproxy_cfg(){
 	local tmp server_ip
 	rm -rf /jffs/configs/dnsmasq.d/ss_server.conf
