@@ -15,8 +15,9 @@ get_china_status(){
 	[ "$ss_failover_enable" == "1" ] && echo $LOGTIME1 $ret >> $LOGFILE_C
 	local S1=`echo $ret|grep -Eo "200 OK"`
 	if [ -n "$S1" ]; then
-		local S2=`echo $ret|sed 's/time=//g'|awk '{printf "%.0f ms\n",$(NF -3)}'`
-		log2='国内链接 【'$LOGTIME'】 ✓&nbsp;&nbsp;'$S2''
+#		local S2=`echo $ret|sed 's/time=//g'|awk '{printf "%.0f ms\n",$(NF -3)}'`
+#		log2='国内链接 【'$LOGTIME'】 ✓&nbsp;&nbsp;'$S2''
+		log2='国内链接 【'$LOGTIME'】 ✓&nbsp;'
 	else
 		log2='国内链接 【'$LOGTIME'】 <font color='#FF0000'>X</font>'
 	fi
@@ -27,8 +28,9 @@ get_foreign_status(){
 	[ "$ss_failover_enable" == "1" ] && echo $LOGTIME1 $ret "[`dbus get ssconf_basic_name_$CURRENT`]" >> $LOGFILE_F
 	local S1=`echo $ret|grep -Eo "200 OK"`
 	if [ -n "$S1" ]; then
-		local S2=`echo $ret|sed 's/time=//g'|awk '{printf "%.0f ms\n",$(NF -3)}'`
-		log1='国外链接 【'$LOGTIME'】 ✓&nbsp;&nbsp;'$S2''
+#		local S2=`echo $ret|sed 's/time=//g'|awk '{printf "%.0f ms\n",$(NF -3)}'`
+#		log1='国外链接 【'$LOGTIME'】 ✓&nbsp;&nbsp;'$S2''
+		log1='国外链接 【'$LOGTIME'】 ✓&nbsp;'
 	else
 		log1='国外链接 【'$LOGTIME'】 <font color='#FF0000'>X</font>'
 	fi
