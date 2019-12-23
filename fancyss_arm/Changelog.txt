@@ -1,5 +1,9 @@
 fancyss_arm Changelog
 ===========================================
+4.2.2
+   - fix	change haproxy backend roundrobin to source;
+   - remove	remove ms in index;
+
 4.2.1
    - Description：	This version only for update online test.
                     I do this for myself, update ss only, please check author hq450 for other versions.
@@ -212,7 +216,7 @@ fancyss_arm Changelog
    - add	加入ss_post_start功能，可以在SS服务运行完毕后触发用户自己的脚本；
     		加入ss_pre_stop功能，可以在SS服务开始关闭前触发用户自己的脚本；
      		* 例如在/koolshare/ss/postscripts/下放入两个脚本:P01V2ray.sh, P99Brook.sh
-     		* SS插件运行后会自动按照数字从小到大顺序运行 P01V2ray.sh start, P99Brook.sh start
+     		* SS插件运行后会自动按照数字从小到大顺序运行 P01V2ray.sh start, P99Brook.sh start
      		* SS插件关闭前会自动按照数字从大到小顺序运行 P99Brook.sh stop, P01V2ray.sh stop
    - update	同步最新规则。
    - readme	此版本其它功能和二进制无任何变化。
@@ -286,16 +290,16 @@ fancyss_arm Changelog
    - fix	修复单开UDPspeeder(V1/V2)，udp加速无效的bug；
    - fix	修复单开UDPspeeder(V1/V2)，MTU设置无效的bug；
    - add	KCPTUN的绑定端口现在可以设置了，现在你可以像原来一样单独使用KCP加速，也能配置KCPTUN和UDPspeeder的串联、KCPTUN和UDP2raw的串联、
-   		KCPTUN先串联UDPspeeder，再串联UDP2raw、甚至UDP2raw串KCPTUN。我知道这很绕，不过只要知道下面的关系，相信如何配置，就难不倒你~
+   		KCPTUN先串联UDPspeeder，再串联UDP2raw、甚至UDP2raw串KCPTUN。我知道这很绕，不过只要知道下面的关系，相信如何配置，就难不倒你~
    		tcp in udp：KCPTUN
    		udp in udp：UDPspeeder
    		udp in tcp：UDP2raw
 
 3.7.3
 
-   - 说明	1. UDP加速，包括UDPspeeder和UDP2raw，都只能支持ss和ssr的udp，不支持koolgame，koolgame已经自带了udp优化。
-     		2. UDP加速需要自己配置服务器端的UDPspeeder或者UDP2raw程序，从飞机场购买SS帐号的不能使用。
-   - add	增加UDP2raw的支持（感谢wangyu-的开源项目），支持单独使用UDP2raw，将ss-redir的UDP流量直接转成tcp流量，应对UDP屏蔽或QoS，或在UDP不稳定的环境下提升稳定性。，
+   - 说明	1. UDP加速，包括UDPspeeder和UDP2raw，都只能支持ss和ssr的udp，不支持koolgame，koolgame已经自带了udp优化。
+     		2. UDP加速需要自己配置服务器端的UDPspeeder或者UDP2raw程序，从飞机场购买SS帐号的不能使用。
+   - add	增加UDP2raw的支持（感谢wangyu-的开源项目），支持单独使用UDP2raw，将ss-redir的UDP流量直接转成tcp流量，应对UDP屏蔽或QoS，或在UDP不稳定的环境下提升稳定性。，
 		也可以将UDPspeeder(V1/V2)与UDP2raw串联，将ss-redir的UDP经过UDPspeeder加速后，通过UDP2raw转成TCP流量。
 		UDPspeeder(V1/V2)与UDP2raw简要的使用说明：
 		正确开启的姿势：
@@ -454,7 +458,7 @@ fancyss_arm Changelog
    - update	优化开机启动生成ss配置文件；
 
 3.6.0
-   - fix	修复游戏模式下trpoxy加载问题
+   - fix	修复游戏模式下trpoxy加载问题
    
 3.5.9
    - update	ss启动脚本start.sh stop.sh nat-start.sh ssconfig.sh全部合并到ssconfig.sh一个脚本；
@@ -514,11 +518,11 @@ fancyss_arm Changelog
 
 3.4.7
    - fix	恢复shadowsocksR的ss-tunnel DNS解析功能.
-   		3.4.6更新日志大雾：ssr-tunnel并不是没有做好，而是和ssr-local合并了，此次更新已经恢复。
+   		3.4.6更新日志大雾：ssr-tunnel并不是没有做好，而是和ssr-local合并了，此次更新已经恢复。
 
 3.4.6
-   - update	更新shadowsocksR-libev最新版，支持none加密和auth_chain_a协议;
-   		注意：因为该版本ssr-tunnel官方并没有做好，所以选择none加密或者auth_chain_a协议时不能使用ss-tunnel作为DNS解析！
+   - update	更新shadowsocksR-libev最新版，支持none加密和auth_chain_a协议;
+   		注意：因为该版本ssr-tunnel官方并没有做好，所以选择none加密或者auth_chain_a协议时不能使用ss-tunnel作为DNS解析！
 
 3.4.5
    - fix	去掉auth_chain_a选项，之前因为测试时加上了，推送时忘了去掉，实际上现在并不支持该协议。
@@ -542,19 +546,19 @@ fancyss_arm Changelog
    - fix	修复SSR json格式检测不准确问题；
    - update	nslookup方式解析错误后会用resolveip尝试一次
    		（ps：前几日腾讯DNS：119.29.29.29出现问题导致很多朋友出现问题，119.29.29.29现已恢复）；
-   - update	当输入服务器，端口，密码时，如果开头或者结束有空格，会自动清除之；
-   - update	去除快速应用DNS，快速应用黑白名单，快速应用附加设置；
+   - update	当输入服务器，端口，密码时，如果开头或者结束有空格，会自动清除之；
+   - update	去除快速应用DNS，快速应用黑白名单，快速应用附加设置；
  		因为重启部分服务或者进程有时候会出现问题，现在改为重启全部服务；
  		在这些设置提交时都会重启整个SS服务器，以保证SS相关的所有进程和配置工作正常。
-   - update	更新kcptun客户端到20170329版本；
-   - update	同步最新ss规则。
+   - update	更新kcptun客户端到20170329版本；
+   - update	同步最新ss规则。
 
 3.4.0
    - add	ss配置恢复支持SSR json格式节点；
    - update	ss配置导出/恢复功能移动到附加功能；
-   - update	现在导入json格式节点默认为大陆白名单模式；
-   - fix	修复用json导入节点配置时导致已有的节点密码变成乱码的bug；
-   - 说明	ss配置恢复不仅可以恢复本插件保存的ss数据:ss_conf_backup.txt，如果已经有配置，导入此配置将覆盖已有配置
+   - update	现在导入json格式节点默认为大陆白名单模式；
+   - fix	修复用json导入节点配置时导致已有的节点密码变成乱码的bug；
+   - 说明	ss配置恢复不仅可以恢复本插件保存的ss数据:ss_conf_backup.txt，如果已经有配置，导入此配置将覆盖已有配置
    		还能导入ss/ssr服务商，PC端ss/ssr等提供的json格式的节点数据，如果已经有配置，导入此配置将新增json内的节点，而不会覆盖
    		建议大家在用json导入节点后，用插件的【导出配置】功能备份一次插件数据。
 
@@ -610,13 +614,13 @@ fancyss_arm Changelog
    - update	binary: update shaodwsocks-libev to 3.0.1, this should sovle ss-tunnel and new encrypt method not working.
 
 3.2.9 - 3.3.0
-   - fix	web：修复chome56下，节点数量超过12个后，节点面板错乱的问题;
+   - fix	web：修复chome56下，节点数量超过12个后，节点面板错乱的问题;
    - fix	web：修复切换节点/应用节点，不能更换加密方式的问题
    - fix	web：socks5页面增加ss 3.0.0的新加密方式
    - update	程序：更新shadowsocksr-libev到最新代码(fix tls1.2_ticket_auth host name bug)
-   		注意,目前ss-libev和ssr-libev支持的加密方式略有不同，但是为了修复此次加密方式的显示bug，将他们都混合在了一块，请注意区分
+   		注意,目前ss-libev和ssr-libev支持的加密方式略有不同，但是为了修复此次加密方式的显示bug，将他们都混合在了一块，请注意区分
 		
-  		SS支持的加密方式：
+  		SS支持的加密方式：
 		rc4-md5
 		aes-128-gcm
 		aes-192-gcm
@@ -659,7 +663,7 @@ fancyss_arm Changelog
 		chacha20-ietf
 		
 3.2.8
-   - fix	web：修复开启ss侧边栏显示后，高亮的是软件中心菜单!
+   - fix	web：修复开启ss侧边栏显示后，高亮的是软件中心菜单!
    		为了这个问题推送一个版本的SS，是为了避免明日380.65-X7.4内测的时候，
    		内测人员的X7.4固件ss插件发生菜单高亮错误，tab消失的问题。
 
@@ -671,14 +675,14 @@ fancyss_arm Changelog
    - update	web：配合ss-libev的更新，更改ss-libev的加密方式，ssr加密方式为原先的不变；
    - update	web：边栏菜单兼容380.65-X7.4固件.
    - update 	规则：更新ss-local acl规则为最新
-     note：	由于simple-obfs不支持udp，如果大家开了原版ss混淆的，请不要使用ss-tunnel和游戏模式
+     note：	由于simple-obfs不支持udp，如果大家开了原版ss混淆的，请不要使用ss-tunnel和游戏模式
 3.2.6
    - fix	web：修复chrome56下页面布局问题（仅SS），其它固件自带页面的修复，需要等到下次固件发布。
    - fix	web：回滚更新日志按钮代码，因为可能还会有错位的情况（如更新后未生效，请按ctrl + F5）;
    - fix	web：修复状态刷新时间不可更改的问题，并且移除将刷新时间储存在cookie中，现在储存在skipd中.
 
 3.2.4 & 3.2.5
-   - fix	修复首页按钮错位，更新后请ctrl+F5刷新页面
+   - fix	修复首页按钮错位，更新后请ctrl+F5刷新页面
    - fix	修复访问控制的一个bug：当选择某个主机或者其它主机不走ss，实际上还是走了gfwlist
    - update	调整了下节点页面的按钮。
 
@@ -764,8 +768,8 @@ fancyss_arm Changelog
 
 3.1.6
    - 说明	此次为大更新，因为固件原因，此版本SS将只适用于X7.2及以后的固件，X7.1及其以前的固件不再支持！
-   		此次升级里面的规则不保存,除了节点其他设定都得重新添加，请大家重新添加后重新保存一份ss配置，用于今后的恢复
-   - add	增加访问控制标签页，在访问控制页面内，你可以自由组合黑名单、白名单、端口、模式。
+   		此次升级里面的规则不保存,除了节点其他设定都得重新添加，请大家重新添加后重新保存一份ss配置，用于今后的恢复
+   - add	增加访问控制标签页，在访问控制页面内，你可以自由组合黑名单、白名单、端口、模式。
 		1  默认状态下，所有局域网的主机都会走当前节点的模式（主模式），相当于即不启用局域网访问控制。
 		2  当你添加了主机，可以设置缺省规则为不通过SS，则只有添加的主机才会走相应的模式。
 		3  当你添加了主机，可以设置缺省规则为当前节点的模式，除了添加的主机才会走相应的模式，未添加的主机会走缺省规则的模式。
@@ -916,11 +920,11 @@ fancyss_arm Changelog
    - fix	修复触发脚本错误；
    - update	更新日志打印，分割行不再提行（强迫症伤不起）；
    - update	完善附加游戏模式v2和全局模式日志中文显示；
-   - update	完善游戏模式/V2启动前对QOS模式的检测，并给出冲突警告（注意：如果启用了"传统带宽管理",游戏模式和游戏模式V2国内将不能正常工作）；
+   - update	完善游戏模式/V2启动前对QOS模式的检测，并给出冲突警告（注意：如果启用了"传统带宽管理",游戏模式和游戏模式V2国内将不能正常工作）；
    - update	隐藏提交时日志打印firefox显示滚动条的问题，暂时不能滚动，如果需要查看完整日志，请在提交完毕后进入日志查看；
    - fix	修复选择dnscrypt-proxy的dns节点提交后，配置显示不正确的问题；
    - update	更新最新的dnscrypt-resolvers.csv文件，更多新的dns节点选择（79个）；
-   - update	现在web中显示电脑上dnscrypt-resolvers.csv中的节点的full name，方便识别；（如果你更新前使用原先的节点，更新后需要重新选择一次！）
+   - update	现在web中显示电脑上dnscrypt-resolvers.csv中的节点的full name，方便识别；（如果你更新前使用原先的节点，更新后需要重新选择一次！）
    - update	chinadns的国内dns选择中增加百度，cnnic，dnspod dns，和国内dns保持一致；
    - update	同步kcptun客户端client_linux_arm5到20161025版本，请更新对应服务器端版本。
 
