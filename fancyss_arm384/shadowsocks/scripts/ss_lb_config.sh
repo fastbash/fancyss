@@ -144,7 +144,7 @@ write_haproxy_cfg(){
 		listen shadowscoks_balance_load
 		    bind 0.0.0.0:$ss_lb_port
 		    mode tcp
-		    balance roundrobin
+		    balance source
 	EOF
 	
 	if [ "$ss_lb_heartbeat" == "1" ];then

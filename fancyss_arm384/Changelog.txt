@@ -1,5 +1,9 @@
 fancyss_arm384 Changelog
 ===========================================
+1.0.4
+   - fix	change haproxy backend roundrobin to source;
+   - remove	remove ms in index;
+
 1.0.3
    - fix	修复游戏模式加载内核模块不完整导致插件无法启用的问题；
    - fix	修复【节点域名解析DNS服务器】无法选择IBM DNS的问题；
