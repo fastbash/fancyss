@@ -1,5 +1,9 @@
 fancyss_hnd Changelog
 ===========================================
+1.7.6
+   - fix	change haproxy backend roundrobin to source;
+   - remove	remove ms in index;
+
 1.7.5
    - fix	Put the function back where it was;
    - fix	get back __get_server_resolver(), add case value 13~15;
