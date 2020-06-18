@@ -2,8 +2,8 @@
 
 MODULE=planesocks
 VERSION=`cat ./planesocks/ss/version|sed -n 1p`
-TITLE=科学上网
-DESCRIPTION=科学上网
+TITLE=科学上网new
+DESCRIPTION='科学上网new for hnd'
 HOME_URL=Module_planesocks.asp
 
 cp_rules(){
