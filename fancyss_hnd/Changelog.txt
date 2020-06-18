@@ -1,5 +1,10 @@
 fancyss_hnd Changelog
 ===========================================
+1.7.7
+   - rename shadowsocks to planesocks;
+   - remove	resolv domain to ip before set server to haproxy balance;
+   - set ping off as default, display none setting input;
+
 1.7.6
    - fix	change haproxy backend roundrobin to source;
    - remove	remove ms in index;
