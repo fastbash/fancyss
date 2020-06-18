@@ -150,6 +150,11 @@ dbus set softcenter_module_planesocks_version="$CUR_VERSION"
 dbus set softcenter_module_planesocks_title="科学上网new"
 dbus set softcenter_module_planesocks_description="科学上网 for merlin hnd"
 
+dbus remove softcenter_module_shadowsocks_home_url
+dbus remove softcenter_module_shadowsocks_install
+dbus remove softcenter_module_shadowsocks_md5
+dbus remove softcenter_module_shadowsocks_version
+
 # 设置v2ray 版本号
 dbus set ss_basic_v2ray_version="v4.20.1"
 

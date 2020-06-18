@@ -13,7 +13,7 @@ backup_url=""
 
 install_ss(){
 	echo_date 开始解压压缩包...
-	tar -zxf shadowsocks.tar.gz
+	tar -zxf planesocks.tar.gz
 	chmod a+x /tmp/planesocks/install.sh
 	echo_date 开始安装更新文件...
 	sh /tmp/planesocks/install.sh
