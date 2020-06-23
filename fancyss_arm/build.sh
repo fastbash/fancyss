@@ -1,26 +1,26 @@
 #!/bin/sh
 
-MODULE=shadowsocks
-VERSION=`cat ./shadowsocks/ss/version|sed -n 1p`
-TITLE=科学上网
-DESCRIPTION=科学上网
+MODULE=planesocks
+VERSION=`cat ./planesocks/ss/version|sed -n 1p`
+TITLE=科学上网new
+DESCRIPTION="科学上网 for arm"
 HOME_URL=Main_Ss_Content.asp
 
 cp_rules(){
-	cp -rf ../rules/gfwlist.conf shadowsocks/ss/rules/
-	cp -rf ../rules/chnroute.txt shadowsocks/ss/rules/
-	cp -rf ../rules/cdn.txt shadowsocks/ss/rules/
-	cp -rf ../rules/version1 shadowsocks/ss/rules/version
+	cp -rf ../rules/gfwlist.conf planesocks/ss/rules/
+	cp -rf ../rules/chnroute.txt planesocks/ss/rules/
+	cp -rf ../rules/cdn.txt planesocks/ss/rules/
+	cp -rf ../rules/version1 planesocks/ss/rules/version
 }
 
 sync_v2ray_binary(){
 	v2ray_version=`cat ../v2ray_binary/latest.txt`
 	md5_latest=`md5sum ../v2ray_binary/$v2ray_version/v2ray | sed 's/ /\n/g'| sed -n 1p`
-	md5_old=`md5sum shadowsocks/bin//v2ray | sed 's/ /\n/g'| sed -n 1p`
+	md5_old=`md5sum planesocks/bin/v2ray | sed 's/ /\n/g'| sed -n 1p`
 	if [ "$md5_latest"x != "$md5_old"x ]; then
 		echo update v2ray binary！
-		cp -rf ../v2ray_binary/$v2ray_version/v2ray shadowsocks/bin/
-		cp -rf ../v2ray_binary/$v2ray_version/v2ctl shadowsocks/bin/
+		cp -rf ../v2ray_binary/$v2ray_version/v2ray planesocks/bin/
+		cp -rf ../v2ray_binary/$v2ray_version/v2ctl planesocks/bin/
 	fi
 }
 
@@ -49,7 +49,7 @@ do_build() {
 	"home_url":"$HOME_URL",
 	"md5":"$md5value",
 	"name":"$MODULE",
-	"tar_url": "https://raw.githubusercontent.com/fastbash/fancyss/master/fancyss_arm/shadowsocks.tar.gz",
+	"tar_url": "https://raw.githubusercontent.com/fastbash/fancyss/master/fancyss_arm/planesocks.tar.gz",
 	"title":"$TITLE",
 	"version":"$VERSION"
 	}
