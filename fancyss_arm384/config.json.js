@@ -1,10 +1,10 @@
 {
-"build_date":"2019-12-24_00:32:39",
+"build_date":"2020-07-16_12:30:42",
 "description":"科学上网",
-"home_url":"Module_shadowsocks.asp",
-"md5":"086baaba8ed499829804a6921e8eb95d",
-"name":"shadowsocks",
-"tar_url": "https://raw.githubusercontent.com/hq450/fancyss/master/fancyss_arm384/shadowsocks.tar.gz", 
+"home_url":"Module_planesocks.asp",
+"md5":"87a71f5f5cd600afe7816bcbeb615901",
+"name":"planesocks",
+"tar_url": "https://raw.githubusercontent.com/hq450/fancyss/master/fancyss_arm384/planesocks.tar.gz", 
 "title":"科学上网",
-"version":"1.0.4"
+"version":"1.0.5"
 }
