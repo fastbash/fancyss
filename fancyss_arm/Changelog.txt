@@ -1,5 +1,12 @@
 fancyss_arm Changelog
 ===========================================
+4.2.4
+   - fix online update source url;
+
+4.2.3
+   - rename shadowsocks to planesocks;
+   - remove resolv domain to ip before set server to haproxy balance;
+
 4.2.2
    - fix	change haproxy backend roundrobin to source;
    - remove	remove ms in index;

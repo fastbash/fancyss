@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# shadowsocks script for AM380 merlin firmware
+# planesocks script for AM380 merlin firmware
 # by sadog (sadoneli@gmail.com) from koolshare.cn
 
 eval `dbus export ss`
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
-main_url="https://raw.githubusercontent.com/hq450/fancyss/master/fancyss_arm"
+main_url="https://raw.githubusercontent.com/fastbash/fancyss/master/fancyss_arm"
 backup_url=""
 
 install_ss(){
@@ -60,7 +60,7 @@ update_ss(){
 
 update_ss2(){
 	echo_date "目前还没有任何备用服务器！请尝试使用离线安装功能！"
-	echo_date "历史版本下载地址：https://github.com/hq450/fancyss/tree/master/fancyss_arm/history"
+	echo_date "历史版本下载地址：https://github.com/fastbash/fancyss/tree/master/fancyss_arm/history"
 	echo_date "下载后请将下载包名字改为：planesocks.tar.gz，再使用离线安装进行安装"
 	sleep 1
 	exit
