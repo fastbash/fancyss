@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2020-10-05
+## Last update: 2020-10-06
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -325,7 +325,6 @@
 .*\b027lyw\.com
 .*\b027lyx\.com
 .*\b027one\.com
-.*\b027pn\.com
 .*\b027qyt\.com
 .*\b027qyy\.com
 .*\b027sheji\.net
@@ -1048,7 +1047,6 @@
 .*\b100txy\.com
 .*\b100uo\.com
 .*\b100wa\.com
-.*\b100warc\.com
 .*\b100weidu\.com
 .*\b100wen\.cc
 .*\b100wen\.com
@@ -11165,7 +11163,6 @@
 .*\baugsky\.com
 .*\baugth\.com
 .*\baugurit\.com
-.*\bauicss\.com
 .*\bauly\.com
 .*\bauniontech\.com
 .*\baunload\.com
@@ -24798,7 +24795,6 @@
 .*\bfanlihe\.com
 .*\bfanlijinfu\.com
 .*\bfanlika\.com
-.*\bfanlimofang\.com
 .*\bfanlisaas\.com
 .*\bfanlitou\.com
 .*\bfanmingming\.com
@@ -27833,7 +27829,6 @@
 .*\bgopojie\.net
 .*\bgoproxy\.cc
 .*\bgopuu\.com
-.*\bgoqljgw\.com
 .*\bgorouter\.info
 .*\bgorse\.com
 .*\bgoshijia\.com
@@ -32699,7 +32694,6 @@
 .*\bhzdmkeji\.com
 .*\bhzeduask\.com
 .*\bhzeg\.com
-.*\bhzesm\.com
 .*\bhzfangwang\.com
 .*\bhzfc\.cc
 .*\bhzfucai\.net
@@ -42791,7 +42785,6 @@
 .*\bmaomego\.com
 .*\bmaomiboy\.com
 .*\bmaomixia666\.com
-.*\bmaopaoke\.com
 .*\bmaopuyouxi\.com
 .*\bmaoqitian\.com
 .*\bmaoqiuapp\.com
@@ -46796,6 +46789,7 @@
 .*\boh100\.com
 .*\bohaotian\.com
 .*\bohipic\.com
+.*\bohmanhua\.com
 .*\bohqly\.com
 .*\bohtly\.com
 .*\bohtpc\.com
@@ -48455,7 +48449,6 @@
 .*\bpku-hit\.com
 .*\bpku-lvxin\.com
 .*\bpku666\.com
-.*\bpkualum\.org
 .*\bpkubr\.com
 .*\bpkucat\.com
 .*\bpkufh\.com
@@ -50232,7 +50225,6 @@
 .*\bqntz\.cc
 .*\bqnvod\.net
 .*\bqnvod\.vip
-.*\bqnw\.cc
 .*\bqnxsk\.com
 .*\bqnydns\.com
 .*\bqnydns\.net
@@ -54059,6 +54051,7 @@
 .*\bshufagu\.com
 .*\bshufaji\.com
 .*\bshufami\.com
+.*\bshufashibie\.com
 .*\bshufawu\.com
 .*\bshufazidian\.com
 .*\bshufaziti\.com
@@ -67827,7 +67820,6 @@
 .*\bygsdmedia\.com
 .*\bygshangjie\.com
 .*\bygsoft\.com
-.*\bygsyedu\.com
 .*\bygtcpa\.com
 .*\bygwenxue\.com
 .*\bygycwx\.com
@@ -68179,7 +68171,6 @@
 .*\byinghaozs\.com
 .*\byinghecloud\.com
 .*\byinghezhong\.com
-.*\byinghuaka\.com
 .*\byinghualiu\.com
 .*\byingjia360\.com
 .*\byingjiesheng\.com
@@ -72024,7 +72015,6 @@
 .*\bzigeer\.com
 .*\bzigeerplus\.com
 .*\bziguhonglan\.com
-.*\bzihai028\.com
 .*\bzihai029\.com
 .*\bzihai0351\.com
 .*\bzihai0411\.com

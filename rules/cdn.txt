@@ -317,7 +317,6 @@
 027lyw.com
 027lyx.com
 027one.com
-027pn.com
 027qyt.com
 027qyy.com
 027sheji.net
@@ -1031,7 +1030,6 @@
 100txy.com
 100uo.com
 100wa.com
-100warc.com
 100weidu.com
 100wen.cc
 100wen.com
@@ -11159,7 +11157,6 @@ audley-printer.com
 augsky.com
 augth.com
 augurit.com
-auicss.com
 auly.com
 auniontech.com
 aunload.com
@@ -24786,7 +24783,6 @@ fanligame.com
 fanlihe.com
 fanlijinfu.com
 fanlika.com
-fanlimofang.com
 fanlisaas.com
 fanlitou.com
 fan-lun.com
@@ -27823,7 +27819,6 @@ goplayervideo.com
 gopojie.net
 goproxy.cc
 gopuu.com
-goqljgw.com
 gorouter.info
 gorse.com
 goshijia.com
@@ -32687,7 +32682,6 @@ hzdledu.com
 hzdmkeji.com
 hzeduask.com
 hzeg.com
-hzesm.com
 hz-etest.com
 hzfangwang.com
 hzfc.cc
@@ -42779,7 +42773,6 @@ maomaoxue.com
 maomego.com
 maomiboy.com
 maomixia666.com
-maopaoke.com
 maopuyouxi.com
 maoqitian.com
 maoqiuapp.com
@@ -46789,6 +46782,7 @@ ogvideos.com
 oh100.com
 ohaotian.com
 ohipic.com
+ohmanhua.com
 ohqly.com
 ohtly.com
 ohtpc.com
@@ -48449,7 +48443,6 @@ pkq2016.com
 pksfc.com
 pksky.com
 pku666.com
-pkualum.org
 pkubr.com
 pkucat.com
 pkufh.com
@@ -50227,7 +50220,6 @@ qnssl.com
 qntz.cc
 qnvod.net
 qnvod.vip
-qnw.cc
 qnxsk.com
 qnydns.com
 qnydns.net
@@ -54042,6 +54034,7 @@ shufafin.com
 shufagu.com
 shufaji.com
 shufami.com
+shufashibie.com
 shufawu.com
 shufazidian.com
 shufaziti.com
@@ -67820,7 +67813,6 @@ ygsc99.com
 ygsdmedia.com
 ygshangjie.com
 ygsoft.com
-ygsyedu.com
 ygtcpa.com
 ygwenxue.com
 ygycwx.com
@@ -68169,7 +68161,6 @@ yinghaicar.com
 yinghaozs.com
 yinghecloud.com
 yinghezhong.com
-yinghuaka.com
 yinghualiu.com
 yingjia360.com
 ying-ji.com
@@ -72015,7 +72006,6 @@ zige365.com
 zigeer.com
 zigeerplus.com
 ziguhonglan.com
-zihai028.com
 zihai029.com
 zihai0351.com
 zihai0411.com
