@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2020-10-19
+## Last update: 2020-10-20
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -7391,7 +7391,6 @@
 .*\b85\.com
 .*\b8518\.com
 .*\b8521\.org
-.*\b853126\.com
 .*\b85384\.com
 .*\b853lab\.com
 .*\b8548965\.com
@@ -11031,7 +11030,6 @@
 .*\baszw\.org
 .*\bat-lib\.com
 .*\bat-siac\.com
-.*\bat0044\.com
 .*\bat0086\.com
 .*\bat0086\.net
 .*\bat58\.com
@@ -12370,7 +12368,6 @@
 .*\bbeiwo\.com
 .*\bbeiwo\.tv
 .*\bbeiwo77\.com
-.*\bbeiwody\.com
 .*\bbeiwotv\.com
 .*\bbeiww\.com
 .*\bbeixingmh\.com
@@ -13395,7 +13392,6 @@
 .*\bbjznnt\.com
 .*\bbjzph\.com
 .*\bbjzqw\.com
-.*\bbjzqyd\.com
 .*\bbjzs114\.com
 .*\bbjzuihui\.com
 .*\bbjzwzx\.com
@@ -15864,7 +15860,6 @@
 .*\bchaofan365\.com
 .*\bchaofan86\.com
 .*\bchaofenxiang\.vip
-.*\bchaofr\.com
 .*\bchaoji\.com
 .*\bchaojialin\.com
 .*\bchaojibiaoge\.com
@@ -21730,6 +21725,7 @@
 .*\bdnbcw\.com
 .*\bdnbcw\.info
 .*\bdnbcw\.net
+.*\bdnbiz\.com
 .*\bdnbwg\.com
 .*\bdncheng\.com
 .*\bdndci\.com
@@ -31515,6 +31511,7 @@
 .*\bhsr2013\.com
 .*\bhssdtest\.com
 .*\bhssemi\.com
+.*\bhssenglish\.com
 .*\bhssjyj\.com
 .*\bhsstr\.com
 .*\bhssxhd\.com
@@ -32007,6 +32004,7 @@
 .*\bhui100\.com
 .*\bhui20\.com
 .*\bhui43\.com
+.*\bhui712\.com
 .*\bhui800\.com
 .*\bhui800\.net
 .*\bhuians\.com
@@ -54479,6 +54477,7 @@
 .*\bsixflower\.com
 .*\bsixianchina\.com
 .*\bsixiang\.im
+.*\bsixiangguo\.net
 .*\bsixiju\.com
 .*\bsixstaredu\.com
 .*\bsixtu\.com
@@ -55640,6 +55639,7 @@
 .*\bstcv66\.com
 .*\bstdaily\.com
 .*\bstdard\.com
+.*\bstdicloud\.com
 .*\bstdlibrary\.com
 .*\bstdout\.pub
 .*\bstdwp\.com
@@ -56836,6 +56836,7 @@
 .*\btaiguoyu\.com
 .*\btaihaikj\.com
 .*\btaihainet\.com
+.*\btaihangco\.com
 .*\btaihanghotel\.com
 .*\btaihaocn\.com
 .*\btaihe\.com
@@ -58493,7 +58494,6 @@
 .*\btopomel\.com
 .*\btoppdu\.com
 .*\btoppiao\.net
-.*\btoppro\.io
 .*\btopproio\.com
 .*\btoprand\.com
 .*\btopsage\.com
@@ -73180,6 +73180,7 @@
 .*\bzzwyglxh\.com
 .*\bzzxdc\.com
 .*\bzzxw\.net
+.*\bzzxy\.net
 .*\bzzyas\.com
 .*\bzzyb\.org
 .*\bzzydb\.com
