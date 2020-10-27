@@ -1,7 +1,7 @@
 [Local Hosts]
 ## China mainland domains
 ## Source: https://github.com/felixonmars/dnsmasq-china-list
-## Last update: 2020-10-27
+## Last update: 2020-10-28
 
 
 Server=/0-100.com/
@@ -73248,6 +73248,7 @@ Server=/pancake.apple.com/
 Server=/pancake.cdn-apple.com.akadns.net/
 Server=/phobos.apple.com/
 Server=/prod-support.apple-support.akadns.net/
+Server=/reserve-prime.apple.com/
 Server=/s.mzstatic.com/
 Server=/s1.mzstatic.com/
 Server=/s2.mzstatic.com/
