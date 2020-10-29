@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2020-10-29
+## Last update: 2020-10-30
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -286,7 +286,6 @@
 .*\b025art\.com
 .*\b025ct\.com
 .*\b025ebaidu\.com
-.*\b025iphone\.com
 .*\b025jxsb\.com
 .*\b025kaiyi\.com
 .*\b025nj\.com
@@ -1778,7 +1777,6 @@
 .*\b168393\.com
 .*\b1684\.cc
 .*\b1684sm\.com
-.*\b1686y\.com
 .*\b16876\.cc
 .*\b1688\.com
 .*\b16881616\.com
@@ -3290,6 +3288,7 @@
 .*\b32668g\.com
 .*\b32800\.com
 .*\b328f\.com
+.*\b329329\.com
 .*\b329569\.com
 .*\b32bh\.com
 .*\b32ka\.com
@@ -3441,7 +3440,6 @@
 .*\b35rc\.com
 .*\b35tyc\.com
 .*\b35vvv\.com
-.*\b35xs\.com
 .*\b35zw\.com
 .*\b35zww\.com
 .*\b36\.la
@@ -3750,6 +3748,7 @@
 .*\b371house\.com
 .*\b371love\.com
 .*\b371site\.com
+.*\b371zhongyi\.com
 .*\b37201\.com
 .*\b3721cha\.com
 .*\b3721rd\.com
@@ -4389,7 +4388,6 @@
 .*\b4k123\.com
 .*\b4khi\.com
 .*\b4kong\.com
-.*\b4ktt\.com
 .*\b4kyy\.com
 .*\b4l\.hk
 .*\b4lzx\.com
@@ -6773,6 +6771,7 @@
 .*\b72en\.com
 .*\b72g\.com
 .*\b72h\.io
+.*\b72k\.us
 .*\b72la\.com
 .*\b72laodian\.com
 .*\b72link\.com
@@ -12730,7 +12729,6 @@
 .*\bbilibili\.com
 .*\bbilibili\.ru
 .*\bbilibili\.tv
-.*\bbilibilicdn\.com
 .*\bbilibiligame\.net
 .*\bbilibiliyoo\.com
 .*\bbilibt\.com
@@ -14030,6 +14028,7 @@
 .*\bbudaixi\.net
 .*\bbudao\.com
 .*\bbudao24\.com
+.*\bbuddhalikedoge\.com
 .*\bbudejie\.com
 .*\bbudhano\.com
 .*\bbuding\.tv
@@ -14807,7 +14806,6 @@
 .*\bcav-ad\.com
 .*\bcavca\.org
 .*\bcavinessad\.com
-.*\bcavyg\.com
 .*\bcawae\.net
 .*\bcaxa\.com
 .*\bcaylor\.cc
@@ -15308,7 +15306,6 @@
 .*\bcdqmyj\.com
 .*\bcdqph\.com
 .*\bcdqss\.com
-.*\bcdqyhq\.com
 .*\bcdren\.com
 .*\bcdren\.net
 .*\bcdronghai\.com
@@ -19007,7 +19004,6 @@
 .*\bcqddzx\.com
 .*\bcqdent\.com
 .*\bcqdhhmj\.com
-.*\bcqdl2020\.com
 .*\bcqdting\.com
 .*\bcqdzw\.com
 .*\bcqedo\.com
@@ -19985,6 +19981,7 @@
 .*\bdadiwang\.com
 .*\bdadizq\.com
 .*\bdadou\.com
+.*\bdadoubao\.com
 .*\bdadukou\.net
 .*\bdadunet\.com
 .*\bdaf-rs\.com
@@ -20720,6 +20717,7 @@
 .*\bdeepdevelop\.com
 .*\bdeepepg\.com
 .*\bdeepermobile\.com
+.*\bdeepfun\.net
 .*\bdeepin\.asia
 .*\bdeepin\.com
 .*\bdeepin\.io
@@ -20728,7 +20726,6 @@
 .*\bdeepinmind\.com
 .*\bdeepleaper\.com
 .*\bdeeplearn\.me
-.*\bdeepleo\.com
 .*\bdeepoon\.com
 .*\bdeepsheet\.ltd
 .*\bdeepsheet\.net
@@ -28002,7 +27999,6 @@
 .*\bguaiwei\.com
 .*\bguaiwola\.com
 .*\bguaixun\.com
-.*\bguajibang\.com
 .*\bguajibao\.club
 .*\bguajibao\.me
 .*\bguajibaola\.com
@@ -28131,7 +28127,6 @@
 .*\bguguzhu\.com
 .*\bguhai66\.com
 .*\bguhantai\.com
-.*\bguhui\.me
 .*\bgui333\.com
 .*\bgui66\.com
 .*\bguibook\.com
@@ -35716,7 +35711,6 @@
 .*\bjiexi8\.com
 .*\bjiexiyouxuan\.com
 .*\bjieyou\.com
-.*\bjieyoujin\.com
 .*\bjieyoujob\.com
 .*\bjieyue\.net
 .*\bjifang360\.com
@@ -37396,6 +37390,7 @@
 .*\bjxsrfdc\.com
 .*\bjxstsz\.com
 .*\bjxsxb\.com
+.*\bjxsxdp\.com
 .*\bjxteacher\.com
 .*\bjxtech\.net
 .*\bjxtianrengroup\.com
@@ -41805,7 +41800,6 @@
 .*\bluoxiang\.com
 .*\bluoxudong\.com
 .*\bluoxue\.com
-.*\bluoyangjiazhuang\.com
 .*\bluoyechenfei\.com
 .*\bluoying66\.com
 .*\bluoyuanhang\.com
@@ -46056,6 +46050,7 @@
 .*\bnodeasy\.com
 .*\bnodebb-cn\.org
 .*\bnodeclass\.com
+.*\bnodeedge\.com
 .*\bnodeing\.com
 .*\bnodejs999\.com
 .*\bnodekey\.com
@@ -50122,7 +50117,6 @@
 .*\bqqq\.com
 .*\bqqq\.tv
 .*\bqqqiyemail\.com
-.*\bqqqla\.com
 .*\bqqqmw\.com
 .*\bqqqnm\.com
 .*\bqqqq\.com
@@ -56211,7 +56205,6 @@
 .*\bsyitgz\.com
 .*\bsyitu\.com
 .*\bsyjcxs\.com
-.*\bsyjgw131\.com
 .*\bsyjiancai\.com
 .*\bsyjingmei\.com
 .*\bsyjkqzw\.com
@@ -60347,7 +60340,6 @@
 .*\bveryhappy\.pw
 .*\bveryhuo\.com
 .*\bveryide\.com
-.*\bveryimportantchair\.com
 .*\bveryitman\.com
 .*\bverymaids\.com
 .*\bveryns\.com
@@ -68268,7 +68260,6 @@
 .*\bykt\.io
 .*\byktworld\.com
 .*\byktz\.net
-.*\bykwlkj\.com
 .*\bykyao\.com
 .*\bykycy\.com
 .*\bykzr\.com
@@ -69268,7 +69259,6 @@
 .*\byuejiewangluo\.com
 .*\byuekenet\.com
 .*\byuekeyun\.com
-.*\byuelol\.com
 .*\byuelong\.info
 .*\byueloo\.com
 .*\byuelu\.net
@@ -70023,6 +70013,7 @@
 .*\byzwb\.net
 .*\byzwu\.net
 .*\byzyczp\.com
+.*\byzyp1\.com
 .*\byzzhanlan\.com
 .*\byzzks\.com
 .*\byzzs\.cc
