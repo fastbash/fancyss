@@ -8,7 +8,7 @@ grep -Ev "([0-9]{1,3}[\.]){3}[0-9]{1,3}" gfwlist_download.conf >gfwlist_download
 
 if [ -f "gfwlist_download.conf" ]; then
 	cat gfwlist_download_tmp.conf gfwlist_koolshare.conf | grep -Ev "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sed "s/^/server=&\/./g" | sed "s/$/\/127.0.0.1#7913/g" >gfwlist_merge.conf
-	cat gfwlist_download_tmp.conf gfwlist_koolshare.conf | sed "s/^/ipset=&\/./g" | sed "s/$/\/gfwlist/g" >>gfwlist_merge.conf
+	cat gfwlist_download_tmp.conf gfwlist_koolshare.conf /home/wwwroot/acl/proxy_list.txt | grep -v '#' | sed "s/^/ipset=&\/./g" | sed "s/$/\/gfwlist/g" >>gfwlist_merge.conf
 fi
 
 sort -k 2 -t. -u gfwlist_merge.conf >gfwlist1.conf
@@ -61,7 +61,7 @@ echo =================
 wget -4 https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf
 
 cat accelerated-domains.china.conf | sed '/^#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" >cdn_download.txt
-cat cdn_koolshare.txt cdn_download.txt | sort -u >cdn1.txt
+cat cdn_koolshare.txt cdn_download.txt /home/wwwroot/acl/no_proxy_list.txt | grep -v '#' | sort -u >cdn1.txt
 
 md5sum5=$(md5sum cdn1.txt | sed 's/ /\n/g' | sed -n 1p)
 md5sum6=$(md5sum ../cdn.txt | sed 's/ /\n/g' | sed -n 1p)
