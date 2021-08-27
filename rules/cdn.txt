@@ -7862,7 +7862,6 @@ aads-cng.net
 aaliyaheartha.com
 aamachina.org
 aaniao.com
-aapig.com
 aaqqw.com
 aarch64.me
 aardio.com
@@ -10489,7 +10488,6 @@ baishancloud.org
 baishan.com
 baishangeek.com
 baishicha.com
-baishigo.com
 baishishuju.com
 baishixi.xyz
 baishudata.com
@@ -20934,6 +20932,7 @@ dyymwy.com
 dyynong.net
 dyys.com
 dyysoft.net
+dyzdx.com
 dyzxw.org
 dz11.com
 dz1982.com
@@ -27705,6 +27704,7 @@ heiguang.com
 heiguang.net
 heiguisf.com
 heijiao.net
+heijiazi.com
 heijin.org
 heilanhome.com
 heilaot.com
@@ -34160,6 +34160,7 @@ jsczyjg.com
 jsdaima.com
 jsd.cc
 jsddlzz.com
+js.design
 jsdthx.com
 jsdujuan.com
 jsdushi.net
@@ -34209,7 +34210,6 @@ jsjkx.com
 jsjlzxw.com
 jsjs.cc
 jsjs.org
-jsjyhzy.cc
 jsjyrcb.com
 jsjznews.com
 jskaiborui.com
@@ -37027,6 +37027,7 @@ lejian.com
 lejianweike.com
 lejiaolexue.com
 lejj.com
+lejlc.com
 lejucaifu.com
 leju.com
 lejuliang.com
@@ -41854,6 +41855,7 @@ mzzjyjy.com
 n0808.com
 n12345.com
 n127.com
+n12xar123.xyz
 n21.cc
 n2v.net
 n3sd.com
@@ -42958,7 +42960,6 @@ nuoha.vip
 nuoji.com
 nuojiugo.com
 nuokui.com
-nuomi9.com
 nuomicikoi.com
 nuomi.com
 nuomiphp.com
@@ -47785,7 +47786,6 @@ rpgmoba.com
 rpjrb.com
 rpo5156.com
 rp-pet.com
-rpsh.net
 rqi17.com
 rqjrb.com
 rqshbp.net
@@ -49762,7 +49762,6 @@ shoudujuchangcn.com
 shoudurc.com
 shoufm.com
 shougongke.com
-shouhome.com
 shouhoubang.com
 shouji10086.com
 shouji315.org
@@ -52017,6 +52016,7 @@ suyutech.com
 suzhenyi.com
 suzhoubank.com
 suzhou.cc
+suzhouds.com
 suzhoujinghui.com
 suzhoulida.com
 suzhoushilla.com
@@ -54607,6 +54607,7 @@ tszs360.com
 tszww.net
 tszyzx.com
 tt116114.com
+tt120.org
 tt1386.com
 tt1h.com
 tt286.com
@@ -67556,6 +67557,7 @@ zsvsz.com
 zswcn.com
 zsweai.club
 zswebao.xyz
+zswhtl.com
 zsxq100.com
 zsxq.com
 zsyjgmr.com
