@@ -1,5 +1,8 @@
 fancyss_arm Changelog
 ===========================================
+4.2.6
+   - fix ss_update bin;
+
 4.2.5
    - fix rule update bin;
 
