@@ -2347,6 +2347,7 @@
 22-dns.com
 22doc.com
 22edu.com
+22eez.com
 22evil.com
 22ff.com
 22hd.com
@@ -4606,7 +4607,6 @@
 520cai.net
 520cc.com
 520cfc.com
-520code.cc
 520.com
 520discount.com
 520fx.com
@@ -5406,7 +5406,6 @@
 5isanguo.com
 5i-training.net
 5its.com
-5itx.com
 5iucn.com
 5ixs.net
 5ixuexiwang.com
@@ -10865,6 +10864,7 @@ bbwxbbs.com
 bbxinwen.com
 bbzhh.com
 bbzhi.com
+bbzplhy.com
 bc12345678.com
 bcactc.com
 bcadx.com
@@ -22525,7 +22525,6 @@ fangkebao.cc
 fangkeduo.net
 fangketong.net
 fangkewang.com
-fangkuaitang.com
 fangkuaiwang.com
 fangkuaiyi.com
 fangle.com
@@ -27489,6 +27488,7 @@ healthjd.com
 healthr.com
 healthych.com
 healthyun.com
+hearstchina.com
 heart-game.com
 heartide.com
 heartinsti.com
@@ -27790,7 +27790,6 @@ heyang365.com
 heyang.cc
 heycan.com
 heycode.com
-hey-ganzhou.com
 heygugu.com
 heyguo.com
 heyi.com
@@ -28662,7 +28661,6 @@ hostker.com
 hostkvm.com
 hostloc.com
 hostmsu.ru
-hostspaces.net
 hostxen.com
 hostyun.com
 hotalk.com
@@ -33907,7 +33905,6 @@ jpyssc.com
 jpzyfx.com
 jq22.com
 jq960.com
-jqaaa.com
 jqbyby.com
 jqcool.net
 jqdzw.com
@@ -39646,6 +39643,7 @@ medlinker.net
 medmeeting.org
 medme.net
 medsci-tech.com
+medtion.com
 med-water.com
 meechao.com
 meefon.com
@@ -48749,7 +48747,6 @@ sfygroup.com
 sfystatic.com
 sfzj123.com
 sf-zs.net
-sg0760.com
 sg120.com
 sg169.com
 sg560.com
@@ -49372,7 +49369,6 @@ shinianonline.com
 shiningmidas.com
 shinsoukun.com
 sh-investment.net
-shinybbs.com
 shinybbs.info
 shinycg.com
 shinyway.org
@@ -51601,6 +51597,7 @@ sunater.com
 sunbloger.com
 sunbo367.com
 sunbo.com
+sunborngame.com
 sunboxsoft.com
 sunboyu.com
 suncafe.cc
@@ -53449,7 +53446,6 @@ tianzhuo.com
 tianzikj.com
 tianzongyouxi.com
 tiaodao.com
-tiaodou.tv
 tiaoguangbolimo.com
 tiaohao.com
 tiaoliao.biz
@@ -53773,7 +53769,6 @@ tmcdn.net
 tmcore.com
 tmd.cc
 tmdm.com
-tmechina.org
 tmeiju.com
 tmetb.com
 tmhong.com
@@ -53907,7 +53902,6 @@ tongfu.net
 tonggao.info
 tonghao.ltd
 tonghs.com
-tonghua5.com
 tonghua-holiday.com
 tonghuiqiye.com
 tongji.com
@@ -55374,7 +55368,6 @@ unity3d8.com
 unitymanual.com
 uniview.com
 uniworldart.com
-unix5.com
 unixfbi.com
 unixhot.com
 unixidc.com
@@ -55383,7 +55376,6 @@ unjeep.com
 unjmz.com
 unjs.com
 unlimax.com
-unmsg.com
 unnnnn.com
 unnue.com
 unohacha.com
@@ -56569,7 +56561,6 @@ wan8.com
 wan95.com
 wanbang365.com
 wanbaoju.com
-wanbizu.com
 wancaibb.com
 wancai.com
 wancaiinfo.com
@@ -57588,7 +57579,6 @@ wesdom.me
 weshaketv.com
 weshequ.com
 weshineapp.com
-weshop.com
 wesiedu.com
 west263.com
 west999.com
@@ -58473,7 +58463,6 @@ wodidashi.com
 wodingche.com
 wodjob.com
 wodocx.com
-woduguo.com
 wofang.com
 wofang.net
 wofangwang.com
@@ -60540,7 +60529,6 @@ xinghuo365.com
 xinghuogroup.com
 xinghuoxiaoshuo.com
 xingjuhe.com
-xingkbjm.com
 xingkeduo.com
 xingkong.com
 xingkongmt.com
@@ -60914,7 +60902,6 @@ xiyousdk.com
 xiyouwebgame.com
 xiyow.com
 xiyuan.tv
-xiyuchou.com
 xiyuege.com
 xiyun.net
 xiyurumen.com
@@ -61492,6 +61479,7 @@ xuanxuan.com
 xuanxuangame.com
 xuanxuantemai.com
 xuanxue.com
+xuanxueyuan.com
 xuanyangxl.com
 xuanyouwang.com
 xuanyusong.com
