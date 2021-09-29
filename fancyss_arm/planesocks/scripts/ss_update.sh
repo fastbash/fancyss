@@ -8,6 +8,14 @@ alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 main_url="https://raw.githubusercontent.com/fastbash/fancyss/master/fancyss_arm"
 backup_url=""
 
+
+downloadBin(){
+	wget --no-check-certificate --timeout=8 -qO - "$1"
+	if [ "$?" != "0" ];then
+		curl -s -k --connect-timeout 8 "$1"
+	fi
+}
+
 install_ss(){
 	echo_date 开始解压压缩包...
 	tar -zxf planesocks.tar.gz
@@ -30,7 +38,8 @@ update_ss(){
 			cd /tmp
 			md5_web1=`curl -s "$main_url"/version | sed -n 2p`
 			echo_date 开启下载进程，从主服务器上下载更新包...
-			wget --no-check-certificate --timeout=5 "$main_url"/planesocks.tar.gz
+			#wget --no-check-certificate --timeout=5 "$main_url"/planesocks.tar.gz
+			downloadBin "$main_url"/planesocks.tar.gz > /tmp/planesocks.tar.gz
 			md5sum_gz=`md5sum /tmp/planesocks.tar.gz | sed 's/ /\n/g'| sed -n 1p`
 			if [ "$md5sum_gz" != "$md5_web1" ]; then
 				echo_date 更新包md5校验不一致！估计是下载的时候出了什么状况，请等待一会儿再试...
