@@ -3,14 +3,11 @@
 # shadowsocks script for AM380 merlin firmware
 # by sadog (sadoneli@gmail.com) from koolshare.cn
 
-# 导入skipd数据
-eval `dbus export ss`
-ss_basic_dnslookup_server="114.114.114.114"
 
 # 引用环境变量等
-source /koolshare/scripts/base.sh
+source "/koolshare/scripts/ss_common.sh"
+
 username=`nvram get http_username`
-alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 
 write_haproxy_cfg(){
 	echo_date 生成haproxy配置文件到/koolshare/configs目录.

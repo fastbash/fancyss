@@ -4,11 +4,12 @@
 # by sadog (sadoneli@gmail.com) from koolshare.cn
 
 export KSROOT=/koolshare
-source $KSROOT/scripts/base.sh
-alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
-eval `dbus export ss`
+
+# 引用环境变量等
+source "/koolshare/scripts/ss_common.sh"
+
 LOCK_FILE=/tmp/online_update.lock
-CONFIG_FILE=/koolshare/ss/ss.json
+# CONFIG_FILE=/koolshare/ss/ss.json
 DEL_SUBSCRIBE=0
 SOCKS_FLAG=0
 

@@ -1,5 +1,6 @@
 #!/bin/sh
-eval `dbus export ss`
+# 引用环境变量等
+source "/koolshare/scripts/ss_common.sh"
 
 # shadowsocks script for AM380 merlin firmware
 # by sadog (sadoneli@gmail.com) from koolshare.cn

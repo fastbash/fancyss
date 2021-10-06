@@ -3,7 +3,8 @@
 # shadowsocks script for AM380 merlin firmware
 # by sadog (sadoneli@gmail.com) from koolshare.cn
 
-source /koolshare/scripts/base.sh
+# 引用环境变量等
+source "/koolshare/scripts/ss_common.sh"
 eval `dbus export ssconf_basic`
 
 # flush previous test value in the table

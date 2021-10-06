@@ -3,8 +3,9 @@
 # planesocks script for AM380 merlin firmware
 # by sadog (sadoneli@gmail.com) from koolshare.cn
 
-eval `dbus export ss`
-alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
+# 引用环境变量等
+source "/koolshare/scripts/ss_common.sh"
+
 main_url="https://raw.githubusercontent.com/fastbash/fancyss/master/fancyss_arm"
 backup_url=""
 
