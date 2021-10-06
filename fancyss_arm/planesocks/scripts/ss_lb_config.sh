@@ -7,6 +7,7 @@
 # 引用环境变量等
 source "/koolshare/scripts/ss_common.sh"
 
+ss_basic_dnslookup_server=$(get_server_resolver)
 username=`nvram get http_username`
 
 write_haproxy_cfg(){
