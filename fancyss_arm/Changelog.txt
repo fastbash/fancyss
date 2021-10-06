@@ -1,5 +1,10 @@
 fancyss_arm Changelog
 ===========================================
+4.2.7
+   - add ss_common.sh;
+   - fix dns sets in ss_lb_config.sh
+
+
 4.2.6
    - fix ss_update bin;
 
