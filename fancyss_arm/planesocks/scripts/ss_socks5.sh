@@ -3,9 +3,8 @@
 # shadowsocks script for AM380 merlin firmware
 # by sadog (sadoneli@gmail.com) from koolshare.cn
 
-eval `dbus export ss`
-source /koolshare/scripts/base.sh
-alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
+# 引用环境变量等
+source "/koolshare/scripts/ss_common.sh"
 
 kill_socks5(){
 	PID=`ps | grep ss-local | grep -v "grep" | grep -v "23456"|awk '{print $1}'`
