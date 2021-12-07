@@ -1871,7 +1871,6 @@
 189read.com
 189read.net
 189sec.com
-189share.com
 189smarthome.com
 189store.com
 189works.com
@@ -5733,7 +5732,6 @@
 666629b.com
 6666519.net
 666666.so
-666898d.com
 6669667.com
 666baicai.com
 666gps.com
@@ -8980,6 +8978,7 @@ aliwd.com
 aliwears.com
 aliwx.net
 alixiaozhan.com
+alixiaozhan.net
 alixinwen.com
 alixixi.com
 alixox.com
@@ -13850,7 +13849,6 @@ cdidc.net
 cditv.tv
 cdjingfeng.com
 cdjingying.com
-cdjinpeng.com
 cdjnrc.com
 cdjsjx.com
 cdjxjy.com
@@ -14183,6 +14181,7 @@ cfhi.com
 cfhot.com
 cfhpc.org
 cfido.com
+cfiecdns.net
 cfiec.net
 cfimg.com
 cfkq.net
@@ -19377,7 +19376,6 @@ dhqtech.com
 dhrcbank.com
 dhrest.com
 dht5867.com
-dhtb.com
 dhwooden.com
 dhy559999.com
 dhy85888.com
@@ -19549,7 +19547,6 @@ dichan.com
 dichanlao.com
 dichanren.com
 dichedai.com
-di.com
 dictall.com
 dida110.com
 dida365.com
@@ -23303,7 +23300,6 @@ fhadmin.org
 fhd001.com
 fhdjh.com
 fhdq.net
-fhdr.com
 fhg90.com
 fhhgj.com
 fhkioskmodules.com
@@ -25073,7 +25069,6 @@ ghboke.com
 gh.com
 ghgy.com
 ghgy.net
-ghkm.com
 ghlearning.com
 ghmba.com
 ghmcchina.com
@@ -26191,6 +26186,7 @@ guotaotaoci.net
 guotv.com
 guowaidiaocha.com
 guowaitianqi.com
+guowenku.com
 guoxingjun.com
 guoxinqh.com
 guoxue123.com
@@ -30108,7 +30104,6 @@ hxsme.org
 hxthjy.com
 hxtk.com
 hxt-semitech.com
-hxttcp.com
 hxwglm.com
 hxxdsb.com
 hxxkw.org
@@ -31667,6 +31662,7 @@ intel-space.com
 intelvisioncn.com
 inter12.org
 inter1908.net
+interactivebrokers.hk
 interbator.com
 internationalbrand.net
 internbird.com
@@ -31726,7 +31722,6 @@ iol8.com
 iomsew.com
 ioneball.com
 ionewu.com
-ionic8.com
 ionichina.com
 ionicliquid.org
 ionic.wang
@@ -37083,7 +37078,6 @@ leagcard.com
 leagsoft.com
 leangoo.com
 leankun.com
-leanlan.com
 leanote.com
 leanote.org
 leansoftx.com
@@ -51132,6 +51126,7 @@ sobereva.com
 sobeycache.com
 sobeycloud.com
 sobot.com
+soboten.com
 sobug.com
 sobuhu.com
 socang.com
@@ -52425,7 +52420,6 @@ sxwbs.com
 sxwpyx.com
 sxwrsa.org
 sxww.com
-sxxcrl.com
 sxxdll.com
 sxxiaomeng.com
 sxxl.com
@@ -53243,7 +53237,6 @@ taurus66.com
 tavsiktlig.com
 tawk.link
 tawk.to
-tax12366.org
 tax-edu.net
 taxjiangkewang.com
 taxnote.org
@@ -55946,6 +55939,7 @@ uplinux.com
 uplookedu.com
 uplooking.com
 upnb.com
+upowerchain.com
 uppsd.com
 upqzfilebk.com
 upqzfile.com
@@ -58016,6 +58010,7 @@ wenmi.com
 wenneart.com
 wenpie.com
 wenrouge.com
+wenruya.com
 wenryxu.com
 wensang.com
 wenshao-art.com
@@ -58856,7 +58851,6 @@ wmcloud.com
 wmcn.com
 wmedias.com
 wmgjd.com
-wmgm.org
 wmiao.com
 wm-imotor.com
 wmiyx.com
@@ -60193,6 +60187,7 @@ xfsd.com
 xfsub.com
 xft123.com
 xftclub.com
+xfun233.com
 xfwi.com
 xf-world.org
 xfxb.net
@@ -61723,7 +61718,6 @@ xnw.com
 xn--wlqw5ebvdhpi5hepihs3c.com
 xnwx2014.net
 xn--xhq9mt12cf5v.ink
-xn--xhq9mt12cf5v.site
 xnxin.com
 xny365.com
 xnyauto.com
@@ -67687,7 +67681,6 @@ zooyoo.cc
 zoroli.com
 zorrowh.com
 zou114.com
-zou114.net
 zoubiao.com
 zoucheng.cc
 zoucz.com
