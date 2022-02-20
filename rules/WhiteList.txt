@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2022-02-20
+## Last update: 2022-02-21
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -11144,6 +11144,7 @@
 .*\bbestbaijiu\.com
 .*\bbestbeibao\.com
 .*\bbestcake\.com
+.*\bbestcdn\.vip
 .*\bbestcem\.com
 .*\bbestdjb\.com
 .*\bbestdo\.com
@@ -17360,6 +17361,7 @@
 .*\bcr6868\.com
 .*\bcrabchina\.com
 .*\bcrackersta\.com
+.*\bgateway\.craft\.moe
 .*\bcraftcontact\.com
 .*\bcrandom\.com
 .*\bcrazepony\.com

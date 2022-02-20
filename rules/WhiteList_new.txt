@@ -1,7 +1,7 @@
 [Local Hosts]
 ## China mainland domains
 ## Source: https://github.com/felixonmars/dnsmasq-china-list
-## Last update: 2022-02-20
+## Last update: 2022-02-21
 
 
 Server=/0-100.com/
@@ -11144,6 +11144,7 @@ Server=/bestb2b.com/
 Server=/bestbaijiu.com/
 Server=/bestbeibao.com/
 Server=/bestcake.com/
+Server=/bestcdn.vip/
 Server=/bestcem.com/
 Server=/bestdjb.com/
 Server=/bestdo.com/
@@ -17360,6 +17361,7 @@ Server=/cr19gj.com/
 Server=/cr6868.com/
 Server=/crabchina.com/
 Server=/crackersta.com/
+Server=/gateway.craft.moe/
 Server=/craftcontact.com/
 Server=/crandom.com/
 Server=/crazepony.com/
