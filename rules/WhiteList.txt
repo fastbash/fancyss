@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2022-03-15
+## Last update: 2022-03-16
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -932,6 +932,7 @@
 .*\b108cun\.com
 .*\b108pk\.com
 .*\b108qi\.com
+.*\b108shu\.com
 .*\b108sq\.com
 .*\b108tian\.com
 .*\b109\.com
@@ -2567,7 +2568,6 @@
 .*\b28rv\.com
 .*\b28sn\.com
 .*\b28tui\.com
-.*\b28u\.org
 .*\b28weixinqun\.com
 .*\b28xl\.com
 .*\b28y\.com
@@ -5530,6 +5530,7 @@
 .*\b61kezhan\.com
 .*\b61mami\.com
 .*\b61mc\.com
+.*\b61mk\.org
 .*\b61sheji\.com
 .*\b61sou\.com
 .*\b61tg\.com
@@ -5981,6 +5982,7 @@
 .*\b737\.com
 .*\b73789\.com
 .*\b7384tv\.com
+.*\b738888\.xyz
 .*\b7399t\.com
 .*\b73bc\.com
 .*\b73bt\.com
@@ -6069,7 +6071,6 @@
 .*\b77745\.com
 .*\b777524\.com
 .*\b7775367\.com
-.*\b777684a\.com
 .*\b777lala\.com
 .*\b777moban\.com
 .*\b777n\.com
@@ -6739,6 +6740,7 @@
 .*\b8e8z\.com
 .*\b8europe\.com
 .*\b8fenxiang\.com
+.*\b8gdh\.xyz
 .*\b8gov\.com
 .*\b8gw\.com
 .*\b8gyu\.com
@@ -7846,7 +7848,6 @@
 .*\bacgdb\.com
 .*\bacgdmzy\.com
 .*\bacgdoge\.net
-.*\bacgface\.com
 .*\bacgist\.com
 .*\bacgn\.pw
 .*\bacgnt\.com
@@ -8079,7 +8080,6 @@
 .*\baesml\.com
 .*\baesucai\.com
 .*\baevit\.xyz
-.*\baex88\.com
 .*\baf360\.com
 .*\bafanti100\.com
 .*\bafarway\.com
@@ -8858,6 +8858,7 @@
 .*\baliyunwaf3\.com
 .*\baliyunwaf4\.com
 .*\baliyunwaf5\.com
+.*\baliyunx\.com
 .*\baliyunyh\.com
 .*\balizhaopin\.com
 .*\balizila\.com
@@ -9472,6 +9473,7 @@
 .*\bapplinzi\.com
 .*\bapplysquare\.com
 .*\bapplysquare\.net
+.*\bappmaker\.cc
 .*\bappmifile\.com
 .*\bappnode\.com
 .*\bappotronics\.com
@@ -10074,7 +10076,6 @@
 .*\bb7l\.cc
 .*\bb8yx\.com
 .*\bba-li\.com
-.*\bba125\.com
 .*\bba210\.com
 .*\bbaaidu\.com
 .*\bbaalchina\.net
@@ -13740,6 +13741,7 @@
 .*\bcdtaishan\.com
 .*\bcdtianda\.com
 .*\bcdueff\.com
+.*\bcduncname\.com
 .*\bcduyzh\.com
 .*\bcdvcloud\.com
 .*\bcdvisor\.com
@@ -20397,6 +20399,7 @@
 .*\bduowan\.com
 .*\bduowanns\.com
 .*\bduoxinqi\.com
+.*\bduoxuanyundian\.com
 .*\bduoyewu\.com
 .*\bduoyi\.com
 .*\bduoyinsu\.com
@@ -22577,7 +22580,6 @@
 .*\bfdzq\.com
 .*\bfe-cable\.com
 .*\bfe2x\.cc
-.*\bfe347\.com
 .*\bfe520\.com
 .*\bfearlazy\.com
 .*\bfeaye\.com
@@ -22686,7 +22688,6 @@
 .*\bfeiyang\.com
 .*\bfeiyangedu\.com
 .*\bfeiyicheng\.com
-.*\bfeiyiproxy\.com
 .*\bfeiyit\.com
 .*\bfeiyng\.com
 .*\bfeiyu\.com
@@ -22855,6 +22856,7 @@
 .*\bffdns\.net
 .*\bffeeii\.com
 .*\bffepower\.com
+.*\bfffbbf\.com
 .*\bffff\.cc
 .*\bfffzgh\.com
 .*\bffhre\.com
@@ -23977,7 +23979,6 @@
 .*\bgamecps\.com
 .*\bgamed9\.com
 .*\bgamedashi\.com
-.*\bgameditu\.com
 .*\bgameegg\.com
 .*\bgameexp\.com
 .*\bgamefk\.com
@@ -25461,7 +25462,6 @@
 .*\bgtm-i1d9\.com
 .*\bgtmlufax\.com
 .*\bgtn9\.com
-.*\bgtnqk\.com
 .*\bgto365\.com
 .*\bgtobal\.com
 .*\bgttof2020\.com
@@ -27005,6 +27005,7 @@
 .*\bhbm360\.com
 .*\bhbmes\.com
 .*\bhbmmtt\.com
+.*\bhbmrjx888\.com
 .*\bhbnews\.net
 .*\bhbnewsoft\.com
 .*\bhbneww\.com
@@ -28056,7 +28057,6 @@
 .*\bhmzx163\.com
 .*\bhn-pc\.com
 .*\bhn165\.com
-.*\bhn5a\.com
 .*\bhn96520\.com
 .*\bhnaccp\.com
 .*\bhnaee\.com
@@ -32377,6 +32377,7 @@
 .*\bjhwaimai\.com
 .*\bjhwl444\.com
 .*\bjhwrsq\.com
+.*\bjhxabj\.com
 .*\bjhxms\.com
 .*\bjhyongyou\.com
 .*\bji-qi\.com
@@ -34316,6 +34317,7 @@
 .*\bjxxhdn\.com
 .*\bjxxhsd\.com
 .*\bjxxyqm\.com
+.*\bjxylb\.com
 .*\bjxyrzdh\.com
 .*\bjxysg\.net
 .*\bjxysyz\.com
@@ -35966,7 +35968,6 @@
 .*\bl7audiolab\.com
 .*\bl99\.com
 .*\bla-mo\.com
-.*\bla31\.com
 .*\blab-z\.com
 .*\blabagd\.com
 .*\blabahao\.com
@@ -37400,6 +37401,7 @@
 .*\blishouhong\.com
 .*\blishuhang\.me
 .*\blishui\.com
+.*\blisinit\.com
 .*\blisizhang\.com
 .*\blisp123\.com
 .*\blistarypro\.com
@@ -37638,6 +37640,7 @@
 .*\blkkued\.com
 .*\blkmcdk\.com
 .*\blkme\.cc
+.*\blkong\.com
 .*\blkong\.net
 .*\blkxianglong\.net
 .*\blkyou\.com
@@ -39884,7 +39887,6 @@
 .*\bmidaijihua\.com
 .*\bmidainc\.com
 .*\bmidasbuy\.com
-.*\bmidday\.me
 .*\bmidea\.com\.tr
 .*\bmidea\.com
 .*\bmidicn\.com
@@ -40030,7 +40032,6 @@
 .*\bminecraftxz\.com
 .*\bmineplugin\.org
 .*\bminer\.tools
-.*\bminerbbs\.com
 .*\bminerfun\.com
 .*\bminerhome\.com
 .*\bminesage\.com
@@ -40438,7 +40439,6 @@
 .*\bmodernsky\.com
 .*\bmodernweekly\.com
 .*\bmodian\.com
-.*\bmodoer\.com
 .*\bmodooplay\.com
 .*\bmodulesocean\.com
 .*\bmoduovr\.com
@@ -41935,7 +41935,6 @@
 .*\bnicelinks\.site
 .*\bniceloo\.com
 .*\bniceonegame\.com
-.*\bnicescale\.com
 .*\bnicetuan\.net
 .*\bnicky1605\.com
 .*\bnicolaszhao\.com
@@ -42363,6 +42362,7 @@
 .*\bns96\.com
 .*\bnsbeta\.info
 .*\bnscloudwaf\.com
+.*\bnscscc\.com
 .*\bnscscc\.org
 .*\bnseac\.com
 .*\bnsecsoft\.com
@@ -42928,6 +42928,7 @@
 .*\bonlyyou\.com
 .*\bonmpw\.com
 .*\bono-bbb\.com
+.*\bononw\.com
 .*\bonqc\.com
 .*\bontheroadstore\.com
 .*\bonthink\.com
@@ -46919,7 +46920,6 @@
 .*\brhkj\.com
 .*\brhsj520\.com
 .*\brhusen03\.com
-.*\brhyjcy\.com
 .*\brhyme\.cc
 .*\bri-china\.com
 .*\briaway\.com
@@ -47001,6 +47001,7 @@
 .*\brizhuji\.com
 .*\brj-bai\.com
 .*\brj889\.net
+.*\brjchangan\.com
 .*\brjdk\.org
 .*\brjghome\.com
 .*\brjh0\.com
@@ -47153,6 +47154,7 @@
 .*\brosedata\.com
 .*\brosefinchfund\.com
 .*\broshanca\.com
+.*\brosi\.me
 .*\brosinson\.com
 .*\brossoarts\.com
 .*\brossoarts\.net
@@ -47449,7 +47451,6 @@
 .*\brzcdz2\.com
 .*\brzfanyi\.com
 .*\brzhuaqiangu\.com
-.*\brzlib\.net
 .*\brzline\.com
 .*\brzok\.net
 .*\brzszp\.com
@@ -61067,7 +61068,6 @@
 .*\bxuewangzhan\.com
 .*\bxuewangzhan\.net
 .*\bxuewei\.net
-.*\bxueweijiema\.com
 .*\bxuexb\.com
 .*\bxuexi\.la
 .*\bxuexi365\.com
@@ -62649,6 +62649,7 @@
 .*\byiwuku\.com
 .*\byiwutalk\.com
 .*\byixao\.com
+.*\byixao\.net
 .*\byixi\.tv
 .*\byixia\.com
 .*\byixiaoxi\.com
@@ -62964,6 +62965,7 @@
 .*\bynyp\.com
 .*\bynzczs\.com
 .*\bynzg\.org
+.*\bynzhongyi\.com
 .*\bynzp\.com
 .*\bynzy-tobacco\.com
 .*\byo4399\.com
@@ -65085,6 +65087,7 @@
 .*\bzhangmenkid\.com
 .*\bzhangnan\.xyz
 .*\bzhangnq\.com
+.*\bzhangqi\.ltd
 .*\bzhangqiaokeyan\.com
 .*\bzhangqiongjie\.com
 .*\bzhangqiu\.cc
@@ -66821,6 +66824,7 @@
 .*\bztqqt\.com
 .*\bztrhmall\.com
 .*\bztrong\.com
+.*\bztrskj\.com
 .*\bztsafe\.com
 .*\bztsfc\.com
 .*\bztt\.cc
