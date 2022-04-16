@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2022-04-16
+## Last update: 2022-04-17
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -817,7 +817,6 @@
 .*\b100pd\.cc
 .*\b100pd\.com
 .*\b100ppi\.com
-.*\b100rjrc\.com
 .*\b100run\.com
 .*\b100shop\.com
 .*\b100skin\.com
@@ -4675,7 +4674,6 @@
 .*\b52liaoshen\.com
 .*\b52life\.cc
 .*\b52linglong\.com
-.*\b52linux\.tech
 .*\b52lion\.com
 .*\b52lishi\.com
 .*\b52lvyou\.com
@@ -10018,7 +10016,6 @@
 .*\bbadu\.com
 .*\bbadudns\.cc
 .*\bbaertt\.com
-.*\bbafafafa\.com
 .*\bbafangjuhe\.com
 .*\bbafangka\.com
 .*\bbafangwang\.com
@@ -12207,7 +12204,6 @@
 .*\bboxui\.com
 .*\bboxz\.com
 .*\bboy-toy\.net
-.*\bboy1818\.com
 .*\bboy1904\.com
 .*\bboyaa\.com
 .*\bboyaceo\.com
@@ -17590,7 +17586,6 @@
 .*\bcxthhhhh\.com
 .*\bcxtuku\.com
 .*\bcxtxt\.com
-.*\bcxvn\.com
 .*\bcxw\.com
 .*\bcxwl\.com
 .*\bcxwt103\.com
@@ -21367,6 +21362,7 @@
 .*\benguo\.com
 .*\bengz\.net
 .*\benicn\.com
+.*\benjoenjoenjo111\.xyz
 .*\benjoy\.link
 .*\benjoy1992\.com
 .*\benjoy3c\.com
@@ -22668,7 +22664,6 @@
 .*\bfeverassets\.net
 .*\bfevte\.com
 .*\bfeydj\.com
-.*\bff14\.org
 .*\bff14yuanxiang\.com
 .*\bff54\.ink
 .*\bff63\.com
@@ -23094,7 +23089,6 @@
 .*\bfonsoft\.net
 .*\bfonsview\.com
 .*\bfont\.im
-.*\bfont168\.com
 .*\bfont5\.com
 .*\bfont6\.com
 .*\bfontke\.com
@@ -25540,7 +25534,6 @@
 .*\bguotv\.com
 .*\bguowaidiaocha\.com
 .*\bguowaitianqi\.com
-.*\bguowenku\.com
 .*\bguoxingjun\.com
 .*\bguoxinqh\.com
 .*\bguoxue\.com
@@ -40560,7 +40553,6 @@
 .*\bmslzz\.com
 .*\bmsmartlife\.com
 .*\bmsmbjp\.com
-.*\bmsoso\.com
 .*\bmspharm\.com
 .*\bmspring\.org
 .*\bmsrtvu\.net
@@ -42174,7 +42166,6 @@
 .*\bnuoder\.com
 .*\bnuoha\.vip
 .*\bnuoji\.com
-.*\bnuojiugo\.com
 .*\bnuokui\.com
 .*\bnuomi\.com
 .*\bnuomicikoi\.com
@@ -42437,7 +42428,6 @@
 .*\boiaqye7985\.com
 .*\boicat\.com
 .*\boicq88\.com
-.*\boicqzone\.com
 .*\boicto\.com
 .*\boidchina\.org
 .*\boigps\.com
@@ -57506,7 +57496,6 @@
 .*\bwldsb\.com
 .*\bwleye\.com
 .*\bwlhcd\.com
-.*\bwlim\.pro
 .*\bwlinfor\.com
 .*\bwljy8\.com
 .*\bwljyyjy\.com
@@ -57518,7 +57507,6 @@
 .*\bwlnh\.net
 .*\bwlphp\.com
 .*\bwlqtpolytheatre\.com
-.*\bwlread\.com
 .*\bwlrjy\.com
 .*\bwlsgjslgy\.com
 .*\bwlshw\.com
