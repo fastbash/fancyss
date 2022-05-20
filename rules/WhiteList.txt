@@ -9524,7 +9524,6 @@
 .*\baskxt\.org
 .*\baslzw\.com
 .*\basm64\.com
-.*\basmrv\.com
 .*\basnlab\.com
 .*\basnlab\.org
 .*\baso\.ink
@@ -9678,6 +9677,7 @@
 .*\bauto98\.com
 .*\bautoai\.com
 .*\bautobaidu\.com
+.*\bautobit\.xyz
 .*\bautobizreview\.com
 .*\bautocamel\.com
 .*\bautochina360\.com
@@ -18130,7 +18130,6 @@
 .*\bdawaner\.net
 .*\bdaweibro\.com
 .*\bdaweisoft\.com
-.*\bdaweixinke\.com
 .*\bdawenming\.com
 .*\bdawenxue\.net
 .*\bdawenxue\.org
@@ -24138,6 +24137,7 @@
 .*\bgetcn\.net
 .*\bgethover\.com
 .*\bgetiis\.com
+.*\bgetiot\.tech
 .*\bgetip\.name
 .*\bgetkwai\.com
 .*\bgetlema\.com
@@ -24829,7 +24829,6 @@
 .*\bgouwanmei\.com
 .*\bgouwubang\.com
 .*\bgouwuke\.com
-.*\bgouwumai\.com
 .*\bgouwuyu\.com
 .*\bgovfz\.com
 .*\bgovmade\.com
@@ -27613,7 +27612,6 @@
 .*\bhmyz\.com
 .*\bhmz\.com
 .*\bhmzixin\.com
-.*\bhmzone\.com
 .*\bhmzs\.net
 .*\bhmzx163\.com
 .*\bhn-pc\.com
@@ -30547,6 +30545,7 @@
 .*\binfobidding\.com
 .*\binfobigdata\.com
 .*\binfocomm-journal\.com
+.*\binfohpc\.com
 .*\binfoier\.com
 .*\binfoipwest\.com
 .*\binfong\.net
@@ -33774,7 +33773,6 @@
 .*\bjxpz888\.com
 .*\bjxqcw\.com
 .*\bjxqgpx\.com
-.*\bjxrencai\.com
 .*\bjxrjzx\.com
 .*\bjxrsrc\.com
 .*\bjxrtv\.com
@@ -45910,6 +45908,7 @@
 .*\braorao\.com
 .*\brap8\.com
 .*\brapidppt\.com
+.*\brapiz\.me
 .*\brapoo\.com
 .*\brapospectre\.com
 .*\brarcbank\.com
@@ -64952,7 +64951,6 @@
 .*\bzhuatang\.com
 .*\bzhuax\.com
 .*\bzhuaxia\.com
-.*\bzhuaying\.com
 .*\bzhuayou\.com
 .*\bzhuayoukong\.com
 .*\bzhuazi\.com

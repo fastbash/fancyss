@@ -9518,7 +9518,6 @@ asktao.com
 askxt.org
 aslzw.com
 asm64.com
-asmrv.com
 asnlab.com
 asnlab.org
 aso100.com
@@ -9667,6 +9666,7 @@ auto98.com
 autoai.com
 autobaidu.com
 auto-beijing.com
+autobit.xyz
 autobizreview.com
 autocamel.com
 auto-ccpit.org
@@ -18121,7 +18121,6 @@ davvar.com
 dawaner.net
 daweibro.com
 daweisoft.com
-daweixinke.com
 dawenming.com
 dawenxue.net
 dawenxue.org
@@ -24130,6 +24129,7 @@ getcai.com
 getcn.net
 gethover.com
 getiis.com
+getiot.tech
 getip.name
 getkwai.com
 getlema.com
@@ -24821,7 +24821,6 @@ goutanzi.com
 gouwanmei.com
 gouwubang.com
 gouwuke.com
-gouwumai.com
 gouwuyu.com
 govfz.com
 govmade.com
@@ -27602,7 +27601,6 @@ hm-yc.com
 hmyz.com
 hmz.com
 hmzixin.com
-hmzone.com
 hmzs.net
 hmzx163.com
 hn165.com
@@ -30531,6 +30529,7 @@ infobidding.com
 infobigdata.com
 info.cc
 infocomm-journal.com
+infohpc.com
 infoier.com
 infoipwest.com
 infong.net
@@ -33768,7 +33767,6 @@ jxpta.com
 jxpz888.com
 jxqcw.com
 jxqgpx.com
-jxrencai.com
 jxrjzx.com
 jxrsrc.com
 jxrtv.com
@@ -45907,6 +45905,7 @@ raonie.com
 raorao.com
 rap8.com
 rapidppt.com
+rapiz.me
 rapoo.com
 rapospectre.com
 rarcbank.com
@@ -64946,7 +64945,6 @@ zhuashouru.com
 zhuatang.com
 zhuax.com
 zhuaxia.com
-zhuaying.com
 zhuayou.com
 zhuayoukong.com
 zhuazi.com
