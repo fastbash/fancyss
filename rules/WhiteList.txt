@@ -2826,7 +2826,6 @@
 .*\b333cn\.com
 .*\b333job\.com
 .*\b333ku\.com
-.*\b333racing\.com
 .*\b333y3\.com
 .*\b334433\.xyz
 .*\b3344u\.com
@@ -7480,7 +7479,6 @@
 .*\ba135\.net
 .*\ba166\.com
 .*\ba1714\.com
-.*\ba1a\.me
 .*\ba2048\.com
 .*\ba21fs\.com
 .*\ba21yishion\.com
@@ -8054,6 +8052,7 @@
 .*\baiaor\.com
 .*\baiba\.com
 .*\baibaimm\.com
+.*\baibaix\.com
 .*\baibang\.com
 .*\baibang5\.com
 .*\baibaov\.com
@@ -8808,7 +8807,6 @@
 .*\banalytics-china\.com
 .*\banalyticskey\.com
 .*\banandoor\.com
-.*\banank\.ke
 .*\bananzu\.com
 .*\banatuprak\.com
 .*\banav\.com
@@ -10105,7 +10103,6 @@
 .*\bbaixing\.com
 .*\bbaixing\.net
 .*\bbaixingcdn\.com
-.*\bbaixingfanli\.com
 .*\bbaixingjd\.com
 .*\bbaixingmall\.com
 .*\bbaixingzixun\.com
@@ -11847,6 +11844,7 @@
 .*\bbn016\.com
 .*\bbn13\.com
 .*\bbn54\.com
+.*\bbnacg\.com
 .*\bbnapp\.com
 .*\bbnbcamp\.com
 .*\bbnbsky\.com
@@ -25547,7 +25545,6 @@
 .*\bgzdai\.com
 .*\bgzdaily\.com
 .*\bgzdata\.net
-.*\bgzdayang\.com
 .*\bgzdbx\.com
 .*\bgzdingyu\.com
 .*\bgzdinuan\.com
@@ -32528,7 +32525,6 @@
 .*\bjinyunfood\.com
 .*\bjinyunweb\.com
 .*\bjinyuzd\.cc
-.*\bjinzhandaily\.com
 .*\bjinzheled\.com
 .*\bjinzhidagl\.com
 .*\bjinzhoubank\.com
@@ -34610,6 +34606,7 @@
 .*\bkjeport\.com
 .*\bkjiuye\.com
 .*\bkjj\.com
+.*\bkjjl100\.com
 .*\bkjkd\.com
 .*\bkjkp\.com
 .*\bkjks\.net
@@ -40312,7 +40309,6 @@
 .*\bmufengyue\.com
 .*\bmuftc\.com
 .*\bmugeda\.com
-.*\bmuguaddy\.com
 .*\bmuhai\.net
 .*\bmuhoujiemi\.com
 .*\bmuimg\.com
@@ -51624,7 +51620,6 @@
 .*\btaxwen\.com
 .*\btayohya\.com
 .*\btazhe\.com
-.*\btb\.am
 .*\btb51\.net
 .*\btb58\.net
 .*\btb888\.net
@@ -52662,7 +52657,6 @@
 .*\btok9\.com
 .*\btoken-ad\.com
 .*\btokenglish\.com
-.*\btokeninsight\.com
 .*\btokenpocket\.pro
 .*\btokensky\.net
 .*\btokenview\.com
@@ -56940,7 +56934,6 @@
 .*\bwithmedia\.net
 .*\bwithpinbox\.com
 .*\bwithsccdn\.com
-.*\bwithsin\.com
 .*\bwithubit\.org
 .*\bwithzz\.com
 .*\bwitkey\.com
