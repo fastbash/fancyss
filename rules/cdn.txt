@@ -9702,6 +9702,7 @@ avalon.pw
 avanpa.com
 avatarmind.com
 avatarmobi.com
+avatr.com
 avc-mr.com
 avc-ott.com
 avdll.com
@@ -15696,7 +15697,6 @@ cmnxt.com
 cmoct.com
 cmodes.com
 cmol.com
-cmo.so
 cmpassport.com
 cmpay.com
 cmread.com
@@ -28261,6 +28261,7 @@ ht-sonic.com
 htstzm.com
 htt5.com
 httingshu.com
+httpcanary.com
 httpcn.com
 hturl.cc
 htuwenming.com
@@ -39849,6 +39850,7 @@ moe.im
 moejam.com
 moejj.com
 moejp.com
+moeking.me
 moeli123.com
 moemiao.net
 moenis.com
@@ -42773,7 +42775,6 @@ pan58.com
 pan8.net
 panabit.com
 panchuang.net
-pancishe.com
 panda321.com
 panda98.com
 pandadastudio.com
@@ -48557,6 +48558,7 @@ shuajizhijia.net
 shuame.com
 shuanghui.net
 shuangkuai.co
+shuangmei2008.com
 shuangtao.com
 shuangtv.net
 shuangxian.com
@@ -55579,6 +55581,7 @@ wantowan.com
 wantrack-nj.com
 wantshopping.ltd
 wantumusic.com
+wantwords.net
 wan.wang
 wanwanol.com
 wanweipc.com
