@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2022-05-24
+## Last update: 2022-05-25
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -1561,7 +1561,6 @@
 .*\b1773\.com
 .*\b1778\.com
 .*\b177817\.com
-.*\b178-go\.com
 .*\b178\.com
 .*\b178198\.com
 .*\b178448\.com
@@ -4712,7 +4711,6 @@
 .*\b52xitong\.com
 .*\b52xiuxian\.com
 .*\b52xiyou\.com
-.*\b52xpp\.com
 .*\b52xtxs\.com
 .*\b52xyz\.com
 .*\b52yawa\.com
@@ -10973,6 +10971,7 @@
 .*\bbiacgn\.com
 .*\bbian-min\.com
 .*\bbiancheng\.net
+.*\bbianchengquan\.com
 .*\bbiancui\.com
 .*\bbianews\.com
 .*\bbianfeng\.com
@@ -14045,6 +14044,7 @@
 .*\bchefafa\.com
 .*\bchefans\.com
 .*\bchefugao\.com
+.*\bchegonggong\.com
 .*\bcheguanyi\.com
 .*\bchegud\.com
 .*\bcheguo\.com
@@ -19290,7 +19290,6 @@
 .*\bdns6132\.com
 .*\bdns6868\.com
 .*\bdns800\.com
-.*\bdns999999\.com
 .*\bdnsapple\.com
 .*\bdnsapple\.net
 .*\bdnsce\.com
@@ -23266,6 +23265,7 @@
 .*\bfunletu\.com
 .*\bfunliving\.com
 .*\bfunnulldns\.com
+.*\bfunnullv27\.com
 .*\bfunnycore\.com
 .*\bfunnypicsbox\.com
 .*\bfunnyplaying\.com
@@ -28529,6 +28529,7 @@
 .*\bhuaxiaci\.com
 .*\bhuaxiaf\.com
 .*\bhuaxiangdiao\.com
+.*\bhuaxiaobaokeji\.com
 .*\bhuaxiazi\.com
 .*\bhuaxincem\.com
 .*\bhuaxing\.com
@@ -31411,6 +31412,7 @@
 .*\bizacholsm\.com
 .*\bizaodao\.com
 .*\bizazamall\.com
+.*\bizdatatech\.com
 .*\bizestchina\.com
 .*\bizhangchu\.com
 .*\bizhangheng\.com
@@ -31844,7 +31846,6 @@
 .*\bjhssapp\.com
 .*\bjht868\.com
 .*\bjhtcgroup\.com
-.*\bjhua168\.com
 .*\bjhwaimai\.com
 .*\bjhwl444\.com
 .*\bjhwrsq\.com
@@ -35077,7 +35078,6 @@
 .*\bkuailesh\.com
 .*\bkuailetongyao\.com
 .*\bkuaileworld\.com
-.*\bkuailexinli\.com
 .*\bkuailexs\.com
 .*\bkuailezu\.com
 .*\bkuailiyu\.com
@@ -44386,9 +44386,9 @@
 .*\bqefeng\.com
 .*\bqeto\.com
 .*\bqf027\.com
+.*\bqf15\.cc
 .*\bqfang\.com
 .*\bqfangimg\.com
-.*\bqfcm\.net
 .*\bqfedu\.com
 .*\bqfeiche\.com
 .*\bqfgolang\.com
@@ -51338,7 +51338,6 @@
 .*\btaiyulink\.com
 .*\btaizibao\.com
 .*\btajdny\.com
-.*\btajubao\.com
 .*\btajyw\.net
 .*\btakungae\.com
 .*\btakungpao\.com
@@ -56774,7 +56773,6 @@
 .*\bwin-ke\.com
 .*\bwin-man\.com
 .*\bwin\.hn
-.*\bwin007\.com
 .*\bwin1032\.com
 .*\bwin1064\.com
 .*\bwin10cjb\.com
@@ -62807,7 +62805,6 @@
 .*\byudianda\.com
 .*\byudiangame\.vip
 .*\byudouyudou\.com
-.*\byudwl\.com
 .*\byue365\.com
 .*\byue7\.com
 .*\byuebagu\.com

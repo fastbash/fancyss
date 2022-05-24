@@ -1559,7 +1559,6 @@
 178bit.com
 178.com
 178du.com
-178-go.com
 178hui.com
 178linux.com
 178online.com
@@ -4706,7 +4705,6 @@
 52xitong.com
 52xiuxian.com
 52xiyou.com
-52xpp.com
 52xtxs.com
 52xyz.com
 52yawa.com
@@ -10967,6 +10965,7 @@ bhzpw.com
 bhzyxy.net
 biacgn.com
 biancheng.net
+bianchengquan.com
 biancui.com
 bianews.com
 bianfeng.com
@@ -14032,6 +14031,7 @@ cheerupmail.com
 chefafa.com
 chefans.com
 chefugao.com
+chegonggong.com
 cheguanyi.com
 chegud.com
 cheguo.com
@@ -19277,7 +19277,6 @@ dns567.com
 dns6132.com
 dns6868.com
 dns800.com
-dns999999.com
 dnsapple.com
 dnsapple.net
 dnsce.com
@@ -23261,6 +23260,7 @@ funjsq.com
 funletu.com
 funliving.com
 funnulldns.com
+funnullv27.com
 funnycore.com
 funnypicsbox.com
 funnyplaying.com
@@ -28518,6 +28518,7 @@ huaxiaci.com
 huaxia.com
 huaxiaf.com
 huaxiangdiao.com
+huaxiaobaokeji.com
 huaxiazi.com
 huaxincem.com
 huaxi.net
@@ -31406,6 +31407,7 @@ iz55.com
 izacholsm.com
 izaodao.com
 izazamall.com
+izdatatech.com
 izestchina.com
 izhangchu.com
 izhangheng.com
@@ -31838,7 +31840,6 @@ jhsjtxx.com
 jhssapp.com
 jht868.com
 jhtcgroup.com
-jhua168.com
 jhwaimai.com
 jhwl444.com
 jhwrsq.com
@@ -35072,7 +35073,6 @@ kuailesh.com
 kuailetongyao.com
 kuaile-u.com
 kuaileworld.com
-kuailexinli.com
 kuailexs.com
 kuailezu.com
 kuailiyu.com
@@ -44386,9 +44386,9 @@ qefee.com
 qefeng.com
 qeto.com
 qf027.com
+qf15.cc
 qfang.com
 qfangimg.com
-qfcm.net
 qfedu.com
 qfeiche.com
 qfgolang.com
@@ -51326,7 +51326,6 @@ taiyougo.net
 taiyulink.com
 taizibao.com
 tajdny.com
-tajubao.com
 tajyw.net
 takungae.com
 takungpao.com
@@ -56774,7 +56773,6 @@ wiloon.com
 wiloop.net
 wimetro.com
 wimiar.com
-win007.com
 win1032.com
 win1064.com
 win10cjb.com
@@ -62807,7 +62805,6 @@ yudianda.com
 yudiangame.vip
 yudi.com
 yudouyudou.com
-yudwl.com
 yue365.com
 yue7.com
 yuebagu.com
