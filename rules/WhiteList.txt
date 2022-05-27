@@ -914,7 +914,6 @@
 .*\b10min\.club
 .*\b10moons\.com
 .*\b10pkpk\.com
-.*\b10qianwan\.com
 .*\b10s1\.com
 .*\b10sea\.com
 .*\b10soo\.com
@@ -5725,7 +5724,6 @@
 .*\b7068\.cc
 .*\b7080edu\.com
 .*\b7082\.com
-.*\b708990\.com
 .*\b70dh\.com
 .*\b70dir\.com
 .*\b70god\.com
@@ -20199,7 +20197,6 @@
 .*\bdygang\.net
 .*\bdygangs\.com
 .*\bdygf\.com
-.*\bdygod\.com
 .*\bdygod\.org
 .*\bdyhhy\.cc
 .*\bdyhjw\.com
@@ -38441,6 +38438,7 @@
 .*\bmaobugames\.com
 .*\bmaodou\.com
 .*\bmaodouapp\.com
+.*\bmaoercdn\.com
 .*\bmaoerduo2018\.com
 .*\bmaoflag\.net
 .*\bmaofly\.com
@@ -41499,7 +41497,6 @@
 .*\bnk84\.com
 .*\bnkp969\.com
 .*\bnkscdn\.com
-.*\bnktaba\.com
 .*\bnktxv\.com
 .*\bnky556\.com
 .*\bnkyp\.com
@@ -43766,7 +43763,6 @@
 .*\bportablesoft\.org
 .*\bportalcdn\.cdnetworks\.com
 .*\bports-intl\.com
-.*\bpos\.gold
 .*\bposbar\.com
 .*\bposeidon\.dl\.playstation\.net
 .*\bposeidong\.com
@@ -44138,7 +44134,6 @@
 .*\bpxb7\.com
 .*\bpxcn168\.com
 .*\bpxemba\.com
-.*\bpxr0\.com
 .*\bpxtsc\.com
 .*\bpxtu\.com
 .*\bpxtx\.com
@@ -50188,7 +50183,6 @@
 .*\bstcmcu\.com
 .*\bstcmcudata\.com
 .*\bstcn\.com
-.*\bstcpsm\.com
 .*\bstcv66\.com
 .*\bstdaily\.com
 .*\bstdard\.com
@@ -52179,7 +52173,6 @@
 .*\btianqijun\.com
 .*\btianqikb\.com
 .*\btianqistatic\.com
-.*\btianqiwang\.org
 .*\btianrow\.com
 .*\btianruixinxi\.com
 .*\btianruiyun\.com
