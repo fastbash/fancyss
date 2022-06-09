@@ -1,7 +1,7 @@
 [Local Hosts]
 ## China mainland domains
 ## Source: https://github.com/felixonmars/dnsmasq-china-list
-## Last update: 2022-06-09
+## Last update: 2022-06-10
 
 
 Server=/0-100.com/
@@ -8114,7 +8114,6 @@ Server=/aihuajia.com/
 Server=/aihuaju.com/
 Server=/aihuau.com/
 Server=/aihuishou.com/
-Server=/aihundan.com/
 Server=/aihuo.cc/
 Server=/aii-alliance.org/
 Server=/aiijournal.com/
@@ -10112,6 +10111,7 @@ Server=/bamaying.com/
 Server=/bamboo18.com/
 Server=/bamenzhushou.com/
 Server=/bamuyu.com/
+Server=/bamxs.com/
 Server=/bananalighter.com/
 Server=/bananau.com/
 Server=/bananaumbrella.com/

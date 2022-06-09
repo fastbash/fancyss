@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2022-06-09
+## Last update: 2022-06-10
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -8114,7 +8114,6 @@
 .*\baihuaju\.com
 .*\baihuau\.com
 .*\baihuishou\.com
-.*\baihundan\.com
 .*\baihuo\.cc
 .*\baii-alliance\.org
 .*\baiijournal\.com
@@ -10112,6 +10111,7 @@
 .*\bbamboo18\.com
 .*\bbamenzhushou\.com
 .*\bbamuyu\.com
+.*\bbamxs\.com
 .*\bbananalighter\.com
 .*\bbananau\.com
 .*\bbananaumbrella\.com
