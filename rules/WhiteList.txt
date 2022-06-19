@@ -2,7 +2,7 @@
 ## China mainland domains
 ## Get the latest database: https://github.com/xinhugo/Free-List/blob/master/WhiteList.txt
 ## Report an issue: https://github.com/xinhugo/Free-List/issues
-## Last update: 2022-06-19
+## Last update: 2022-06-20
 
 .*\b0-100\.com
 .*\b0-6\.com
@@ -6028,6 +6028,7 @@
 .*\b7moor\.com
 .*\b7msj\.com
 .*\b7mx\.com
+.*\b7mz3a\.com
 .*\b7nepal\.com
 .*\b7net\.cc
 .*\b7oh\.net
@@ -7581,6 +7582,7 @@
 .*\bacgpiping\.net
 .*\bacgqd\.com
 .*\bacgres\.com
+.*\bacgrip\.com
 .*\bacgsky\.win
 .*\bacgtofe\.com
 .*\bacgvideo\.com
@@ -7831,7 +7833,6 @@
 .*\bafilmb\.com
 .*\bafjk\.com
 .*\bafjob88\.com
-.*\bafoxsshadow\.com
 .*\bafrazanna\.com
 .*\bafriendx\.com
 .*\bafshanghai\.org
@@ -9418,6 +9419,7 @@
 .*\basiainfo\.com
 .*\basiainfodata\.com
 .*\basianewsphoto\.com
+.*\basianmetal\.com
 .*\basiarobot\.net
 .*\basifadeaway\.com
 .*\basilu\.com
@@ -10793,6 +10795,7 @@
 .*\bbestweshop\.com
 .*\bbestzone\.org
 .*\bbet007\.com
+.*\bbet08365\.com
 .*\bbetaflare\.com
 .*\bbetaidc\.com
 .*\bbetajy\.com
@@ -14174,7 +14177,6 @@
 .*\bchina-consulate\.org
 .*\bchina-csdz\.com
 .*\bchina-csm\.org
-.*\bchina-cw\.com
 .*\bchina-d\.com
 .*\bchina-def\.com
 .*\bchina-designer\.com
@@ -22055,6 +22057,7 @@
 .*\bfcxjiuyuan\.com
 .*\bfcxxh\.org
 .*\bfcyhw\.com
+.*\bfcyjj\.com
 .*\bfcz360\.com
 .*\bfczx\.com
 .*\bfd-trust\.com
@@ -26192,7 +26195,6 @@
 .*\bhaoyun56\.com
 .*\bhaoyunbb\.com
 .*\bhaoyunma\.com
-.*\bhaoyunmom\.com
 .*\bhaozai120\.com
 .*\bhaozaishop\.com
 .*\bhaozhai\.com
@@ -27415,6 +27417,7 @@
 .*\bhmldds\.com
 .*\bhmltec\.com
 .*\bhmnst\.com
+.*\bhmoe\.link
 .*\bhmpic\.xyz
 .*\bhmplay\.com
 .*\bhmsce\.org
@@ -28940,6 +28943,7 @@
 .*\bhxytw\.com
 .*\bhxyxsj\.com
 .*\bhxzdhn\.com
+.*\bhxzgcj\.com
 .*\bhy-la\.com
 .*\bhy-zr\.com
 .*\bhy01888\.com
@@ -34109,7 +34113,6 @@
 .*\bkedi\.cc
 .*\bkedou\.com
 .*\bkeede\.com
-.*\bkeen8\.com
 .*\bkeenonrobot\.com
 .*\bkeensky\.com
 .*\bkeenwon\.com
@@ -38520,7 +38523,6 @@
 .*\bmcyo\.pw
 .*\bmczyz\.com
 .*\bmdaxue\.com
-.*\bmdbig\.com
 .*\bmdbimg\.com
 .*\bmdckj\.com
 .*\bmdcui\.com
@@ -39501,6 +39503,7 @@
 .*\bmm2hservices\.com
 .*\bmm2uu\.com
 .*\bmm52\.com
+.*\bmm52\.net
 .*\bmm8mm8\.com
 .*\bmm957\.com
 .*\bmmall\.com
@@ -43023,7 +43026,6 @@
 .*\bphedu\.net
 .*\bphenixos\.com
 .*\bphezzan\.com
-.*\bphicomm\.com
 .*\bphida\.net
 .*\bphilipswechat\.com
 .*\bphlexing\.com
@@ -47267,6 +47269,7 @@
 .*\bseezy\.com
 .*\bsefonsoft\.com
 .*\bsefyc\.com
+.*\bsegapi\.com
 .*\bsegmentfault\.com
 .*\bsegmentfault\.net
 .*\bsegotep\.com
@@ -47885,6 +47888,7 @@
 .*\bshenpinwu\.com
 .*\bshenqhy\.com
 .*\bshenqibuy\.com
+.*\bshenqiwunet\.com
 .*\bshenquol\.com
 .*\bshenrennn\.com
 .*\bshenrongda\.com
@@ -53800,6 +53804,7 @@
 .*\buiste\.com
 .*\buiu\.cc
 .*\buiwed\.com
+.*\bujia007\.com
 .*\bujian\.cc
 .*\bujinbi\.com
 .*\bujing\.online
@@ -55068,7 +55073,6 @@
 .*\bwailianvisa\.com
 .*\bwaima\.com
 .*\bwaimai\.zone
-.*\bwaimaiquan\.vip
 .*\bwaimao6\.com
 .*\bwaimaolangtz\.com
 .*\bwaimaoribao\.com
@@ -57070,7 +57074,6 @@
 .*\bwoshao\.com
 .*\bwoshipm\.com
 .*\bwoshiqian\.com
-.*\bwoshitv\.com
 .*\bwoshizz\.com
 .*\bwoshuo123\.com
 .*\bwosign\.com
