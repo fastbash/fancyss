@@ -1,0 +1,48 @@
+fancyss Changelog
+===========================================
+3.0.3
+   - fix	Shadowsocks-rust在重启或IP地址更换后无法正常工作 #32846
+   - fix	修复节点域名解析服务器cloudflare dns错误的问题
+   - fix	修复部分机场节点订阅后，端口号最后以为缺失的问题
+   - fix	修复部分机场v2ray节点订阅显示错误节点的问题
+   - add	添加【所有trojan节点强制允许不安全】功能，位于【附加功能】标签页
+
+3.0.2
+   - update	更新arm|hnd|qca平台的httping，移除ssl支持以缩小体积（本插件不需要ssl功能）
+   - update	更新安装脚本，现在对应平台的路由器只能安装对应平台的离线安装包了
+   - update	更新在线规则更新脚本
+   - update	更新shadowsocks-rust更新脚本，确保不同平台更新到不同的二进制
+   - update	fancyss_arm版本的ss、kcptun二进制更新到最新版本（thx to piangere）
+   - fix	修复arm平台shadowsocks-libev错误开启多线程（arm平台不支持）
+   - add	添加实用二进制：sponge, sponge - soak up standard input and write to a file
+
+3.0.1
+   - fix	修复xray、v2ray二进制无法更新的问题
+   - update	同步fancyss_arm_full的v2ray二进制版本到最新v4.45.0
+
+3.0.0
+   - note1	将fancyss_hnd、fancyss_qca、fancyss_arm384共同纳入fancyss目录下进行维护，版本号3.0.0起步
+       		为了保持兼容性，以后3.x.x版本的维护在3.0分支下进行，master分支保留3.0.0以下版本的代码
+       		精简3.0分支目录结构，以方便后期维护
+       		1. fancyss：插件代码主目录，由build.sh打包成不同路由器的离线安装包
+       		2. binaries：一些在线更新的二进制程序，如v2ray、xray
+       		3. packages：离线安装包的最新版本，用于插件的在线更新
+       		4. rules：插件的规则文件，如gfwlist.conf、chnroute.txt、cdn.txt
+   - note2	如何升级到3.x.x版本
+       		1. 在线更新：通过在线更新fancyss_arm_1.0.6/fancyss_hnd_2.0.3/fancyss_qca_2.2.2过度版本后，即可再次通过在线更新升级到3.x.x
+       		2. 离线安装：下载并安装3.x.x，比如3.0.0的离线安装包，通过软件中心离线安装功能安装即可
+   - note3	3.x.x包含1.x.x - 2.x.x所有的功能和更新，为方便查询，提供日志回溯链接：
+       		fancyss_hnd 1.0.0 - 2.0.3 更新日志: https://github.com/hq450/fancyss/blob/master/fancyss_hnd/Changelog.txt
+       		fancyss_qca 2.0.0 - 2.2.2 更新日志: https://github.com/hq450/fancyss/blob/master/fancyss_hnd/Changelog.txt
+       		fancyss_arm 1.0.0 - 1.0.6 更新日志: https://github.com/hq450/fancyss/blob/master/fancyss_hnd/Changelog.txt
+       		----------------------------------------------------------------------------------------------------------
+   - add	增加dnsmasq重启按钮，方便在不重启整个插件的时候，通过重启dnsmasq来重建DNS缓存
+   - update	规则（rules）更新和二进制（binary）更新地址均切换到3.0分支
+   - update	fancyss_hnd更新trojan，版本号不变，体积减小
+   - update	离线安装包从shaowsocks.tar.gz更名为fancyss_xxx_yyy.tar.gz，包含以下：
+       		1.fancyss_arm_full.tar.gz
+       		2.fancyss_arm_lite.tar.gz
+       		3.fancyss_hnd_full.tar.gz
+       		4.fancyss_hnd_lite.tar.gz
+       		5.fancyss_qca_full.tar.gz
+       		6.fancyss_qca_lite.tar.gz
