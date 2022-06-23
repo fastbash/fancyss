@@ -70,7 +70,7 @@ update_ss(){
 		fancyss_md5_online=$(jq -r .$MD5NAME /tmp/version.json.js)
 		echo_date "开启下载进程，从主服务器上下载更新包..."
 		echo_date "下载链接：${update_url}/${PACKAGE}.tar.gz"
-		wget -4 --no-check-certificate --timeout=5 "${update_url}/${PACKAGE}.tar.gz"
+		wget -4 --no-check-certificate --timeout=5 "${update_url}/${PACKAGE}.tar.gz" -O "${PACKAGE}.tar.gz"
 		if [ "$?" != "0" ];then
 			echo_date "下载失败！请检查你的网络！"
 		fi
