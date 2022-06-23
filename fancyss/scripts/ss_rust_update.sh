@@ -2,12 +2,10 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/base.sh
-source /koolshare/scripts/ss_base.sh
-alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
-url_main="https://raw.githubusercontent.com/hq450/fancyss/3.0/binaries/ss_rust"
+. /koolshare/scripts/ss_base.sh
+# alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 DNLD=""
-LINUX_VER=$(uname -r|awk -F"." '{print $1$2}')
+LINUX_VER="$(uname -r|awk -F"." '{print $1$2}')"
 if [ "${LINUX_VER}" -ge "41" ];then
 	ARCH=armv7
 elif [ "${LINUX_VER}" -eq "26" ];then
@@ -15,16 +13,16 @@ elif [ "${LINUX_VER}" -eq "26" ];then
 fi
 
 get_latest_version(){
-	flag=$1
+	# flag="$1"
 	rm -rf /tmp/ssrust_latest_info.txt
 	echo_date "检测shadowsocks-rust最新版本..."
-	curl --connect-timeout 8 -s ${url_main}/latest.txt > /tmp/ssrust_latest_info.txt
-	if [ "$?" == "0" ];then
+	curl --connect-timeout 8 -s "${rust_url}/latest.txt" > /tmp/ssrust_latest_info.txt
+	if [ "$?" = "0" ];then
 		if [ -z "$(cat /tmp/ssrust_latest_info.txt)" ];then
 			echo_date "获取shadowsocks-rust最新版本信息失败！使用备用服务器检测！"
 			failed_warning
 		fi
-		if [ -n "$(cat /tmp/ssrust_latest_info.txt|grep "404")" ];then
+		if grep -q "404" /tmp/ssrust_latest_info.txt;then
 			echo_date "获取shadowsocks-rust最新版本信息失败！使用备用服务器检测！"
 			failed_warning
 		fi
@@ -47,7 +45,7 @@ get_latest_version(){
 
 		if [ "${CUR_VER}" != "${RVERSION}" ];then
 			echo_date "检测到在线版本和本地版本不同，开始更新sslocal程序..."
-			update_now ${RVERSION}
+			update_now "${RVERSION}"
 		else
 			echo_date "检测到本地版本已经是最新，退出更新程序!"
 		fi
@@ -67,10 +65,10 @@ failed_warning(){
 update_now(){
 	rm -rf /tmp/sslocal_bin
 	mkdir -p /tmp/sslocal_bin
-	cd /tmp/sslocal_bin
+	cd /tmp/sslocal_bin || ( echo_date "目录 /tmp/sslocal_bin 异常!";exit 1 )
 
 	echo_date "开始下载校验文件：md5sum.txt"
-	wget -4 --no-check-certificate --timeout=20 -qO - ${url_main}/$1/md5sum.txt > /tmp/sslocal_bin/md5sum.txt
+	wget -4 --no-check-certificate --timeout=20 -qO - "${rust_url}/$1/md5sum.txt" > /tmp/sslocal_bin/md5sum.txt
 	if [ "$?" != "0" ];then
 		echo_date "md5sum.txt下载失败！"
 		md5sum_ok=0
@@ -80,17 +78,17 @@ update_now(){
 	fi
 	
 	echo_date "开始下载shadowsocks-rust sslocal程序"
-	wget -4 --no-check-certificate --timeout=20 --tries=1 ${url_main}/$1/sslocal_${ARCH}
+	wget -4 --no-check-certificate --timeout=20 --tries=1 "${rust_url}/$1/sslocal_${ARCH}"
 	if [ "$?" != "0" ];then
 		echo_date "sslocal下载失败！"
 		sslocal_ok=0
 	else
 		echo_date "sslocal程序下载成功..."
-		mv sslocal_${ARCH} sslocal
+		mv "sslocal_${ARCH}" sslocal
 		sslocal_ok=1
 	fi
 
-	if [ "${md5sum_ok}" == "1" -a "${sslocal_ok}" == "1" ];then
+	if [ "${md5sum_ok}" = "1" ] && [ "${sslocal_ok}" = "1" ];then
 		check_md5sum
 	else
 		echo_date "使用备用服务器下载..."
@@ -102,11 +100,11 @@ update_now(){
 }
 
 check_md5sum(){
-	cd /tmp/sslocal_bin
+	cd /tmp/sslocal_bin || ( echo_date "目录 /tmp/sslocal_bin 异常!";exit 1 )
 	echo_date "校验下载的文件!"
 	LOCAL_MD5=$(md5sum sslocal|awk '{print $1}')
-	ONLINE_MD5=$(cat md5sum.txt|grep -w sslocal_${ARCH}|awk '{print $1}')
-	if [ "${LOCAL_MD5}" == "${ONLINE_MD5}" ];then
+	ONLINE_MD5=$(grep -w "sslocal_${ARCH}" md5sum.txt |awk '{print $1}')
+	if [ "${LOCAL_MD5}" = "${ONLINE_MD5}" ];then
 		echo_date "文件校验通过!"
 		install_binary
 	else
@@ -121,7 +119,7 @@ install_binary(){
 	echo_date "开始覆盖最新二进制!"
 	if [ "$(pidof sslocal)" ];then
 
-		CMDS=$(ps|grep sslocal|grep -v grep | grep -Eo "sslocal*.+")
+		# CMDS=$(ps | grep sslocal | grep -v grep | grep -Eo "sslocal*.+")
 
 		echo_date "为了保证更新正确，先关闭sslocal主进程... "
 		sslocal_process=$(pidof sslocal)
@@ -141,9 +139,9 @@ install_binary(){
 
 move_binary(){
 	echo_date "开始安装sslocal二进制文件... "
-	mv /tmp/sslocal_bin/sslocal /koolshare/bin/sslocal
-	chmod +x /koolshare/bin/sslocal
-	LOCAL_VER=$(/koolshare/bin/sslocal --version 2>/dev/null | awk '{print $NF}')
+	mv /tmp/sslocal_bin/sslocal "/koolshare/bin/sslocal"
+	chmod +x "/koolshare/bin/sslocal"
+	LOCAL_VER=$("/koolshare/bin/sslocal" --version 2>/dev/null | awk '{print $NF}')
 	if [ -n "${LOCAL_VER}" ];then
 		echo_date "shadowsocks-rust二进制文件:sslocal替换成功... "
 	fi
@@ -151,9 +149,9 @@ move_binary(){
 }
 
 start_ss_rust() {
-	if [ "${ss_basic_enable}" == "1" -a "${ss_basic_type}" == "0" -a "${ss_basic_rust}" == "1" ]; then
+	if [ "${ss_basic_enable}" = "1" ] && [ "${ss_basic_type}" = "0" ] && [ "${ss_basic_rust}" = "1" ]; then
 		echo_date "重启插件！ "
-		cd /koolshare/ss
+		cd "/koolshare/ss" || ( echo_date "目录 /koolshare/ss 异常!";exit 1 )
 		sh ssconfig.sh restart
 	fi
 }

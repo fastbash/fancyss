@@ -102,15 +102,15 @@ RT-AX56U_V2这种jffs分区极小(15MB)的机型，建议直接使用lite版本
 插件下载有两种方式：
 
 1. 在`packages`目录下，点击tar.gz后缀文件，下载当前最新版本的离线安装包
-2. 在[fancyss_history_package](https://github.com/hq450/fancyss_history_package)项目中，包含**历史版本**和**最新版本**的离线安装包
+2. 在[fancyss_history_package](https://github.com/fastbash/fancyss_history_package)项目中，包含**历史版本**和**最新版本**的离线安装包
 
 插件离线包下载导航：
 
 | 平台 | 最新full版本下载                                             | 最新lite版本下载                                             | 历史版本下载（包含最新版）                                   |
 | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| hnd  | [fancyss_hnd_full](https://raw.githubusercontent.com/hq450/fancyss/3.0/packages/fancyss_hnd_full.tar.gz) | [fancyss_hnd_lite](https://raw.githubusercontent.com/hq450/fancyss/3.0/packages/fancyss_hnd_lite.tar.gz) | [fancyss_hnd](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_hnd) |
-| qca  | [fancyss_qca_full](https://raw.githubusercontent.com/hq450/fancyss/3.0/packages/fancyss_qca_full.tar.gz) | [fancyss_qca_lite](https://raw.githubusercontent.com/hq450/fancyss/3.0/packages/fancyss_qca_lite.tar.gz) | [fancyss_qca](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_qca) |
-| farm | [fancyss_arm_full](https://raw.githubusercontent.com/hq450/fancyss/3.0/packages/fancyss_arm_full.tar.gz) | [fancyss_arm_lite](https://raw.githubusercontent.com/hq450/fancyss/3.0/packages/fancyss_arm_lite.tar.gz) | [fancyss_arm](https://github.com/hq450/fancyss_history_package/tree/master/fancyss_arm) |
+| hnd  | [fancyss_hnd_full](https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/fancyss_hnd_full.tar.gz) | [fancyss_hnd_lite](https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/fancyss_hnd_lite.tar.gz) | [fancyss_hnd](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_hnd) |
+| qca  | [fancyss_qca_full](https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/fancyss_qca_full.tar.gz) | [fancyss_qca_lite](https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/fancyss_qca_lite.tar.gz) | [fancyss_qca](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_qca) |
+| farm | [fancyss_arm_full](https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/fancyss_arm_full.tar.gz) | [fancyss_arm_lite](https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/fancyss_arm_lite.tar.gz) | [fancyss_arm](https://github.com/fastbash/fancyss_history_package/tree/master/fancyss_arm) |
 
 ## 插件安装
 
@@ -147,7 +147,7 @@ RT-AX56U_V2这种jffs分区极小(15MB)的机型，建议直接使用lite版本
 1. 克隆本项目：使用linux系统，比如Ubuntu 20.04
 
    ```bash
-   git clone https://github.com/hq450/fancyss.git
+   git clone https://github.com/fastbash/fancyss.git
    ```
 
 2. 切换到3.0分支
@@ -178,7 +178,7 @@ RT-AX56U_V2这种jffs分区极小(15MB)的机型，建议直接使用lite版本
 
 ## 相关链接
 
-* **fancyss 3.0**更新日志：https://github.com/hq450/fancyss/blob/3.0/Changelog.txt
+* **fancyss 3.0**更新日志：https://github.com/fastbash/fancyss/blob/3.0/Changelog.txt
 
 * 官改/梅改固件下载【网方网站】（最新固件）：[https://www.koolcenter.com](https://www.koolcenter.com/)
 * 官改/梅改固件下载【固件镜像】（次新固件）：[https://fw.koolcenter.com](https://fw.koolcenter.com)

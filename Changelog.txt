@@ -1,5 +1,20 @@
 fancyss Changelog
 ===========================================
+3.0.4
+   - update get version 3.0 from https://github.com/hq450/fancyss
+   - fix	some shell syntax
+   - fix	put repeat functions into ss_var.sh
+   - fix	change name to planesocks
+   - update	set rule and node update at 04:00 everyday automatically
+   - update	set ss_foreign_dns to dns2socks as default, set opendns1 as node resolver
+   - add	haproxy balance mode to select
+   - fix	do not resolve node domain to ip at starting haproxy, use dns settings' dns as resolver
+   - fix	just one node can start haproxy
+   - fix	fix can't select balance node by missing type variable affect 
+   - fix	theme ROG compatible
+   - fix	diff lock file in function stop and function start
+   - fix	...
+
 3.0.3
    - fix	Shadowsocks-rust在重启或IP地址更换后无法正常工作 #32846
    - fix	修复节点域名解析服务器cloudflare dns错误的问题

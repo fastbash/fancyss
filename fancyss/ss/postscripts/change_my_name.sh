@@ -9,7 +9,7 @@
 # SS插件关闭前会自动按照数字从大到小顺序运行 P99Brook.sh stop, P01xxx.sh stop
 #------------------------------------------
 # 读取所有SS配置，1.6.0版本及其以后插件，请用此方法获取配置，以前的方法可能导致配置获取不全
-source /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/ss_base.sh
 #------------------------------------------
 start_xxx(){
 	echo_date ："启动xxx"

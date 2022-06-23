@@ -1,8 +1,8 @@
 #!/bin/bash
 CurrentDate=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
-CURR_PATH="$( cd "$( dirname "$BASH_SOURCE[0]" )" && pwd )"
+CURR_PATH="$( cd "$( dirname "$0" )" && pwd )"
 RULE_PATH=${CURR_PATH%\/*}
-RULE_FILE=${RULE_PATH}/rules.json.js
+RULE_FILE=${RULE_PATH}/rules.json
 OBJECT_1='{}'
 
 prepare(){

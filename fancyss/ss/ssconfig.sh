@@ -2,11 +2,11 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/ss_base.sh
 #-----------------------------------------------
 # Variable definitions
 THREAD=$(grep -c '^processor' /proc/cpuinfo)
-dbus set ss_basic_version_local=$(cat /koolshare/ss/version)
+dbus set ss_basic_version_local="$(cat /koolshare/ss/version)"
 LOG_FILE=/tmp/upload/ss_log.txt
 CONFIG_FILE=/koolshare/ss/ss.json
 LOCK_FILE=/var/lock/koolss.lock
@@ -41,30 +41,22 @@ unset_lock() {
 	rm -rf "$LOCK_FILE"
 }
 
-set_skin(){
-	local UI_TYPE=ASUSWRT
-	local SC_SKIN=$(nvram get sc_skin)
-	local ROG_FLAG=$(grep -o "680516" /www/form_style.css|head -n1)
-	local TUF_FLAG=$(grep -o "D0982C" /www/form_style.css|head -n1)
-	if [ -n "${ROG_FLAG}" ];then
-		UI_TYPE="ROG"
-	fi
-	if [ -n "${TUF_FLAG}" ];then
-		UI_TYPE="TUF"
-	fi
-	
-	if [ -z "${SC_SKIN}" -o "${SC_SKIN}" != "${UI_TYPE}" ];then
-		echo_date "安装${UI_TYPE}皮肤！"
-		nvram set sc_skin="${UI_TYPE}"
-		nvram commit
-	fi
+set_stop_lock() {
+	exec 1001>"$LOCK_FILE".stop
+	flock -x 1001
 }
+
+unset_stop_lock() {
+	flock -u 1001
+	rm -rf "$LOCK_FILE".stop
+}
+
 
 pre_set(){
 	# set vcore name
 	XRAY_CONFIG_TEMP="/tmp/xray_tmp.json"
 	XRAY_CONFIG_FILE="/koolshare/ss/xray.json"
-	if [ "${ss_basic_vcore}" == "1" ];then
+	if [ "${ss_basic_vcore}" = "1" ];then
 		VCORE_NAME=Xray
 		V2RAY_CONFIG_TEMP="/tmp/xray_tmp.json"
 		V2RAY_CONFIG_FILE="/koolshare/ss/xray.json"
@@ -74,7 +66,7 @@ pre_set(){
 		V2RAY_CONFIG_FILE="/koolshare/ss/v2ray.json"
 	fi
 
-	if [ "${ss_basic_tcore}" == "1" ];then
+	if [ "${ss_basic_tcore}" = "1" ];then
 		TCORE_NAME=Xray
 		TROJAN_CONFIG_TEMP="/tmp/xray_tmp.json"
 		TROJAN_CONFIG_FILE="/koolshare/ss/xray.json"
@@ -92,7 +84,7 @@ pre_set(){
 
 donwload_binary(){
 	# 二进制下载应该在fancyss关闭/重启前运行，这样可以利用代理进行下载
-	if [ "${ss_basic_type}" == "0" -a "${ss_basic_rust}" == "1" -a "${ACTION}" == "restart" ]; then
+	if [ "${ss_basic_type}" = "0" ] && [ "${ss_basic_rust}" = "1" ] && [ "${ACTION}" = "restart" ]; then
 		if [ ! -x "/koolshare/bin/sslocal" ];then
 			echo_date "没有检测到shadowsocks-rust二进制文件:sslocal，准备下载..."
 			sh /koolshare/scripts/ss_rust_update.sh download
@@ -101,7 +93,7 @@ donwload_binary(){
 }
 
 get_lan_cidr() {
-	local netmask=$(nvram get lan_netmask)
+	local netmask="$(nvram get lan_netmask)"
 	local x=${netmask##*255.}
 	set -- 0^^^128^192^224^240^248^252^254^ $(((${#netmask} - ${#x}) * 2)) ${x%%.*}
 	x=${1%%$3*}
@@ -111,13 +103,13 @@ get_lan_cidr() {
 }
 
 get_wan0_cidr() {
-	local netmask=$(nvram get wan0_netmask)
+	local netmask="$(nvram get wan0_netmask)"
 	local x=${netmask##*255.}
 	set -- 0^^^128^192^224^240^248^252^254^ $(((${#netmask} - ${#x}) * 2)) ${x%%.*}
 	x=${1%%$3*}
 	suffix=$(($2 + (${#x} / 4)))
 	prefix=$(nvram get wan0_ipaddr)
-	if [ -n "$prefix" -a -n "$netmask" ]; then
+	if [ -n "$prefix" ] && [ -n "$netmask" ]; then
 		echo $prefix/$suffix
 	else
 		echo ""
@@ -143,7 +135,7 @@ close_in_five() {
 __get_type_full_name() {
 	case "$1" in
 	0)
-		if [ "${ss_basic_rust}" == "1" ];then
+		if [ "${ss_basic_rust}" = "1" ];then
 			echo "shadowsocks-rust"
 		else
 			echo "shadowsocks-libev"
@@ -170,7 +162,7 @@ __get_type_full_name() {
 __get_type_abbr_name() {
 	case "${ss_basic_type}" in
 	0)
-		if [ "${ss_basic_rust}" == "1" ];then
+		if [ "${ss_basic_rust}" = "1" ];then
 			echo "ss-rust"
 		else
 			echo "ss"
@@ -194,101 +186,12 @@ __get_type_abbr_name() {
 	esac
 }
 
-__valid_ip() {
-	# 验证是否为ipv4或者ipv6地址，是则正确返回，不是返回空值
-	local format_4=$(echo "$1" | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}")
-	local format_6=$(echo "$1" | grep -Eo '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*')
-	if [ -n "$format_4" -a -z "$format_6" ]; then
-		echo "$format_4"
-		return 0
-	elif [ -z "$format_4" -a -n "$format_6" ]; then
-		echo "$format_6"
-		return 0
-	else
-		echo ""
-		return 1
-	fi
-}
-
-__get_server_resolver() {
-	local value_1="$ss_basic_server_resolver"
-	local value_2="$ss_basic_server_resolver_user"
-	local res
-	if [ "$value_1" == "1" ]; then
-		if [ -n "$IFIP_DNS1" ]; then
-			res="$ISP_DNS1"
-		else
-			res="114.114.114.114"
-		fi
-	fi
-	[ "$value_1" == "2" ] && res="223.5.5.5"
-	[ "$value_1" == "3" ] && res="223.6.6.6"
-	[ "$value_1" == "4" ] && res="114.114.114.114"
-	[ "$value_1" == "5" ] && res="114.114.115.115"
-	[ "$value_1" == "6" ] && res="1.2.4.8"
-	[ "$value_1" == "7" ] && res="210.2.4.8"
-	[ "$value_1" == "8" ] && res="117.50.11.11"
-	[ "$value_1" == "9" ] && res="117.50.22.22"
-	[ "$value_1" == "10" ] && res="180.76.76.76"
-	[ "$value_1" == "11" ] && res="119.29.29.29"
-	[ "$value_1" == "13" ] && res="8.8.8.8"
-	[ "$value_1" == "14" ] && res="8.8.4.4"
-	[ "$value_1" == "15" ] && res="9.9.9.9"
-	[ "$value_1" == "16" ] && res="1.1.1.1"
-	if [ "$value_1" == "12" ]; then
-		if [ -n "$value_2" ]; then
-			res=$(__valid_ip "$value_2")
-			[ -z "$res" ] && res="114.114.114.114"
-		else
-			res="114.114.114.114"
-		fi
-	fi
-	echo $res
-}
-
-__get_server_resolver_port() {
-	local port
-	if [ "$ss_basic_server_resolver" == "12" ]; then
-		if [ -n "$ss_basic_server_resolver_user" ]; then
-			port=$(echo "$ss_basic_server_resolver_user" | awk -F"#|:" '{print $2}')
-			[ -z "$port" ] && port="53"
-		else
-			port="53"
-		fi
-	else
-		port="53"
-	fi
-	echo $port
-}
-
-__resolve_ip() {
-	local domain1=$(echo "$1" | grep -E "^https://|^http://|/")
-	local domain2=$(echo "$1" | grep -E "\.")
-	if [ -n "$domain1" -o -z "$domain2" ]; then
-		# not ip, not domain
-		echo ""
-		return 2
-	else
-		# domain format
-		SERVER_IP=$(nslookup "$1" $(__get_server_resolver):$(__get_server_resolver_port) | sed '1,4d' | awk '{print $3}' | grep -v : | awk 'NR==1{print}' 2>/dev/null)
-		SERVER_IP=$(__valid_ip $SERVER_IP)
-		if [ -n "$SERVER_IP" ]; then
-			# success resolved
-			echo "$SERVER_IP"
-			return 0
-		else
-			# resolve failed
-			echo ""
-			return 1
-		fi
-	fi
-}
 
 # ================================= ss stop ===============================
 restore_conf() {
 	echo_date 删除ss相关的名单配置文件.
-	local isconf=$(find /jffs/configs/dnsmasq.d/ -name "*.conf" 2>/dev/null)
-	if [ -n "${isconf}" -o -f "/jffs/configs/dnsmasq.conf.add" -o -f "/jffs/scripts/dnsmasq.postconf" ];then
+	local isconf="$(find /jffs/configs/dnsmasq.d/ -name "*.conf" 2>/dev/null)"
+	if [ -n "${isconf}" ] || [ -f "/jffs/configs/dnsmasq.conf.add" ] || [ -f "/jffs/scripts/dnsmasq.postconf" ];then
 		rm -rf /jffs/configs/dnsmasq.d/gfwlist.conf
 		rm -rf /jffs/configs/dnsmasq.d/cdn.conf
 		rm -rf /jffs/configs/dnsmasq.d/custom.conf
@@ -447,10 +350,10 @@ kill_process() {
 
 # ================================= ss prestart ===========================
 ss_pre_start() {
-	local IS_LOCAL_ADDR=$(echo "${ss_basic_server}" | grep -o "127.0.0.1" 2>/dev/null)
-	if [ "$ss_lb_enable" == "1" ]; then
+	local IS_LOCAL_ADDR="$(echo "${ss_basic_server}" | grep -o "127.0.0.1" 2>/dev/null)"
+	if [ "$ss_lb_enable" = "1" ]; then
 		echo_date ---------------------- 【科学上网】 启动前触发脚本 ----------------------
-		if [ -n "${IS_LOCAL_ADDR}" -a "${ss_basic_port}" == "${ss_lb_port}" ]; then
+		if [ -n "${IS_LOCAL_ADDR}" ] && [ "${ss_basic_port}" = "${ss_lb_port}" ]; then
 			echo_date 插件启动前触发:触发启动负载均衡功能！
 			#start haproxy
 			sh /koolshare/scripts/ss_lb_config.sh
@@ -458,7 +361,7 @@ ss_pre_start() {
 			#echo_date 插件启动前触发:未选择负载均衡节点，不触发负载均衡启动！
 		fi
 	else
-		if [ -n "${IS_LOCAL_ADDR}" -a "${ss_basic_port}" == "${ss_lb_port}" ]; then
+		if [ -n "${IS_LOCAL_ADDR}" ] && [ "${ss_basic_port}" = "${ss_lb_port}" ]; then
 			echo_date 插件启动前触发【警告】：你选择了负载均衡节点，但是负载均衡开关未启用！！
 		#else
 			#echo_date ss启动前触发：你选择了普通节点，不触发负载均衡启动！
@@ -469,32 +372,32 @@ ss_pre_start() {
 
 resolv_server_ip() {
 	local tmp server_ip
-	if [ "$ss_basic_type" == "3" -a "$ss_basic_v2ray_use_json" == "1" ]; then
+	if [ "$ss_basic_type" = "3" ] && [ "$ss_basic_v2ray_use_json" = "1" ]; then
 		#v2ray json配置在后面单独处理
 		return 1
-	elif [ "$ss_basic_type" == "4" -a "$ss_basic_xray_use_json" == "1" ]; then
+	elif [ "$ss_basic_type" = "4" ] && [ "$ss_basic_xray_use_json" = "1" ]; then
 		#xray json配置在后面单独处理
 		return 1
 	else
 		# 判断服务器域名格式
 		tmp=$(__valid_ip "$ss_basic_server")
-		if [ $? == 0 ]; then
+		if [ $? = 0 ]; then
 			# server is ip address format, not need to resolve.
-			echo_date "检测到你的$(__get_type_abbr_name)服务器已经是IP格式：$ss_basic_server,跳过解析... "
+			echo_date "检测到你的$(__get_type_abbr_name)服务器已经是IP格式：${ss_basic_server},跳过解析... "
 			ss_basic_server_ip="$ss_basic_server"
 			dbus set ss_basic_server_ip=$ss_basic_server
 		else
-			echo_date "检测到你的$(__get_type_abbr_name)服务器：【$ss_basic_server】不是ip格式！"
+			echo_date "检测到你的$(__get_type_abbr_name)服务器：【${ss_basic_server}】不是ip格式！"
 			echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用DNS：$(__get_server_resolver):$(__get_server_resolver_port)"
 			echo_date "如果此处等待时间较久，建议在【节点域名解析DNS服务器】处更换DNS服务器..."
 			server_ip=$(__resolve_ip "$ss_basic_server")
 			case $? in
 			0)
-				echo_date "$(__get_type_abbr_name)服务器【$ss_basic_server】的ip地址解析成功：$server_ip"
-				echo "server=/$ss_basic_server/$(__get_server_resolver)#$(__get_server_resolver_port)" >/jffs/configs/dnsmasq.d/ss_server.conf
+				echo_date "$(__get_type_abbr_name)服务器【${ss_basic_serve}r】的ip地址解析成功：${server_ip}"
+				echo "server=/${ss_basic_server}/$(__get_server_resolver)#$(__get_server_resolver_port)" >/jffs/configs/dnsmasq.d/ss_server.conf
 				# server is domain format and success resolved.
 				# 记录解析结果到/tmp/ss_host.conf，方便插件触发重启设定工作
-				echo "address=/$ss_basic_server/$server_ip" >/tmp/ss_host.conf
+				echo "address=/${ss_basic_server}/${server_ip}" >/tmp/ss_host.conf
 				# 去掉此功能，以免ip发生变更导致问题，或者影响域名对应的其它二级域名
 				#ln -sf /tmp/ss_host.conf /jffs/configs/dnsmasq.d/ss_host.conf
 				ss_basic_server="$server_ip"
@@ -504,7 +407,7 @@ resolv_server_ip() {
 			1)
 				# server is domain format and failed to resolve.
 				echo_date "$(__get_type_abbr_name)服务器的ip地址解析失败，将由ss-redir自己解析... "
-				echo "server=/$ss_basic_server/$(__get_server_resolver)#$(__get_server_resolver_port)" >/jffs/configs/dnsmasq.d/ss_server.conf
+				echo "server=/${ss_basic_server}/$(__get_server_resolver)#$(__get_server_resolver_port)" >/jffs/configs/dnsmasq.d/ss_server.conf
 				unset ss_basic_server_ip
 				dbus remvoe ss_basic_server_ip
 				;;
@@ -524,8 +427,8 @@ ss_arg() {
 		return
 	fi
 
-	if [ "${ss_basic_ss_v2ray}" == "1" ]; then
-		if [ "${ss_basic_ss_obfs}" == "tls" -o "${ss_basic_ss_obfs}" == "tls" ]; then
+	if [ "${ss_basic_ss_v2ray}" = "1" ]; then
+		if [ "${ss_basic_ss_obfs}" = "tls" ] || [ "${ss_basic_ss_obfs}" = "tls" ]; then
 			echo_date "检测到你同时开启了obfs-local和v2ray-plugin！。"
 			echo_date "插件只能支持开启一个SIP002插件！"
 			echo_date "请更正设置后重试！"
@@ -538,14 +441,14 @@ ss_arg() {
 		fi
 		echo_date "检测到开启了v2ray-plugin。"
 	else
-		if [ "${ss_basic_ss_obfs}" == "http" ]; then
+		if [ "${ss_basic_ss_obfs}" = "http" ]; then
 			echo_date "检测到开启了simple-obfs。"
 			if [ -n "${ss_basic_ss_obfs_host}" ]; then
 				ARG_OBFS="--plugin obfs-local --plugin-opts obfs=http;obfs-host=${ss_basic_ss_obfs_host}"
 			else
 				ARG_OBFS="--plugin obfs-local --plugin-opts obfs=http"
 			fi
-		elif [ "${ss_basic_ss_obfs}" == "tls" ]; then
+		elif [ "${ss_basic_ss_obfs}" = "tls" ]; then
 			echo_date "检测到开启了simple-obfs。"
 			if [ -n "${ss_basic_ss_obfs_host}" ]; then
 				ARG_OBFS="--plugin obfs-local --plugin-opts obfs=tls;obfs-host=${ss_basic_ss_obfs_host}"
@@ -559,9 +462,9 @@ ss_arg() {
 }
 # create shadowsocks config file...
 creat_ss_json() {
-	if [ "$ss_basic_type" == "0" -a "${ss_basic_rust}" == "1" ]; then
+	if [ "$ss_basic_type" = "0" ] && [ "${ss_basic_rust}" = "1" ]; then
 		echo_date "ℹ️使用shadowsocks-rust替换shadowsocks-libev..."
-		if [ "${ss_basic_tfo}" == "1" -a "${LINUX_VER}" != "26" ]; then
+		if [ "${ss_basic_tfo}" = "1" -a "${LINUX_VER}" != "26" ]; then
 			RUST_ARG_1="--fast-open"
 			echo_date ss-rust开启tcp fast open支持.
 			echo 3 >/proc/sys/net/ipv4/tcp_fastopen
@@ -569,7 +472,7 @@ creat_ss_json() {
 			RUST_ARG_1=""
 		fi
 
-		if [ "${ss_basic_tnd}" == "1" ]; then
+		if [ "${ss_basic_tnd}" = "1" ]; then
 			echo_date ss-rust开启TCP_NODELAY支持.
 			RUST_ARG_2="--no-delay"
 		else
@@ -593,56 +496,56 @@ creat_ss_json() {
 	fi
 	
 	echo_date "创建$(__get_type_abbr_name)配置文件到${CONFIG_FILE}"
-	if [ "$ss_basic_type" == "0" ]; then
+	if [ "$ss_basic_type" = "0" ]; then
 		cat >$CONFIG_FILE <<-EOF
 			{
-			    "server":"$ss_basic_server",
-			    "server_port":$ss_basic_port,
+			    "server":"${ss_basic_server}",
+			    "server_port":${ss_basic_port},
 			    "local_address":"0.0.0.0",
 			    "local_port":3333,
-			    "password":"$ss_basic_password",
+			    "password":"${ss_basic_password}",
 			    "timeout":600,
-			    "method":"$ss_basic_method"
+			    "method":"${ss_basic_method}"
 			}
 		EOF
-	elif [ "$ss_basic_type" == "1" ]; then
+	elif [ "$ss_basic_type" = "1" ]; then
 		cat >$CONFIG_FILE <<-EOF
 			{
-			    "server":"$ss_basic_server",
-			    "server_port":$ss_basic_port,
+			    "server":"${ss_basic_server}",
+			    "server_port":${ss_basic_port},
 			    "local_address":"0.0.0.0",
 			    "local_port":3333,
-			    "password":"$ss_basic_password",
+			    "password":"${ss_basic_password}",
 			    "timeout":600,
-			    "protocol":"$ss_basic_rss_protocol",
-			    "protocol_param":"$ss_basic_rss_protocol_param",
-			    "obfs":"$ss_basic_rss_obfs",
-			    "obfs_param":"$ss_basic_rss_obfs_param",
-			    "method":"$ss_basic_method"
+			    "protocol":"${ss_basic_rss_protocol}",
+			    "protocol_param":"${ss_basic_rss_protocol_param}",
+			    "obfs":"${ss_basic_rss_obfs}",
+			    "obfs_param":"${ss_basic_rss_obfs_param}",
+			    "method":"${ss_basic_method}"
 			}
 		EOF
-	elif [ "$ss_basic_type" == "2" ]; then
+	elif [ "$ss_basic_type" = "2" ]; then
 		cat >$CONFIG_FILE <<-EOF
 			{
-			    "server":"$ss_basic_server",
-			    "server_port":$ss_basic_port,
+			    "server":"${ss_basic_server}",
+			    "server_port":${ss_basic_port},
 			    "local_port":3333,
 			    "sock5_port":23456,
-			    "dns2ss":$DNSF_PORT,
+			    "dns2ss":${DNSF_PORT},
 			    "adblock_addr":"",
-			    "dns_server":"$ss_dns2ss_user",
-			    "password":"$ss_basic_password",
+			    "dns_server":"${ss_dns2ss_user}",
+			    "password":"${ss_basic_password}",
 			    "timeout":600,
-			    "method":"$ss_basic_method",
-			    "use_tcp":$ss_basic_koolgame_udp
+			    "method":"${ss_basic_method}",
+			    "use_tcp":${ss_basic_koolgame_udp}
 			}
 		EOF
 	fi
 
-	if [ "$ss_basic_udp2raw_boost_enable" == "1" -o "$ss_basic_udp_boost_enable" == "1" ]; then
-		if [ "$ss_basic_udp_upstream_mtu" == "1" -a "$ss_basic_udp_node" == "$ssconf_basic_node" ]; then
-			echo_date 设定MTU为 $ss_basic_udp_upstream_mtu_value
-			cat /koolshare/ss/ss.json | jq --argjson MTU $ss_basic_udp_upstream_mtu_value '. + {MTU: $MTU}' >/koolshare/ss/ss_tmp.json
+	if [ "$ss_basic_udp2raw_boost_enable" = "1" ] || [ "$ss_basic_udp_boost_enable" = "1" ]; then
+		if [ "$ss_basic_udp_upstream_mtu" = "1" ] && [ "$ss_basic_udp_node" = "$ssconf_basic_node" ]; then
+			echo_date "设定MTU为 $ss_basic_udp_upstream_mtu_value"
+			cat /koolshare/ss/ss.json | jq --argjson MTU ${ss_basic_udp_upstream_mtu_value} '. + {MTU: $MTU}' >/koolshare/ss/ss_tmp.json
 			mv /koolshare/ss/ss_tmp.json /koolshare/ss/ss.json
 		fi
 	fi
@@ -688,11 +591,11 @@ get_dns_name() {
 }
 
 start_ss_local() {
-	if [ "$ss_basic_type" == "1" ]; then
+	if [ "$ss_basic_type" = "1" ]; then
 		echo_date 开启ssr-local，提供socks5代理端口：23456
 		rss-local -l 23456 -c $CONFIG_FILE -u -f /var/run/sslocal1.pid >/dev/null 2>&1
-	elif [ "$ss_basic_type" == "0" ]; then
-		if [ "${ss_basic_rust}" == "1" ];then
+	elif [ "$ss_basic_type" = "0" ]; then
+		if [ "${ss_basic_rust}" = "1" ];then
 			echo_date 开启sslocal，提供socks5代理端口：23456
 			sslocal ${ARG_RUST_SOCKS} ${ARG_OBFS} -d >/dev/null 2>&1
 		else
@@ -714,32 +617,32 @@ start_dns() {
 	fi
 	
 	# 回国模式下强制改国外DNS为直连方式
-	if [ "$ss_basic_mode" == "6" -a "$ss_foreign_dns" != "8" ]; then
+	if [ "$ss_basic_mode" = "6" ] && [ "$ss_foreign_dns" != "8" ]; then
 		ss_foreign_dns="8"
 		dbus set ss_foreign_dns="8"
 	fi
 
 	# Start cdns
-	if [ "$ss_foreign_dns" == "1" ]; then
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启cdns，用于【国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启cdns，用于【国外所有网站】的DNS解析..."
+	if [ "$ss_foreign_dns" = "1" ]; then
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启cdns，用于【国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启cdns，用于【国外所有网站】的DNS解析..."
 		cdns -c /koolshare/ss/rules/cdns.json >/dev/null 2>&1 &
 	fi
 
 	# Start chinadns2
-	if [ "$ss_foreign_dns" == "2" ]; then
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启chinadns2，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启chinadns2，用于【国内cdn网站 + 国外所有网站】的DNS解析..."
+	if [ "$ss_foreign_dns" = "2" ]; then
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启chinadns2，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启chinadns2，用于【国内cdn网站 + 国外所有网站】的DNS解析..."
 		clinet_ip="114.114.114.114"
 		public_ip=$(nvram get wan0_realip_ip)
 		if [ -z "$public_ip" ]; then
 			# 路由公网ip为空则获取
 			public_ip=$(curl --connect-timeout 1 --retry 0 --max-time 1 -s 'http://members.3322.org/dyndns/getip')
-			if [ "$?" == "0" -a -n "$public_ip" ]; then
+			if [ "$?" = "0" ] && [ -n "$public_ip" ]; then
 				# 获取成功
-				echo_date 你的公网ip地址是：$public_ip
-				dbus set ss_basic_publicip="$public_ip"
-				clinet_ip="$public_ip"
+				echo_date 你的公网ip地址是：${public_ip}
+				dbus set ss_basic_publicip="${public_ip}"
+				clinet_ip="${public_ip}"
 			else
 				# 获取失败，则自动为114
 				[ -n "$ss_basic_publicip" ] && clinet_ip="$ss_basic_publicip"
@@ -751,7 +654,7 @@ start_dns() {
 
 		if [ -n "$ss_basic_server_ip" ]; then
 			# 用chnroute去判断SS服务器在国内还是在国外
-			ipset test chnroute $ss_basic_server_ip >/dev/null 2>&1
+			ipset test chnroute "$ss_basic_server_ip" >/dev/null 2>&1
 			if [ "$?" != "0" ]; then
 				# ss服务器是国外IP
 				ss_real_server_ip="$ss_basic_server_ip"
@@ -763,87 +666,88 @@ start_dns() {
 			# ss服务器可能是域名且没有正确解析
 			ss_real_server_ip="8.8.8.8"
 		fi
-		chinadns -p $DNSF_PORT -s $ss_chinadns_user -e $clinet_ip,$ss_real_server_ip -c /koolshare/ss/rules/chnroute.txt >/dev/null 2>&1 &
+		chinadns -p "$DNSF_PORT" -s "$ss_chinadns_user" -e "$clinet_ip,$ss_real_server_ip" -c /koolshare/ss/rules/chnroute.txt >/dev/null 2>&1 &
 	fi
 
 	# Start DNS2SOCKS (default)
-	if [ "$ss_foreign_dns" == "3" -o -z "$ss_foreign_dns" ]; then
+	if [ "$ss_foreign_dns" = "3" ] || [ -z "$ss_foreign_dns" ]; then
 		[ -z "$ss_foreign_dns" ] && dbus set ss_foreign_dns="3"
 		start_ss_local
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
-		dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" 127.0.0.1:$DNSF_PORT >/dev/null 2>&1 &
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
+		dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" "127.0.0.1:$DNSF_PORT" >/dev/null 2>&1 &
 	fi
 
 	# Start ss-tunnel
-	if [ "$ss_foreign_dns" == "4" ]; then
-		if [ "$ss_basic_type" == "1" ]; then
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启ssr-tunnel，用于【国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启ssr-tunnel，用于【国外所有网站】的DNS解析..."
-			rss-tunnel -c $CONFIG_FILE -l $DNSF_PORT -L $ss_sstunnel_user -u -f /var/run/sstunnel.pid >/dev/null 2>&1
-		elif [ "$ss_basic_type" == "0" ]; then
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启ss-tunnel，用于【国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启ss-tunnel，用于【国外所有网站】的DNS解析..."
-			if [ "${ss_basic_rust}" == "1" ];then
-				sslocal ${ARG_RUST_TUNNEL} -f ${ss_sstunnel_user} ${ARG_OBFS} -u -d >/dev/null 2>&1
+	if [ "$ss_foreign_dns" = "4" ]; then
+		if [ "$ss_basic_type" = "1" ]; then
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启ssr-tunnel，用于【国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启ssr-tunnel，用于【国外所有网站】的DNS解析..."
+			rss-tunnel -c "$CONFIG_FILE "-l "$DNSF_PORT" -L "$ss_sstunnel_user" -u -f /var/run/sstunnel.pid >/dev/null 2>&1
+		elif [ "$ss_basic_type" = "0" ]; then
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启ss-tunnel，用于【国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启ss-tunnel，用于【国外所有网站】的DNS解析..."
+			if [ "${ss_basic_rust}" = "1" ];then
+				sslocal "${ARG_RUST_TUNNEL}" -f "${ss_sstunnel_user}" "${ARG_OBFS}" -u -d >/dev/null 2>&1
 			else
-				ss-tunnel -c ${CONFIG_FILE} -l ${DNSF_PORT} -L ${ss_sstunnel_user} ${ARG_OBFS} -u -f /var/run/sstunnel.pid >/dev/null 2>&1
+				ss-tunnel -c "${CONFIG_FILE}" -l "${DNSF_PORT}" -L "${ss_sstunnel_user}" "${ARG_OBFS}" -u -f /var/run/sstunnel.pid >/dev/null 2>&1
 			fi
-		elif [ "$ss_basic_type" == "3" -o "$ss_basic_type" == "4" -o "$ss_basic_type" == "5" ]; then
-			echo_date $(__get_type_full_name $ss_basic_type)下不支持ss-tunnel，改用dns2socks！
+		elif [ "$ss_basic_type" = "3" ] || [ "$ss_basic_type" = "4" ] || [ "$ss_basic_type" = "5" ]; then
+			echo_date "$(__get_type_full_name ${ss_basic_type})下不支持ss-tunnel，改用dns2socks！"
 			dbus set ss_foreign_dns=3
 			start_ss_local
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
-			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" 127.0.0.1:$DNSF_PORT >/dev/null 2>&1 &
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
+			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" "127.0.0.1:$DNSF_PORT" >/dev/null 2>&1 &
 		fi
 	fi
 
 	#start chinadns1
-	if [ "$ss_foreign_dns" == "5" ]; then
+	if [ "$ss_foreign_dns" = "5" ]; then
 		# 当国内SmartDNS和国外chiandns1冲突
-		if [ "$ss_dns_china" == "13" -a "$ss_foreign_dns" == "5" ]; then
+		if [ "$ss_dns_china" = "13" ] && [ "$ss_foreign_dns" = "5" ]; then
 			echo_date "！！中国DNS选择SmartDNS和外国DNS选择chiandns1冲突，将外国DNS默认改为dns2socks！！"
 			ss_foreign_dns="3"
 			dbus set ss_foreign_dns="3"
 			start_ss_local
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
-			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" 127.0.0.1:$DNSF_PORT >/dev/null 2>&1 &
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
+			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" "127.0.0.1:$DNSF_PORT" >/dev/null 2>&1 &
 		else
 			start_ss_local
-			echo_date 开启dns2socks，用于chinadns1上游...
+			echo_date "开启dns2socks，用于chinadns1上游..."
 			dns2socks 127.0.0.1:23456 "$ss_chinadns1_user" 127.0.0.1:1055 >/dev/null 2>&1 &
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启chinadns1，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启chinadns1，用于【国内cdn网站 + 国外所有网站】的DNS解析..."
-			chinadns1 -p $DNSF_PORT -s $CDN,127.0.0.1:1055 -d -c /koolshare/ss/rules/chnroute.txt >/dev/null 2>&1 &
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启chinadns1，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启chinadns1，用于【国内cdn网站 + 国外所有网站】的DNS解析..."
+			chinadns1 -p "$DNSF_PORT" -s $CDN,127.0.0.1:1055 -d -c /koolshare/ss/rules/chnroute.txt >/dev/null 2>&1 &
 		fi
 	fi
 
 	#start chinadns_ng
-	if [ "$ss_foreign_dns" == "10" ]; then
+	if [ "$ss_foreign_dns" = "10" ]; then
 		start_ss_local
 		echo_date 开启dns2socks，用于chinadns-ng的国外上游...
 		[ -z "$ss_chinadnsng_user" ] && ss_chinadnsng_user="8.8.8.8:53"
 		dns2socks 127.0.0.1:23456 "$ss_chinadnsng_user" 127.0.0.1:1055 >/dev/null 2>&1 &
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启chinadns-ng，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启chinadns-ng，用于【国内所有网站 + 国外所有网站】的DNS解析..."
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启chinadns-ng，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启chinadns-ng，用于【国内所有网站 + 国外所有网站】的DNS解析..."
 		cat /koolshare/ss/rules/gfwlist.conf|sed '/^server=/d'|sed 's/ipset=\/.//g'|sed 's/\/gfwlist//g' > /tmp/gfwlist.txt
-		if [ "${ss_disable_aaaa}" == "1" ];then
+		if [ "${ss_disable_aaaa}" = "1" ];then
 			local EXT="-N"
 		else
 			local EXT=""
 		fi
-		chinadns-ng ${EXT} -l ${DNSF_PORT} -c ${CDN}#${DNSC_PORT} -t 127.0.0.1#1055 -g /tmp/gfwlist.txt -m /koolshare/ss/rules/cdn.txt -M >/dev/null 2>&1 &
+		#${DNSC_PORT} -t 127.0.0.1#1055 -g /tmp/gfwlist.txt -m /koolshare/ss/rules/cdn.txt -M >/dev/null 2>&1 &
+		chinadns-ng "${EXT}" -l "${DNSF_PORT}" -c "${CDN}"
 	fi
 
 	#start https_dns_proxy
-	if [ "$ss_foreign_dns" == "6" ]; then
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启https_dns_proxy，用于【国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启https_dns_proxy，用于【国外所有网站】的DNS解析..."
+	if [ "$ss_foreign_dns" = "6" ]; then
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启https_dns_proxy，用于【国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启https_dns_proxy，用于【国外所有网站】的DNS解析..."
 		if [ -n "$ss_basic_server_ip" ]; then
 			# 用chnroute去判断SS服务器在国内还是在国外
-			ipset test chnroute $ss_basic_server_ip >/dev/null 2>&1
+			ipset test chnroute "$ss_basic_server_ip" >/dev/null 2>&1
 			if [ "$?" != "0" ]; then
 				# ss服务器是国外IP
 				ss_real_server_ip="$ss_basic_server_ip"
@@ -855,30 +759,30 @@ start_dns() {
 			# ss服务器可能是域名且没有正确解析
 			ss_real_server_ip="8.8.8.8"
 		fi
-		https_dns_proxy -u nobody -p $DNSF_PORT -b 8.8.8.8,1.1.1.1,8.8.4.4,1.0.0.1,145.100.185.15,145.100.185.16,185.49.141.37 -e $ss_real_server_ip/16 -r "https://cloudflare-dns.com/dns-query?ct=application/dns-json&" -d
+		https_dns_proxy -u nobody -p "$DNSF_PORT" -b 8.8.8.8,1.1.1.1,8.8.4.4,1.0.0.1,145.100.185.15,145.100.185.16,185.49.141.37 -e $ss_real_server_ip/16 -r "https://cloudflare-dns.com/dns-query?ct=application/dns-json&" -d
 	fi
 
 	# start v2ray DNSF_PORT
-	if [ "$ss_foreign_dns" == "7" ]; then
-		if [ "$ss_basic_type" == "3" -o "$ss_basic_type" == "4" ]; then
+	if [ "$ss_foreign_dns" = "7" ]; then
+		if [ "$ss_basic_type" = "3" ] || [ "$ss_basic_type" = "4" ]; then
 			return 0
-		elif [ "$ss_basic_type" == "5" -a "$ss_basic_tcore" == "1" ]; then
+		elif [ "$ss_basic_type" = "5" ] && [ "$ss_basic_tcore" = "1" ]; then
 			return 0
 		else
-			echo_date $(__get_type_full_name $ss_basic_type)下不支持${VCORE_NAME} dns，改用dns2socks！
+			echo_date "$(__get_type_full_name ${ss_basic_type})下不支持${VCORE_NAME} dns，改用dns2socks！"
 			dbus set ss_foreign_dns=3
 			start_ss_local
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
 			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" 127.0.0.1:$DNSF_PORT >/dev/null 2>&1 &
 		fi
 	fi
 
 	# 开启SmartDNS
-	if [ "$ss_dns_china" == "13" -a "$ss_foreign_dns" == "9" ]; then
+	if [ "$ss_dns_china" = "13" ] && [ "$ss_foreign_dns" = "9" ]; then
 		# 国内国外都启用SmartDNS （此情况下，如果是gfwlist模式则不用cdn.conf；如果是大陆白名单模式也不需要使用cdn.conf）
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启SmartDNS，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启SmartDNS，用于【国内所有网站 + 国外所有网站】的DNS解析..."
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启SmartDNS，用于【国内所有网站 + 国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启SmartDNS，用于【国内所有网站 + 国外所有网站】的DNS解析..."
 		#if [ "$(nvram get ipv6_service)" == "disabled" ]; then
 		#	sed 's/# force-AAAA-SOA yes/force-AAAA-SOA yes/g' /koolshare/ss/rules/smartdns_template.conf > /tmp/smartdns.conf
 		#	sed -i '/^#/d /^$/d' /tmp/smartdns.conf
@@ -886,10 +790,10 @@ start_dns() {
 			sed '/^#/d /^$/d' /koolshare/ss/rules/smartdns_template.conf > /tmp/smartdns.conf
 		#fi
 		smartdns -c /tmp/smartdns.conf >/dev/null 2>&1 &
-	elif [ "$ss_dns_china" == "13" -a "$ss_foreign_dns" != "9" ]; then
+	elif [ "$ss_dns_china" = "13" ] && [ "$ss_foreign_dns" != "9" ]; then
 		# 国内启用SmartDNS，国外不启用SmartDNS （此情况下，如果是gfwlist模式则不用cdn.conf；如果是大陆白名单模式则是根据国外DNS的选择而决定是否使用cdn.conf）
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启SmartDNS，用于【国内所有网站】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启SmartDNS，用于【国内cdn网站】的DNS解析..."
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启SmartDNS，用于【国内所有网站】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启SmartDNS，用于【国内cdn网站】的DNS解析..."
 		#if [ "$(nvram get ipv6_service)" == "disabled" ]; then
 		#	sed 's/# force-AAAA-SOA yes/force-AAAA-SOA yes/g' /koolshare/ss/rules/smartdns_template.conf > /tmp/smartdns.conf
 		#	sed -i '/^#/d /^$/d /foreign/d' /tmp/smartdns.conf
@@ -897,10 +801,10 @@ start_dns() {
 			sed '/^#/d /^$/d /foreign/d' /koolshare/ss/rules/smartdns_template.conf > /tmp/smartdns.conf
 		#fi
 		smartdns -c /tmp/smartdns.conf >/dev/null 2>&1 &
-	elif [ "$ss_dns_china" != "13" -a "$ss_foreign_dns" == "9" ]; then
+	elif [ "$ss_dns_china" != "13" ] && [ "$ss_foreign_dns" == "9" ]; then
 		# 国内不启用SmartDNS，国外启用SmartDNS （此情况下，如果是gfwlist模式则不用cdn.conf；如果是大陆白名单模式则需要使用cdn.conf）
-		[ "$DNS_PLAN" == "1" ] && echo_date "开启SmartDNS，用于【国外gfwlist站点】的DNS解析..."
-		[ "$DNS_PLAN" == "2" ] && echo_date "开启SmartDNS，用于【国外所有网站】的DNS解析..."
+		[ "$DNS_PLAN" = "1" ] && echo_date "开启SmartDNS，用于【国外gfwlist站点】的DNS解析..."
+		[ "$DNS_PLAN" = "2" ] && echo_date "开启SmartDNS，用于【国外所有网站】的DNS解析..."
 		#if [ "$(nvram get ipv6_service)" == "disabled" ]; then
 		#	sed 's/# force-AAAA-SOA yes/force-AAAA-SOA yes/g' /koolshare/ss/rules/smartdns_template.conf > /tmp/smartdns.conf
 		#	sed -i '/^#/d /^$/d /china/d' /tmp/smartdns.conf
@@ -911,25 +815,25 @@ start_dns() {
 	fi
 
 	# direct
-	if [ "$ss_foreign_dns" == "8" ]; then
-		if [ "$ss_basic_mode" == "6" ]; then
-			echo_date 回国模式，国外DNS采用直连方案。
+	if [ "$ss_foreign_dns" = "8" ]; then
+		if [ "$ss_basic_mode" = "6" ]; then
+			echo_date "回国模式，国外DNS采用直连方案。"
 		else
-			echo_date 非回国模式，国外DNS直连解析不能使用，自动切换到dns2socks方案。
+			echo_date "非回国模式，国外DNS直连解析不能使用，自动切换到dns2socks方案。"
 			dbus set ss_foreign_dns=3
 			start_ss_local
-			[ "$DNS_PLAN" == "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
-			[ "$DNS_PLAN" == "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
-			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" 127.0.0.1:$DNSF_PORT >/dev/null 2>&1 &
+			[ "$DNS_PLAN" = "1" ] && echo_date "开启dns2socks，用于【国外gfwlist站点】的DNS解析..."
+			[ "$DNS_PLAN" = "2" ] && echo_date "开启dns2socks，用于【国外所有网站】的DNS解析..."
+			dns2socks 127.0.0.1:23456 "$ss_dns2socks_user" "127.0.0.1:$DNSF_PORT" >/dev/null 2>&1 &
 		fi
 	fi
 }
 #--------------------------------------------------------------------------------------
 
 detect_domain() {
-	domain1=$(echo $1 | grep -E "^https://|^http://|www|/")
-	domain2=$(echo $1 | grep -E "\.")
-	if [ -n "$domain1" -o -z "$domain2" ]; then
+	domain1=$(echo "$1" | grep -E "^https://|^http://|www|/")
+	domain2=$(echo "$1" | grep -E "\.")
+	if [ -n "$domain1" ] || [ -z "$domain2" ]; then
 		return 1
 	else
 		return 0
@@ -937,14 +841,14 @@ detect_domain() {
 }
 
 create_dnsmasq_conf() {
-	if [ "$ss_dns_china" == "1" ]; then
-		if [ "$ss_basic_mode" == "6" ]; then
+	if [ "$ss_dns_china" = "1" ]; then
+		if [ "$ss_basic_mode" = "6" ]; then
 			# 使用回国模式的时候，ISP dns是国外的，所以这里直接用114取代
 			CDN="114.114.114.114"
 		else
 			if [ -n "$IFIP_DNS1" ]; then
 				# 用chnroute去判断运营商DNS是否为局域网(国外)ip地址，有些二级路由的是局域网ip地址，会被ChinaDNS 判断为国外dns服务器，这个时候用114取代之
-				ipset test chnroute $IFIP_DNS1 >/dev/null 2>&1
+				ipset test chnroute "$IFIP_DNS1" >/dev/null 2>&1
 				if [ "$?" != "0" ]; then
 					# 运营商DNS：ISP_DNS1是局域网(国外)ip
 					CDN="114.114.114.114"
@@ -958,20 +862,20 @@ create_dnsmasq_conf() {
 			fi
 		fi
 	fi
-	[ "$ss_dns_china" == "2" ] && CDN="223.5.5.5"
-	[ "$ss_dns_china" == "3" ] && CDN="223.6.6.6"
-	[ "$ss_dns_china" == "4" ] && CDN="114.114.114.114"
-	[ "$ss_dns_china" == "5" ] && CDN="114.114.115.115"
-	[ "$ss_dns_china" == "6" ] && CDN="1.2.4.8"
-	[ "$ss_dns_china" == "7" ] && CDN="210.2.4.8"
-	[ "$ss_dns_china" == "8" ] && CDN="117.50.11.11"
-	[ "$ss_dns_china" == "9" ] && CDN="117.50.22.22"
-	[ "$ss_dns_china" == "10" ] && CDN="180.76.76.76"
-	[ "$ss_dns_china" == "11" ] && CDN="119.29.29.29"
-	[ "$ss_dns_china" == "12" ] && {
+	[ "$ss_dns_china" = "2" ] && CDN="223.5.5.5"
+	[ "$ss_dns_china" = "3" ] && CDN="223.6.6.6"
+	[ "$ss_dns_china" = "4" ] && CDN="114.114.114.114"
+	[ "$ss_dns_china" = "5" ] && CDN="114.114.115.115"
+	[ "$ss_dns_china" = "6" ] && CDN="1.2.4.8"
+	[ "$ss_dns_china" = "7" ] && CDN="210.2.4.8"
+	[ "$ss_dns_china" = "8" ] && CDN="117.50.11.11"
+	[ "$ss_dns_china" = "9" ] && CDN="117.50.22.22"
+	[ "$ss_dns_china" = "10" ] && CDN="180.76.76.76"
+	[ "$ss_dns_china" = "11" ] && CDN="119.29.29.29"
+	[ "$ss_dns_china" = "12" ] && {
 		[ -n "$ss_dns_china_user" ] && CDN="$ss_dns_china_user" || CDN="114.114.114.114"
 	}
-	if [ "$ss_dns_china" == "13" ];then
+	if [ "$ss_dns_china" = "13" ];then
 		CDN="127.0.0.1"
 		DNSC_PORT=5335
 	fi
@@ -991,33 +895,33 @@ create_dnsmasq_conf() {
 
 	# custom dnsmasq settings by user
 	if [ -n "$ss_dnsmasq" ]; then
-		echo_date 添加自定义dnsmasq设置到/tmp/custom.conf
+		echo_date "添加自定义dnsmasq设置到/tmp/custom.conf"
 		echo "$ss_dnsmasq" | base64_decode | sort -u >>/tmp/custom.conf
 	fi
 
 	# these sites need to go ss inside router
 	if [ "$ss_basic_mode" != "6" ]; then
 		echo "#for router itself" >>/tmp/wblist.conf
-		echo "server=/.google.com.tw/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.google.com.tw/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.google.com.tw/router" >>/tmp/wblist.conf
-		echo "server=/dns.google.com/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/dns.google.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/dns.google.com/router" >>/tmp/wblist.conf
-		echo "server=/.github.com/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.github.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.github.com/router" >>/tmp/wblist.conf
-		echo "server=/.github.io/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.github.io/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.github.io/router" >>/tmp/wblist.conf
-		echo "server=/.raw.githubusercontent.com/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.raw.githubusercontent.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.raw.githubusercontent.com/router" >>/tmp/wblist.conf
-		echo "server=/.adblockplus.org/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.adblockplus.org/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.adblockplus.org/router" >>/tmp/wblist.conf
-		echo "server=/.entware.net/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.entware.net/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.entware.net/router" >>/tmp/wblist.conf
-		echo "server=/.apnic.net/127.0.0.1#$DNSF_PORT" >>/tmp/wblist.conf
+		echo "server=/.apnic.net/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/.apnic.net/router" >>/tmp/wblist.conf
 	fi
 
 	# append white domain list, not through ss
-	wanwhitedomain=$(echo $ss_wan_white_domain | base64_decode)
+	wanwhitedomain=$(echo "$ss_wan_white_domain" | base64_decode)
 	if [ -n "$ss_wan_white_domain" ]; then
 		echo_date 应用域名白名单
 		echo "#for white_domain" >>/tmp/wblist.conf
@@ -1033,7 +937,7 @@ create_dnsmasq_conf() {
 					echo "$wan_white_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
 				fi
 			else
-				echo_date ！！检测到域名白名单内的【"$wan_white_domain"】不是域名格式！！此条将不会添加！！
+				echo_date "！！检测到域名白名单内的【${wan_white_domain}】不是域名格式！！此条将不会添加！！"
 			fi
 		done
 	fi
@@ -1050,13 +954,13 @@ create_dnsmasq_conf() {
 	fi
 
 	# append black domain list, through ss
-	wanblackdomain=$(echo $ss_wan_black_domain | base64_decode)
+	wanblackdomain=$(echo "$ss_wan_black_domain" | base64_decode)
 	if [ -n "$ss_wan_black_domain" ]; then
-		echo_date 应用域名黑名单
+		echo_date "应用域名黑名单"
 		echo "#for black_domain" >>/tmp/wblist.conf
 		for wan_black_domain in $wanblackdomain; do
 			detect_domain "$wan_black_domain"
-			if [ "$?" == "0" ]; then
+			if [ "$?" = "0" ]; then
 				if [ "$ss_basic_mode" != "6" ]; then
 					echo "$wan_black_domain" | sed "s/^/server=&\/./g" | sed "s/$/\/127.0.0.1#$DNSF_PORT/g" >>/tmp/wblist.conf
 					echo "$wan_black_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/black_list/g" >>/tmp/wblist.conf
@@ -1065,7 +969,7 @@ create_dnsmasq_conf() {
 					echo "$wan_black_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/black_list/g" >>/tmp/wblist.conf
 				fi
 			else
-				echo_date ！！检测到域名黑名单内的【"$wan_black_domain"】不是域名格式！！此条将不会添加！！
+				echo_date "！！检测到域名黑名单内的【${wan_black_domain}】不是域名格式！！此条将不会添加！！"
 			fi
 		done
 	fi
@@ -1097,27 +1001,27 @@ create_dnsmasq_conf() {
 	# 3 所以最终保留自动方案，增加国内优先和国外优先的选择方案（todo）
 
 	# 此处决定何时使用cdn.txt
-	if [ "$ss_basic_mode" == "6" ]; then
+	if [ "$ss_basic_mode" = "6" ]; then
 		# 回国模式中，因为国外DNS无论如何都不会污染的，所以采取的策略是直连就行，默认国内优先即可
-		echo_date 自动判断在回国模式中使用国内优先模式，不加载cdn.conf
+		echo_date "自动判断在回国模式中使用国内优先模式，不加载cdn.conf"
 	else
-		if [ "$ss_basic_mode" == "1" -a -z "$chn_on" -a -z "$all_on" -o "$ss_basic_mode" == "6" ]; then
+		if [ "$ss_basic_mode" = "1" -a -z "$chn_on" -a -z "$all_on" -o "$ss_basic_mode" = "6" ]; then
 			# gfwlist模式的时候，且访问控制主机中不存在 大陆白名单模式 游戏模式 全局模式，则使用国内优先模式
 			# 回国模式下自动判断使用国内优先
-			echo_date 自动判断使用国内优先模式，不加载cdn.conf
+			echo_date "自动判断使用国内优先模式，不加载cdn.conf"
 		else
 			# 其它情况，均使用国外优先模式，以下区分是否加载cdn.conf
 			# if [ "$ss_foreign_dns" == "2" -o "$ss_foreign_dns" == "5" -o "$ss_foreign_dns" == "9" -a "$ss_dns_china" == "13" ]; then
-			if [ "$ss_foreign_dns" == "2" -o "$ss_foreign_dns" == "5" -a "$ss_dns_china" != "13" -o "$ss_foreign_dns" == "10" ]; then
+			if [ "$ss_foreign_dns" = "2" -o "$ss_foreign_dns" = "5" -a "$ss_dns_china" != "13" -o "$ss_foreign_dns" = "10" ]; then
 				# 因为chinadns1 chinadns2自带国内cdn，所以也不需要cdn.conf
-				echo_date 自动判断dns解析使用国外优先模式...
-				echo_date 国外解析方案【$(get_dns_name $ss_foreign_dns)】自带国内cdn，无需加载cdn.conf，路由器开销小...
+				echo_date "自动判断dns解析使用国外优先模式..."
+				echo_date "国外解析方案【$(get_dns_name $ss_foreign_dns)】自带国内cdn，无需加载cdn.conf，路由器开销小..."
 			else
-				echo_date 自动判断dns解析使用国外优先模式...
-				echo_date 国外解析方案【$(get_dns_name $ss_foreign_dns)】，需要加载cdn.conf提供国内cdn...
-				echo_date 生成cdn加速列表到/tmp/sscdn.conf，加速用的dns：$CDN
+				echo_date "自动判断dns解析使用国外优先模式..."
+				echo_date "国外解析方案【$(get_dns_name $ss_foreign_dns)】，需要加载cdn.conf提供国内cdn..."
+				echo_date "生成cdn加速列表到/tmp/sscdn.conf，加速用的dns：${CDN}"
 				echo "#for china site CDN acclerate" >>/tmp/sscdn.conf
-				cat /koolshare/ss/rules/cdn.txt | sed "s/^/server=&\/./g" | sed "s/$/\/&$CDN#$DNSC_PORT/g" | sort | awk '{if ($0!=line) print;line=$0}' >>/tmp/sscdn.conf
+				cat /koolshare/ss/rules/cdn.txt | sed "s/^/server=&\/./g" | sed "s/$/\/&${CDN}#${DNSC_PORT}/g" | sort | awk '{if ($0!=line) print;line=$0}' >>/tmp/sscdn.conf
 			fi
 		fi
 	fi
@@ -1138,24 +1042,24 @@ create_dnsmasq_conf() {
 	fi
 
 	# 此处决定何时使用gfwlist.txt
-	if [ "$ss_basic_mode" == "1" ]; then
+	if [ "$ss_basic_mode" = "1" ]; then
 		echo_date 创建gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹.
 		ln -sf /koolshare/ss/rules/gfwlist.conf /jffs/configs/dnsmasq.d/gfwlist.conf
-	elif [ "$ss_basic_mode" == "2" -o "$ss_basic_mode" == "3" ]; then
+	elif [ "$ss_basic_mode" = "2" ] || [ "$ss_basic_mode" = "3" ]; then
 		if [ -n "$gfw_on" ]; then
 			echo_date 创建gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹.
 			ln -sf /koolshare/ss/rules/gfwlist.conf /jffs/configs/dnsmasq.d/gfwlist.conf
 		fi
-	elif [ "$ss_basic_mode" == "6" ]; then
+	elif [ "$ss_basic_mode" = "6" ]; then
 		# 回国模式下默认方案是国内优先，所以gfwlist里的网站不能由127.0.0.1#7913来解析了，应该是国外当地直连
-		if [ -n "$(echo $ss_direct_user | grep :)" ]; then
-			echo_date 国外直连dns设定格式错误，将自动更正为8.8.8.8#53.
+		if [ -n "$(echo "$ss_direct_user" | grep :)" ]; then
+			echo_date "国外直连dns设定格式错误，将自动更正为8.8.8.8#53."
 			ss_direct_user="8.8.8.8#53"
 			dbus set ss_direct_user="8.8.8.8#53"
 		fi
-		echo_date 创建回国模式专用gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹.
+		echo_date "创建回国模式专用gfwlist的软连接到/jffs/etc/dnsmasq.d/文件夹."
 		[ -z "$ss_direct_user" ] && ss_direct_user="8.8.8.8#53"
-		cat /koolshare/ss/rules/gfwlist.conf | sed "s/127.0.0.1#$DNSF_PORT/$ss_direct_user/g" >/tmp/gfwlist.conf
+		cat /koolshare/ss/rules/gfwlist.conf | sed "s/127.0.0.1#${DNSF_PORT}/${ss_direct_user}/g" >/tmp/gfwlist.conf
 		ln -sf /tmp/gfwlist.conf /jffs/configs/dnsmasq.d/gfwlist.conf
 	fi
 
@@ -1170,53 +1074,53 @@ auto_start() {
 
 start_kcp() {
 	# Start kcp
-	if [ "$ss_basic_use_kcp" == "1" ]; then
+	if [ "$ss_basic_use_kcp" = "1" ]; then
 		echo_date 启动KCP协议进程，为了更好的体验，建议在路由器上创建虚拟内存.
 		export GOGC=30
 		[ -z "$ss_basic_kcp_server" ] && ss_basic_kcp_server="$ss_basic_server"
-		if [ "$ss_basic_kcp_method" == "1" ]; then
+		if [ "$ss_basic_kcp_method" = "1" ]; then
 			[ -n "$ss_basic_kcp_encrypt" ] && KCP_CRYPT="--crypt $ss_basic_kcp_encrypt"
 			[ -n "$ss_basic_kcp_password" ] && KCP_KEY="--key $ss_basic_kcp_password" || KCP_KEY=""
 			[ -n "$ss_basic_kcp_sndwnd" ] && KCP_SNDWND="--sndwnd $ss_basic_kcp_sndwnd" || KCP_SNDWND=""
 			[ -n "$ss_basic_kcp_rcvwnd" ] && KCP_RNDWND="--rcvwnd $ss_basic_kcp_rcvwnd" || KCP_RNDWND=""
 			[ -n "$ss_basic_kcp_mtu" ] && KCP_MTU="--mtu $ss_basic_kcp_mtu" || KCP_MTU=""
 			[ -n "$ss_basic_kcp_conn" ] && KCP_CONN="--conn $ss_basic_kcp_conn" || KCP_CONN=""
-			[ "$ss_basic_kcp_nocomp" == "1" ] && COMP="--nocomp" || COMP=""
+			[ "$ss_basic_kcp_nocomp" = "1" ] && COMP="--nocomp" || COMP=""
 			[ -n "$ss_basic_kcp_mode" ] && KCP_MODE="--mode $ss_basic_kcp_mode" || KCP_MODE=""
 
 			start-stop-daemon -S -q -b -m \
 				-p /tmp/var/kcp.pid \
 				-x /koolshare/bin/kcptun \
 				-- -l 127.0.0.1:1091 \
-				-r $ss_basic_kcp_server:$ss_basic_kcp_port \
-				$KCP_CRYPT $KCP_KEY $KCP_SNDWND $KCP_RNDWND $KCP_MTU $KCP_CONN $COMP $KCP_MODE $ss_basic_kcp_extra
+				-r ${ss_basic_kcp_server}:${ss_basic_kcp_port} \
+				${KCP_CRYPT} ${KCP_KEY} ${KCP_SNDWND} ${KCP_RNDWND} ${KCP_MTU} ${KCP_CONN} ${COMP} ${KCP_MODE} ${ss_basic_kcp_extra}
 		else
 			start-stop-daemon -S -q -b -m \
 				-p /tmp/var/kcp.pid \
 				-x /koolshare/bin/kcptun \
 				-- -l 127.0.0.1:1091 \
-				-r $ss_basic_kcp_server:$ss_basic_kcp_port \
-				$ss_basic_kcp_parameter
+				-r ${ss_basic_kcp_server}:${ss_basic_kcp_port} \
+				${ss_basic_kcp_parameter}
 		fi
 	fi
 }
 
 start_speeder() {
 	#只有游戏模式下或者访问控制中有游戏模式主机，且udp加速节点和当前使用节点一致
-	if [ "$ss_basic_use_kcp" == "1" -a "$ss_basic_kcp_server" == "127.0.0.1" -a "$ss_basic_kcp_port" == "1092" ]; then
+	if [ "$ss_basic_use_kcp" = "1" ] && [ "$ss_basic_kcp_server" = "127.0.0.1" ] && [ "$ss_basic_kcp_port" = "1092" ]; then
 		echo_date 检测到你配置了KCP与UDPspeeder串联.
 		SPEED_KCP=1
 	fi
 
-	if [ "$ss_basic_use_kcp" == "1" -a "$ss_basic_kcp_server" == "127.0.0.1" -a "$ss_basic_kcp_port" == "1093" ]; then
+	if [ "$ss_basic_use_kcp" = "1" ] && [ "$ss_basic_kcp_server" = "127.0.0.1" ] && [ "$ss_basic_kcp_port" = "1093" ]; then
 		echo_date 检测到你配置了KCP与UDP2raw串联.
 		SPEED_KCP=2
 	fi
 
-	if [ "$mangle" == "1" -a "$ss_basic_udp_node" == "$ssconf_basic_node" -o "$SPEED_KCP" == "1" -o "$SPEED_KCP" == "2" ]; then
+	if [ "$mangle" = "1" -a "$ss_basic_udp_node" = "$ssconf_basic_node" -o "$SPEED_KCP" = "1" -o "$SPEED_KCP" = "2" ]; then
 		#开启udpspeeder
-		if [ "$ss_basic_udp_boost_enable" == "1" ]; then
-			if [ "$ss_basic_udp_software" == "1" ]; then
+		if [ "$ss_basic_udp_boost_enable" = "1" ]; then
+			if [ "$ss_basic_udp_software" = "1" ]; then
 				echo_date 开启UDPspeederV1进程.
 				[ -z "$ss_basic_udpv1_rserver" ] && ss_basic_udpv1_rserver="$ss_basic_server_ip"
 				[ -n "$ss_basic_udpv1_duplicate_time" ] && duplicate_time="-t $ss_basic_udpv1_duplicate_time" || duplicate_time=""
@@ -1225,9 +1129,9 @@ start_speeder() {
 				[ -n "$ss_basic_udpv1_drop" ] && drop="--random-drop $ss_basic_udpv1_drop" || drop=""
 				[ -n "$ss_basic_udpv1_duplicate_nu" ] && duplicate="-d $ss_basic_udpv1_duplicate_nu" || duplicate=""
 				[ -n "$ss_basic_udpv1_password" ] && key1="-k $ss_basic_udpv1_password" || key1=""
-				[ "$ss_basic_udpv1_disable_filter" == "1" ] && filter="--disable-filter" || filter=""
+				[ "$ss_basic_udpv1_disable_filter" = "1" ] && filter="--disable-filter" || filter=""
 
-				if [ "$ss_basic_udp2raw_boost_enable" == "1" ]; then
+				if [ "$ss_basic_udp2raw_boost_enable" = "1" ]; then
 					#串联：如果两者都开启了，则把udpspeeder的流udp量转发给udp2raw
 					speederv1 -c -l 0.0.0.0:1092 -r 127.0.0.1:1093 $key1 $ss_basic_udpv1_password \
 						$duplicate_time $jitter $report $drop $filter $duplicate $ss_basic_udpv1_duplicate_nu >/dev/null 2>&1 &
@@ -1263,11 +1167,11 @@ start_speeder() {
 			fi
 		fi
 		#开启udp2raw
-		if [ "$ss_basic_udp2raw_boost_enable" == "1" ]; then
+		if [ "$ss_basic_udp2raw_boost_enable" = "1" ]; then
 			echo_date 开启UDP2raw进程.
 			[ -z "$ss_basic_udp2raw_rserver" ] && ss_basic_udp2raw_rserver="$ss_basic_server_ip"
-			[ "$ss_basic_udp2raw_a" == "1" ] && UD2RAW_EX1="-a" || UD2RAW_EX1=""
-			[ "$ss_basic_udp2raw_keeprule" == "1" ] && UD2RAW_EX2="--keep-rule" || UD2RAW_EX2=""
+			[ "$ss_basic_udp2raw_a" = "1" ] && UD2RAW_EX1="-a" || UD2RAW_EX1=""
+			[ "$ss_basic_udp2raw_keeprule" = "1" ] && UD2RAW_EX2="--keep-rule" || UD2RAW_EX2=""
 			[ -n "$ss_basic_udp2raw_lowerlevel" ] && UD2RAW_LOW="--lower-level $ss_basic_udp2raw_lowerlevel" || UD2RAW_LOW=""
 			[ -n "$ss_basic_udp2raw_password" ] && key3="-k $ss_basic_udp2raw_password" || key3=""
 
@@ -1279,13 +1183,13 @@ start_speeder() {
 }
 
 start_ss_redir() {
-	if [ "$ss_basic_type" == "1" ]; then
+	if [ "$ss_basic_type" = "1" ]; then
 		echo_date 开启ssr-redir进程，用于透明代理.
 		BIN=rss-redir
 		ARG_OBFS=""
-	elif [ "$ss_basic_type" == "0" ]; then
+	elif [ "$ss_basic_type" = "0" ]; then
 		# ss-libev需要大于160的熵才能正常工作
-		if [ "${ss_basic_rust}" == "1" ];then
+		if [ "${ss_basic_rust}" = "1" ];then
 			echo_date "开启shadowsocks-rust的sslocal进程，用于透明代理."
 			BIN=sslocal
 		else
@@ -1294,7 +1198,7 @@ start_ss_redir() {
 		fi
 	fi
 
-	if [ "$ss_basic_udp_boost_enable" == "1" ]; then
+	if [ "$ss_basic_udp_boost_enable" = "1" ]; then
 		#只要udpspeeder开启，不管udp2raw是否开启，均设置为1092,
 		SPEED_PORT=1092
 	else
@@ -1302,64 +1206,64 @@ start_ss_redir() {
 		SPEED_PORT=1093
 	fi
 
-	if [ "$ss_basic_udp2raw_boost_enable" == "1" -o "$ss_basic_udp_boost_enable" == "1" ]; then
+	if [ "$ss_basic_udp2raw_boost_enable" = "1" ] || [ "$ss_basic_udp_boost_enable" = "1" ]; then
 		#udp2raw开启，udpspeeder未开启则ss-redir的udp流量应该转发到1093
 		SPEED_UDP=1
 	fi
 
-	if [ "$ss_basic_use_kcp" == "1" -a "$ss_basic_kcp_server" == "127.0.0.1" -a "$ss_basic_kcp_port" == "1092" ]; then
+	if [ "$ss_basic_use_kcp" = "1" ] && [ "$ss_basic_kcp_server" = "127.0.0.1" ] && [ "$ss_basic_kcp_port" = "1092" ]; then
 		SPEED_KCP=1
 	fi
 
-	if [ "$ss_basic_use_kcp" == "1" -a "$ss_basic_kcp_server" == "127.0.0.1" -a "$ss_basic_kcp_port" == "1093" ]; then
+	if [ "$ss_basic_use_kcp" = "1" ] && [ "$ss_basic_kcp_server" = "127.0.0.1" ] && [ "$ss_basic_kcp_port" = "1093" ]; then
 		SPEED_KCP=2
 	fi
 	# Start ss-redir
-	if [ "$ss_basic_use_kcp" == "1" ]; then
-		if [ "$mangle" == "1" ]; then
-			if [ "$SPEED_UDP" == "1" -a "$ss_basic_udp_node" == "$ssconf_basic_node" ]; then
+	if [ "$ss_basic_use_kcp" = "1" ]; then
+		if [ "$mangle" = "1" ]; then
+			if [ "$SPEED_UDP" = "1" ] && [ "$ss_basic_udp_node" = "$ssconf_basic_node" ]; then
 				# tcp go kcp
-				if [ "$SPEED_KCP" == "1" ]; then
-					echo_date ${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpspeeder
-				elif [ "$SPEED_KCP" == "2" ]; then
-					echo_date ${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpraw
+				if [ "$SPEED_KCP" = "1" ]; then
+					echo_date "${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpspeeder"
+				elif [ "$SPEED_KCP" = "2" ]; then
+					echo_date "${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpraw"
 				else
-					echo_date ${BIN}的 tcp 走kcptun.
+					echo_date "${BIN}的 tcp 走kcptun."
 				fi
-				if [ "$ss_basic_type" == "1" ]; then
+				if [ "$ss_basic_type" = "1" ]; then
 					rss-redir -s 127.0.0.1 -p 1091 -c ${CONFIG_FILE} -f /var/run/shadowsocks.pid >/dev/null 2>&1
 				else
-					if [ "${ss_basic_rust}" == "1" ];then
+					if [ "${ss_basic_rust}" = "1" ];then
 						sslocal -s "127.0.0.1:1091" ${ARG_RUST_REDIR_NS} --tcp-redir "redirect" ${ARG_OBFS} -d >/dev/null 2>&1
 					else
 						ss-redir -s 127.0.0.1 -p 1091 -c ${CONFIG_FILE} ${ARG_OBFS} -f /var/run/shadowsocks.pid >/dev/null 2>&1
 					fi
 				fi
 				# udp go udpspeeder
-				[ "$ss_basic_udp2raw_boost_enable" == "1" -a "$ss_basic_udp_boost_enable" == "1" ] && echo_date ${BIN}的 udp 走udpspeeder, udpspeeder的 udp 走 udpraw
-				[ "$ss_basic_udp2raw_boost_enable" == "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date ${BIN}的 udp 走udpraw.
-				[ "$ss_basic_udp2raw_boost_enable" != "1" -a "$ss_basic_udp_boost_enable" == "1" ] && echo_date ${BIN}的 udp 走udpspeeder.
-				[ "$ss_basic_udp2raw_boost_enable" != "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date ${BIN}的 udp 走${BIN}.
-				if [ "$ss_basic_type" == "1" ]; then
+				[ "$ss_basic_udp2raw_boost_enable" = "1" -a "$ss_basic_udp_boost_enable" = "1" ] && echo_date "${BIN}的 udp 走udpspeeder, udpspeeder的 udp 走 udpraw"
+				[ "$ss_basic_udp2raw_boost_enable" = "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date "${BIN}的 udp 走udpraw."
+				[ "$ss_basic_udp2raw_boost_enable" != "1" -a "$ss_basic_udp_boost_enable" = "1" ] && echo_date "${BIN}的 udp 走udpspeeder."
+				[ "$ss_basic_udp2raw_boost_enable" != "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date "${BIN}的 udp 走${BIN}."
+				if [ "$ss_basic_type" = "1" ]; then
 					rss-redir -s 127.0.0.1 -p ${SPEED_PORT} -c ${CONFIG_FILE} -U -f /var/run/shadowsocks.pid >/dev/null 2>&1
 				else
-					if [ "${ss_basic_rust}" == "1" ];then
-						sslocal -s "127.0.0.1:${SPEED_PORT}" ${ARG_RUST_REDIR_NS} --udp-redir "tproxy" ${ARG_OBFS} -u -d >/dev/null 2>&1
+					if [ "${ss_basic_rust}" = "1" ];then
+						sslocal -s "127.0.0.1:${SPEED_PORT}" ${ARG_RUST_REDIR_NS} --udp-redir "tproxy" "${ARG_OBFS}" -u -d >/dev/null 2>&1
 					else
 						ss-redir -s 127.0.0.1 -p ${SPEED_PORT} -c ${CONFIG_FILE} ${ARG_OBFS} -U -f /var/run/shadowsocks.pid >/dev/null 2>&1
 					fi
 				fi
 			else
 				# tcp go kcp, udp go ss
-				if [ "${SPEED_KCP}" == "1" ]; then
-					echo_date ${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpspeeder
+				if [ "${SPEED_KCP}" = "1" ]; then
+					echo_date "${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpspeeder"
 				elif [ "${SPEED_KCP}" == "2" ]; then
-					echo_date ${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpraw
+					echo_date "${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpraw"
 				else
-					echo_date ${BIN}的 tcp 走kcptun.
+					echo_date "${BIN}的 tcp 走kcptun."
 				fi
 				
-				if [ "${ss_basic_type}" == "1" ]; then
+				if [ "${ss_basic_type}" = "1" ]; then
 					rss-redir -s 127.0.0.1 -p 1091 -c ${CONFIG_FILE} -f /var/run/shadowsocks.pid >/dev/null 2>&1
 					rss-redir -c ${CONFIG_FILE} -U -f /var/run/shadowsocks.pid >/dev/null 2>&1
 				else
@@ -1374,18 +1278,18 @@ start_ss_redir() {
 			fi
 		else
 			# tcp only go kcp
-			if [ "${SPEED_KCP}" == "1" ]; then
-				echo_date ${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpspeeder
-			elif [ "${SPEED_KCP}" == "2" ]; then
-				echo_date ${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpraw
+			if [ "${SPEED_KCP}" = "1" ]; then
+				echo_date "${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpspeeder"
+			elif [ "${SPEED_KCP}" = "2" ]; then
+				echo_date "${BIN}的 tcp 走kcptun, kcptun的 udp 走 udpraw"
 			else
-				echo_date ${BIN}的 tcp 走kcptun.
+				echo_date "${BIN}的 tcp 走kcptun."
 			fi
-			echo_date ${BIN}的 udp 未开启.
-			if [ "${ss_basic_type}" == "1" ]; then
+			echo_date "${BIN}的 udp 未开启."
+			if [ "${ss_basic_type}" = "1" ]; then
 				rss-redir -s 127.0.0.1 -p 1091 -c ${CONFIG_FILE} -f /var/run/shadowsocks.pid >/dev/null 2>&1
 			else
-				if [ "${ss_basic_rust}" == "1" ];then
+				if [ "${ss_basic_rust}" = "1" ];then
 					sslocal -s "127.0.0.1:1091" ${ARG_RUST_REDIR_NS} --tcp-redir "redirect" ${ARG_OBFS} -d >/dev/null 2>&1
 				else
 					ss-redir -s 127.0.0.1 -p 1091 -c ${CONFIG_FILE} ${ARG_OBFS} -f /var/run/shadowsocks.pid >/dev/null 2>&1
@@ -1393,11 +1297,11 @@ start_ss_redir() {
 			fi
 		fi
 	else
-		if [ "${mangle}" == "1" ]; then
-			if [ "${SPEED_UDP}" == "1" -a "${ss_basic_udp_node}" == "${ssconf_basic_node}" ]; then
+		if [ "${mangle}" = "1" ]; then
+			if [ "${SPEED_UDP}" = "1" ] && [ "${ss_basic_udp_node}" = "${ssconf_basic_node}" ]; then
 				# tcp go ss
-				echo_date ${BIN}的 tcp 走${BIN}.
-				if [ "${ss_basic_type}" == "1" ]; then
+				echo_date "${BIN}的 tcp 走${BIN}."
+				if [ "${ss_basic_type}" = "1" ]; then
 					rss-redir -c ${CONFIG_FILE} -f /var/run/shadowsocks.pid >/dev/null 2>&1
 				else
 					if [ "${ss_basic_rust}" == "1" ];then
@@ -1407,12 +1311,12 @@ start_ss_redir() {
 					fi
 				fi
 				# udp go udpspeeder
-				[ "${ss_basic_udp2raw_boost_enable}" == "1" -a "$ss_basic_udp_boost_enable" == "1" ] && echo_date ${BIN}的 udp 走udpspeeder, udpspeeder的 udp 走 udpraw
-				[ "${ss_basic_udp2raw_boost_enable}" == "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date ${BIN}的 udp 走udpraw.
-				[ "${ss_basic_udp2raw_boost_enable}" != "1" -a "$ss_basic_udp_boost_enable" == "1" ] && echo_date ${BIN}的 udp 走udpspeeder.
-				[ "${ss_basic_udp2raw_boost_enable}" != "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date ${BIN}的 udp 走${BIN}.
+				[ "${ss_basic_udp2raw_boost_enable}" = "1" -a "$ss_basic_udp_boost_enable" = "1" ] && echo_date "${BIN}的 udp 走udpspeeder, udpspeeder的 udp 走 udpraw"
+				[ "${ss_basic_udp2raw_boost_enable}" = "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date "${BIN}的 udp 走udpraw."
+				[ "${ss_basic_udp2raw_boost_enable}" != "1" -a "$ss_basic_udp_boost_enable" = "1" ] && echo_date "${BIN}的 udp 走udpspeeder."
+				[ "${ss_basic_udp2raw_boost_enable}" != "1" -a "$ss_basic_udp_boost_enable" != "1" ] && echo_date "${BIN}的 udp 走${BIN}."
 
-				if [ "${ss_basic_type}" == "1" ]; then
+				if [ "${ss_basic_type}" = "1" ]; then
 					rss-redir -s 127.0.0.1 -p ${SPEED_PORT} -c ${CONFIG_FILE} -U -f /var/run/shadowsocks.pid >/dev/null 2>&1
 				else
 					if [ "${ss_basic_rust}" == "1" ];then
@@ -1423,12 +1327,12 @@ start_ss_redir() {
 				fi
 			else
 				# tcp udp go ss
-				echo_date ${BIN}的 tcp 走${BIN}.
-				echo_date ${BIN}的 udp 走${BIN}.
-				if [ "${ss_basic_type}" == "1" ]; then
+				echo_date "${BIN}的 tcp 走${BIN}."
+				echo_date "${BIN}的 udp 走${BIN}."
+				if [ "${ss_basic_type}" = "1" ]; then
 					fire_redir "rss-redir -c ${CONFIG_FILE} -u"
 				else
-					if [ "${ss_basic_rust}" == "1" ];then
+					if [ "${ss_basic_rust}" = "1" ];then
 						sslocal ${ARG_RUST_REDIR} --tcp-redir "redirect" --udp-redir "tproxy" ${ARG_OBFS} -U -d >/dev/null 2>&1
 					else
 						fire_redir "ss-redir -c ${CONFIG_FILE} ${ARG_OBFS} -u"
@@ -1437,12 +1341,12 @@ start_ss_redir() {
 			fi
 		else
 			# tcp only go ss
-			echo_date ${BIN}的 tcp 走${BIN}.
-			echo_date ${BIN}的 udp 未开启.
-			if [ "${ss_basic_type}" == "1" ]; then
+			echo_date "${BIN}的 tcp 走${BIN}."
+			echo_date "${BIN}的 udp 未开启."
+			if [ "${ss_basic_type}" = "1" ]; then
 				fire_redir "rss-redir -c ${CONFIG_FILE}"
 			else
-				if [ "${ss_basic_rust}" == "1" ];then
+				if [ "${ss_basic_rust}" = "1" ];then
 					sslocal ${ARG_RUST_REDIR} --tcp-redir "redirect" ${ARG_OBFS} -d >/dev/null 2>&1
 				else
 					fire_redir "ss-redir -c ${CONFIG_FILE} ${ARG_OBFS}"
@@ -1450,7 +1354,7 @@ start_ss_redir() {
 			fi
 		fi
 	fi
-	echo_date ${BIN} 启动完毕！.
+	echo_date "${BIN} 启动完毕！."
 
 	start_speeder
 }
@@ -1458,24 +1362,24 @@ start_ss_redir() {
 fire_redir() {
 	local ARG_1=""
 	local ARG_2=""
-	if [ "$ss_basic_type" == "0" -a "$ss_basic_mcore" == "1" -a "${LINUX_VER}" != "26" ];then
+	if [ "$ss_basic_type" = "0" ] && [ "$ss_basic_mcore" = "1" ] && [ "${LINUX_VER}" != "26" ];then
 		local ARG_1="--reuse-port"
 	fi
-	if [ "$ss_basic_type" == "0" -a "$ss_basic_tfo" == "1" -a "${LINUX_VER}" != "26" ]; then
+	if [ "$ss_basic_type" = "0" ] && [ "$ss_basic_tfo" = "1" ] && [ "${LINUX_VER}" != "26" ]; then
 		local ARG_2="--fast-open"
-		echo_date $BIN开启tcp fast open支持.
+		echo_date "$BIN开启tcp fast open支持."
 		echo 3 >/proc/sys/net/ipv4/tcp_fastopen
 	fi
 
-	if [ "$ss_basic_type" == "0" -a "$ss_basic_tnd" == "1" ]; then
-		echo_date $BIN开启TCP_NODELAY支持.
+	if [ "$ss_basic_type" = "0" ] && [ "$ss_basic_tnd" = "1" ]; then
+		echo_date "$BIN开启TCP_NODELAY支持."
 		local ARG_3="--no-delay"
 	else
 		local ARG_3=""
 	fi
 
-	if [ "$ss_basic_mcore" == "1" -a "${LINUX_VER}" != "26" ]; then
-		echo_date $BIN开启$THREAD线程支持.
+	if [ "$ss_basic_mcore" = "1" ] && [ "${LINUX_VER}" != "26" ]; then
+		echo_date "$BIN开启$THREAD线程支持."
 		local i=1
 		while [ $i -le $THREAD ]; do
 			cmd $1 $ARG_1 $ARG_2 $ARG_3 -f /var/run/ss_$i.pid
@@ -1490,25 +1394,25 @@ start_koolgame() {
 	# Start koolgame
 	pdu=$(ps | grep pdu | grep -v grep)
 	if [ -z "$pdu" ]; then
-		echo_date 开启pdu进程，用于优化mtu...
+		echo_date "开启pdu进程，用于优化mtu..."
 		pdu br0 /tmp/var/pdu.pid >/dev/null 2>&1
 		sleep 1
 	fi
-	echo_date 开启koolgame主进程...
+	echo_date "开启koolgame主进程..."
 	start-stop-daemon -S -q -b -m -p /tmp/var/koolgame.pid -x /koolshare/bin/koolgame -- -c $CONFIG_FILE
 
-	if [ "$mangle" == "1" -a "$ss_basic_udp_node" == "$ssconf_basic_node" ]; then
-		if [ "$ss_basic_udp_boost_enable" == "1" ]; then
-			if [ "$ss_basic_udp_software" == "1" ]; then
-				echo_date 检测到你启用了UDPspeederV1，但是koolgame下不支持UDPspeederV1加速，不启用！
+	if [ "$mangle" = "1" ] && [ "$ss_basic_udp_node" = "$ssconf_basic_node" ]; then
+		if [ "$ss_basic_udp_boost_enable" = "1" ]; then
+			if [ "$ss_basic_udp_software" = "1" ]; then
+				echo_date "检测到你启用了UDPspeederV1，但是koolgame下不支持UDPspeederV1加速，不启用！"
 				dbus set ss_basic_udp_boost_enable=0
-			elif [ "$ss_basic_udp_software" == "2" ]; then
-				echo_date 检测到你启用了UDPspeederV2，但是koolgame下不支持UDPspeederV1加速，不启用！
+			elif [ "$ss_basic_udp_software" = "2" ]; then
+				echo_date "检测到你启用了UDPspeederV2，但是koolgame下不支持UDPspeederV1加速，不启用！"
 				dbus set ss_basic_udp_boost_enable=0
 			fi
 		fi
-		if [ "$ss_basic_udp2raw_boost_enable" == "1" ]; then
-			echo_date 检测到你启用了UDP2raw，但是koolgame下不支持UDP2raw，不启用！
+		if [ "$ss_basic_udp2raw_boost_enable" = "1" ]; then
+			echo_date "检测到你启用了UDP2raw，但是koolgame下不支持UDP2raw，不启用！"
 			dbus set ss_basic_udp2raw_boost_enable=0
 		fi
 	fi
@@ -1771,7 +1675,7 @@ creat_v2ray_json() {
 		EOF
 		# inbounds area (7913 for dns resolve)
 		if [ "${ss_foreign_dns}" == "7" ]; then
-			echo_date 配置${VCORE_NAME} dns，用于dns解析...
+			echo_date "配置${VCORE_NAME} dns，用于dns解析..."
 			cat >>"${V2RAY_CONFIG_TEMP}" <<-EOF
 				"inbounds": [
 					{
@@ -1862,7 +1766,7 @@ creat_v2ray_json() {
 			]
 			}
 		EOF
-		echo_date 解析${VCORE_NAME}配置文件...
+		echo_date "解析${VCORE_NAME}配置文件..."
 		sed -i '/null/d' ${V2RAY_CONFIG_TEMP} 2>/dev/null
 		jq --tab . ${V2RAY_CONFIG_TEMP} >/tmp/jq_para_tmp.txt 2>&1
 		if [ "$?" != "0" ];then
@@ -1873,12 +1777,12 @@ creat_v2ray_json() {
 			close_in_five
 		fi
 		jq --tab . $V2RAY_CONFIG_TEMP >"$V2RAY_CONFIG_FILE"
-		echo_date ${VCORE_NAME}配置文件写入成功到"$V2RAY_CONFIG_FILE"
+		echo_date "${VCORE_NAME}配置文件写入成功到${V2RAY_CONFIG_FILE}"
 	else
-		echo_date 使用自定义的${VCORE_NAME} json配置文件...
+		echo_date "使用自定义的${VCORE_NAME} json配置文件..."
 		echo "$ss_basic_v2ray_json" | base64_decode >"$V2RAY_CONFIG_TEMP"
-		local OB=$(cat "$V2RAY_CONFIG_TEMP" | jq .outbound)
-		local OBS=$(cat "$V2RAY_CONFIG_TEMP" | jq .outbounds)
+		local OB="$(cat "$V2RAY_CONFIG_TEMP" | jq .outbound)"
+		local OBS="$(cat "$V2RAY_CONFIG_TEMP" | jq .outbounds)"
 
 		# 兼容旧格式：outbound
 		if [ "$OB" != "null" ]; then
@@ -1890,7 +1794,7 @@ creat_v2ray_json() {
 			OUTBOUNDS=$(cat "$V2RAY_CONFIG_TEMP" | jq .outbounds[0])
 		fi
 		
-		if [ "$ss_foreign_dns" == "7" ]; then
+		if [ "$ss_foreign_dns" = "7" ]; then
 			local TEMPLATE="{
 								\"log\": {
 									\"access\": \"none\",
@@ -1952,9 +1856,9 @@ creat_v2ray_json() {
 								]
 							}"
 		fi
-		echo_date 解析${VCORE_NAME}配置文件...
+		echo_date" 解析${VCORE_NAME}配置文件..."
 		echo $TEMPLATE | jq --argjson args "$OUTBOUNDS" '. + {outbounds: [$args]}' >"$V2RAY_CONFIG_FILE"
-		echo_date ${VCORE_NAME}配置文件写入成功到"$V2RAY_CONFIG_FILE"
+		echo_date "${VCORE_NAME}配置文件写入成功到"$V2RAY_CONFIG_FILE""
 
 		# 检查v2ray json是否配置了xtls，如果是，则自动切换为xray
 		if [ -f "/koolshare/ss/v2ray.json" ];then
@@ -3363,14 +3267,14 @@ load_module() {
 
 # write number into nvram with no commit
 write_numbers() {
-	nvram set update_ipset="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.gfwlist.date')"
-	nvram set update_chnroute="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.chnroute.date')"
-	nvram set update_cdn="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.cdn_china.date')"
+	nvram set update_ipset="$(/koolshare/bin/jq -r '.gfwlist.date' /koolshare/ss/rules/rules.json)"
+	nvram set update_chnroute="$(/koolshare/bin/jq -r '.chnroute.date' /koolshare/ss/rules/rules.json)"
+	nvram set update_cdn="$(/koolshare/bin/jq -r '.cdn_china.date' /koolshare/ss/rules/rules.json)"
 	
-	nvram set ipset_numbers="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.gfwlist.count')"
-	nvram set chnroute_numbers="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.chnroute.count')"
-	nvram set chnroute_ips="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.chnroute.count_ip')"
-	nvram set cdn_numbers="$(cat /koolshare/ss/rules/rules.json.js | /koolshare/bin/jq -r '.cdn_china.count')"
+	nvram set ipset_numbers="$(/koolshare/bin/jq -r '.gfwlist.count' /koolshare/ss/rules/rules.json)"
+	nvram set chnroute_numbers="$(/koolshare/bin/jq -r '.chnroute.count' /koolshare/ss/rules/rules.json)"
+	nvram set chnroute_ips="$(/koolshare/bin/jq -r '.chnroute.count_ip' /koolshare/ss/rules/rules.json)"
+	nvram set cdn_numbers="$(/koolshare/bin/jq -r '.cdn_china.count' /koolshare/ss/rules/rules.json)"
 }
 
 set_sys() {
@@ -3706,7 +3610,7 @@ get_status() {
 case $ACTION in
 start)
 	set_lock
-	if [ "$ss_basic_enable" == "1" ]; then
+	if [ "$ss_basic_enable" = "1" ]; then
 		logger "[软件中心]: 启动科学上网插件！"
 		apply_ss >>"$LOG_FILE"
 		#get_status >> /tmp/upload/test.txt
@@ -3716,14 +3620,14 @@ start)
 	unset_lock
 	;;
 stop)
-	set_lock
+	set_stop_lock
 	disable_ss
 	echo_date
 	echo_date 你已经成功关闭科学上网服务~
 	echo_date See you again!
 	echo_date
 	echo_date ======================= 梅林固件 - 【科学上网】 ========================
-	unset_lock
+	unset_stop_lock
 	;;
 restart)
 	set_lock
