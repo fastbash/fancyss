@@ -10,7 +10,11 @@
 source "/koolshare/scripts/base.sh"
 source helper.sh
 
-if [ ! -f "/koolshare/scripts/ss_var.sh" ];then . "$(find -name ss_var.sh)";fi
+if [ ! -f "/koolshare/scripts/ss_var.sh" ];then
+	. "$(find / -name ss_var.sh)"
+else
+	. "/koolshare/scripts/ss_var.sh"
+fi
 
 eval "$(dbus export ss)"
 # alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'

@@ -17,7 +17,7 @@ mkdir -p /tmp/upload
 # qca (RT-AX89X)	4.4.60			qca
 # --------------------------------------
 LINUX_VER=$(uname -r|awk -F"." '{print $1$2}')
-if [ "${LINUX_VER}" -eq "41" -o "${LINUX_VER}" -eq "419" ];then
+if [ "${LINUX_VER}" -eq "41" ] || [ "${LINUX_VER}" -eq "419" ];then
 	PLATFORM=hnd
 elif [ "${LINUX_VER}" -eq "44" ];then
 	PLATFORM=qca
@@ -66,7 +66,7 @@ update_ss(){
 	dbus set ss_basic_version_web="${fancyss_version_online}"
 	if [ "${ss_basic_version_local}" != "${fancyss_version_online}" ];then
 		echo_date "主服务器在线版本号：${fancyss_version_online} 和本地版本号：${ss_basic_version_local} 不同！"
-		cd /tmp
+		cd /tmp || exit 1
 		fancyss_md5_online=$(jq -r .$MD5NAME /tmp/version.json.js)
 		echo_date "开启下载进程，从主服务器上下载更新包..."
 		echo_date "下载链接：${update_url}/${PACKAGE}.tar.gz"
