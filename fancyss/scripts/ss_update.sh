@@ -36,7 +36,7 @@ VERSION=version.json.js
 
 install_fancyss(){
 	echo_date "开始解压压缩包..."
-	tar -zxf "${MODULE}.tar.gz"
+	tar -zxf "${PACKAGE}.tar.gz"
 	chmod a+x "/tmp/${MODULE}/install.sh"
 	echo_date "开始安装更新文件..."
 	sh "/tmp/${MODULE}/install.sh"
