@@ -130,7 +130,7 @@ get_cdn(){
 	fi
 	
 	# 2.merge
-	cat "${CURR_PATH}/{accelerated-domains.china.conf,apple.china.conf,google.china.conf}" "${CURR_PATH}/../../../no_proxy_list.txt" | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
+	cat "${CURR_PATH}"/{accelerated-domains.china.conf,apple.china.conf,google.china.conf} "${CURR_PATH}/../../../no_proxy_list.txt" | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
 	cat "${CURR_PATH}/cdn_koolcenter.txt" "${CURR_PATH}/cdn_download.txt" | sort -u > "${CURR_PATH}/cdn_tmp.txt"
 
 	# 3. compare
