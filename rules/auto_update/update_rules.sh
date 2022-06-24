@@ -19,10 +19,11 @@ prepare(){
 }
 
 get_gfwlist(){
+	echo "---------------------------------get_gfwlist"
 	# gfwlist.conf
 
 	# 1. download
-	"${CURR_PATH}/fwlist.py" gfwlist_download.conf >/dev/null 2>&1
+	"${CURR_PATH}/fwlist.py" "${CURR_PATH}/gfwlist_download.conf" >/dev/null 2>&1
 	if [ ! -f "gfwlist_download.conf" ]; then
 		echo "gfwlist download faild!"
 		exit 1
@@ -44,7 +45,6 @@ get_gfwlist(){
 	# 5. compare
 	md5sum1=$(md5sum "${CURR_PATH}/gfwlist_tmp.conf" | awk '{print $1}')
 	md5sum2=$(md5sum "${RULE_PATH}/gfwlist.conf" | awk '{print $1}')
-	echo "---------------------------------"
 	if [ "$md5sum1"x = "$md5sum2"x ]; then
 		echo "gfwlist same md5!"
 		return
@@ -64,6 +64,7 @@ get_gfwlist(){
 }
 
 get_chnroute(){
+	echo "---------------------------------get_chnroute"
 	# chnroute.txt
 
 	# 1. download
@@ -95,7 +96,6 @@ get_chnroute(){
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute_tmp.txt" | awk '{print $1}')
 	md5sum2=$(md5sum "${RULE_PATH}/chnroute.txt" | awk '{print $1}')
-	echo "---------------------------------"
 	if [ "$md5sum1"x = "$md5sum2"x ]; then
 		echo "chnroute same md5!"
 		return
@@ -117,6 +117,7 @@ get_chnroute(){
 }
 
 get_cdn(){
+	echo "---------------------------------get_cdn"
 	# cdn.txt
 
 	# 1.download
@@ -135,7 +136,6 @@ get_cdn(){
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/cdn_tmp.txt" | awk '{print $1}')
 	md5sum2=$(md5sum "${RULE_PATH}/cdn.txt" | awk '{print $1}')
-	echo "---------------------------------"
 	if [ "$md5sum1"x = "$md5sum2"x ]; then
 		echo "cdn list same md5!"
 		return
@@ -155,6 +155,7 @@ get_cdn(){
 }
 
 get_apple(){
+	echo "---------------------------------get_apple"
 	# 1. get domain
 	sed '/^#/d' "${CURR_PATH}/apple.china.conf" | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" | sort -u > "${CURR_PATH}/apple_download.txt"
 
@@ -181,13 +182,13 @@ get_apple(){
 }
 
 get_google(){
+	echo "---------------------------------get_google"
 	# 1. get domain
 	sed '/^#/d' "${CURR_PATH}/google.china.conf" | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" | sort -u >${CURR_PATH}/google_download.txt
 
 	# 2. compare
 	md5sum1=$(md5sum "${CURR_PATH}/google_download.txt" | awk '{print $1}')
 	md5sum2=$(md5sum "${RULE_PATH}/google_china.txt" | awk '{print $1}')
-	echo "---------------------------------"
 	if [ "$md5sum1"x = "$md5sum2"x ]; then
 		echo "google china list same md5!"
 		return
@@ -207,13 +208,13 @@ get_google(){
 }
 
 get_cdntest(){
+	echo "---------------------------------get_cdntest"
 	# 1. get domain
 	wget https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/cdn-testlist.txt -qO "${CURR_PATH}/cdn_test.txt"
 
 	# 2. compare
 	md5sum1=$(md5sum "${CURR_PATH}/cdn_test.txt" | awk '{print $1}')
 	md5sum2=$(md5sum "${RULE_PATH}/cdn_test.txt" | awk '{print $1}')
-	echo "---------------------------------"
 	if [ "$md5sum1"x = "$md5sum2"x ]; then
 		echo "cdn test list same md5!"
 		return
