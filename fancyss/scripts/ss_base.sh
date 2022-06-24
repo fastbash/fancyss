@@ -136,7 +136,11 @@ __resolve_ip() {
 		return 2
 	else
 		# domain format
-		SERVER_IP=$(nslookup "$1" "$(__get_server_resolver):$(__get_server_resolver_port)" | sed '1,4d' | awk '{print $3}' | grep -v : | awk 'NR==1{print}' 2>/dev/null)
+		if [ "$2" = "1" ];then
+			SERVER_IP=$(ping -s 1 -c 1 -w 1 -W 1 -q "$1" | grep "PING $1" | awk -F '[ ()]+' '{print $3}')
+		else
+			SERVER_IP=$(nslookup "$1" "$(__get_server_resolver):$(__get_server_resolver_port)" | sed '1,4d' | awk '{print $3}' | grep -v : | awk 'NR==1{print}' 2>/dev/null)
+		fi
 		SERVER_IP=$(__valid_ip "$SERVER_IP")
 		if [ -n "$SERVER_IP" ]; then
 			# success resolved

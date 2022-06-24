@@ -331,6 +331,7 @@ install_now(){
 	[ -z "$(dbus get ss_basic_interval)" ] && dbus set ss_basic_interval=2
 	# 关闭 ping
 	dbus set ss_basic_ping_node=off
+	dbus set ss_basic_ping_dns=1
 	# rule 
 	[ -z "$(dbus get ss_basic_rule_update)" ] && { 
 		dbus set ss_basic_rule_update=1

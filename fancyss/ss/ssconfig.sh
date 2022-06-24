@@ -127,7 +127,7 @@ close_in_five() {
 	dbus set ss_basic_enable="0"
 	disable_ss >/dev/null
 	echo_date "插件已关闭！！"
-	echo_date ======================= 梅林固件 - 【科学上网】 ========================
+	echo_date "======================= 梅林固件 - 【科学上网】 ========================"
 	unset_lock
 	exit
 }
@@ -388,12 +388,18 @@ resolv_server_ip() {
 			dbus set ss_basic_server_ip=$ss_basic_server
 		else
 			echo_date "检测到你的$(__get_type_abbr_name)服务器：【${ss_basic_server}】不是ip格式！"
-			echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用DNS：$(__get_server_resolver):$(__get_server_resolver_port)"
-			echo_date "如果此处等待时间较久，建议在【节点域名解析DNS服务器】处更换DNS服务器..."
-			server_ip=$(__resolve_ip "$ss_basic_server")
+			if [ "$ss_basic_ping_dns" = "1" ];then 
+				echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用ping解析"
+				echo_date "如果此处等待时间较久，建议在【节点域名解析DNS服务器】处取消勾选ping解析..."
+
+			else
+				echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用DNS：$(__get_server_resolver):$(__get_server_resolver_port)"
+				echo_date "如果此处等待时间较久，建议在【节点域名解析DNS服务器】处更换 DNS 服务器..."
+			fi
+			server_ip=$(__resolve_ip "$ss_basic_server" "$ss_basic_ping_node")
 			case $? in
 			0)
-				echo_date "$(__get_type_abbr_name)服务器【${ss_basic_serve}r】的ip地址解析成功：${server_ip}"
+				echo_date "$(__get_type_abbr_name)服务器【${ss_basic_server}】的ip地址解析成功：${server_ip}"
 				echo "server=/${ss_basic_server}/$(__get_server_resolver)#$(__get_server_resolver_port)" >/jffs/configs/dnsmasq.d/ss_server.conf
 				# server is domain format and success resolved.
 				# 记录解析结果到/tmp/ss_host.conf，方便插件触发重启设定工作
