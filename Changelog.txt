@@ -1,5 +1,9 @@
 fancyss Changelog
 ===========================================
+3.0.4.1
+   - fix update_rules.sh
+   - add add option ping to resolv domain
+
 3.0.4
    - update get version 3.0 from https://github.com/hq450/fancyss
    - fix	some shell syntax
