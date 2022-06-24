@@ -84,13 +84,13 @@ get_chnroute(){
 	# cat apnic.txt| awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > ${CURR_PATH}/chnroute_tmp.txt
 	# rm -rf ${CURR_PATH}/apnic.txt
 	
-	if [ ! -f "chnroute_tmp.txt" ]; then
+	if [ ! -f "${CURR_PATH}/chnroute_tmp.txt" ]; then
 		echo "chnroute download faild!"
 		exit 1
 	fi
 
 	# 2. process
-	sed -i '/^#/d' chnroute_tmp.txt
+	sed -i '/^#/d' "${CURR_PATH}/chnroute_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute_tmp.txt" | awk '{print $1}')
