@@ -54,7 +54,7 @@ get_gfwlist(){
 	echo "update gfwlist!"
 	cat "${CURR_PATH}/gfwlist_tmp.conf" > "${RULE_PATH}/gfwlist.conf"
 
-	# 7. write json
+    # 7. write json
 	CURR_DATE=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
 	MD5_VALUE="${md5sum1}"
 	LINE_COUN=$(grep -Ec "^server=" "${RULE_PATH}/gfwlist.conf")
@@ -100,20 +100,20 @@ get_chnroute(){
 		echo "chnroute same md5!"
 		return
 	fi
-	
+
+	# 5. update file
+	echo "update chnroute, total ${LINE_COUN} subnets, ${IP_COUNT} unique IPs !"
+	cat "${CURR_PATH}/chnroute_tmp.txt" > "${RULE_PATH}/chnroute.txt"
+
 	# 4. write json
 	CURR_DATE=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
 	MD5_VALUE="${md5sum1}"
 	LINE_COUN=$(wc -l < "${CURR_PATH}/chnroute_tmp.txt")
 	IP_COUNT=$(awk -F "/" '{sum += 2^(32-$2)-2};END {print sum}' "${CURR_PATH}/chnroute_tmp.txt")
-	jq --arg variable "${CURR_DATE}" '.chnroute.date = $variable' "${RULE_FILE}" | "sponge ${RULE_FILE}"
-	jq --arg variable "${MD5_VALUE}" '.chnroute.md5 = $variable' "${RULE_FILE}" | "sponge ${RULE_FILE}"
-	jq --arg variable "${LINE_COUN}" '.chnroute.count = $variable' "${RULE_FILE}" | "sponge ${RULE_FILE}"
-	jq --arg variable "${IP_COUNT}" '.chnroute.count_ip = $variable' "${RULE_FILE}" | "sponge ${RULE_FILE}"
-
-	# 5. update file
-	echo "update chnroute, total ${LINE_COUN} subnets, ${IP_COUNT} unique IPs !"
-	cat "${CURR_PATH}/chnroute_tmp.txt" > "${RULE_PATH}/chnroute.txt"
+	jq --arg variable "${CURR_DATE}" '.chnroute.date = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
+	jq --arg variable "${MD5_VALUE}" '.chnroute.md5 = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
+	jq --arg variable "${LINE_COUN}" '.chnroute.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
+	jq --arg variable "${IP_COUNT}" '.chnroute.count_ip = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 }
 
 get_cdn(){
@@ -175,7 +175,7 @@ get_apple(){
 	# 4. write json
 	CURR_DATE=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
 	MD5_VALUE="${md5sum1}"
-	 LINE_COUN=$(wc -l < "${RULE_PATH}/apple_china.txt")
+	LINE_COUN=$(wc -l < "${RULE_PATH}/apple_china.txt")
 	jq --arg variable "${CURR_DATE}" '.apple_china.date = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 	jq --arg variable "${MD5_VALUE}" '.apple_china.md5 = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 	jq --arg variable "${LINE_COUN}" '.apple_china.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
