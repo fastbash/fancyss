@@ -57,7 +57,7 @@ get_gfwlist(){
 	# 7. write json
 	CURR_DATE=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
 	MD5_VALUE="${md5sum1}"
-	 LINE_COUN=$(grep -En "^server=" "${RULE_PATH}/gfwlist.conf")
+	LINE_COUN=$(grep -Ec "^server=" "${RULE_PATH}/gfwlist.conf")
 	jq --arg variable "${CURR_DATE}" '.gfwlist.date = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 	jq --arg variable "${MD5_VALUE}" '.gfwlist.md5 = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 	jq --arg variable "${LINE_COUN}" '.gfwlist.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
@@ -130,7 +130,7 @@ get_cdn(){
 	fi
 	
 	# 2.merge
-	sed '/#/d' "${CURR_PATH}/{accelerated-domains.china.conf,apple.china.conf,google.china.conf}" "${CURR_PATH}/../../../no_proxy_list.txt" | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
+	cat "${CURR_PATH}/{accelerated-domains.china.conf,apple.china.conf,google.china.conf}" "${CURR_PATH}/../../../no_proxy_list.txt" | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
 	cat "${CURR_PATH}/cdn_koolcenter.txt" "${CURR_PATH}/cdn_download.txt" | sort -u > "${CURR_PATH}/cdn_tmp.txt"
 
 	# 3. compare
