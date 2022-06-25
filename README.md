@@ -119,9 +119,9 @@ RT-AX56U_V2这种jffs分区极小(15MB)的机型，建议直接使用lite版本
 2. 命令安装：(以fancyss_hnd_lite.tar.gz为例，先下载好安装包，并将其上传到路由器的/tmp目录)
 
    ```bash
-   mv /tmp/fancyss_hnd_lite.tar.gz /tmp/shadowsocks.tar.gz
-   tar -zxvf /tmp/shadowsocks.tar.gz
-   sh /tmp/shadowsocks/install.sh
+   # mv /tmp/fancyss_hnd_lite.tar.gz /tmp/shadowsocks.tar.gz
+   tar xzf /tmp/fancyss_hnd_lite.tar.gz
+   sh /tmp/planesocks/install.sh
    ```
 
 ## 注意事项

@@ -273,6 +273,7 @@ do_backup(){
 		touch "${HISTORY_DIR}/md5sum.txt"
 	fi
 	echo "${backup_tar_md5} fancyss_${platform}_${pkgtype}_${backup_version}.tar.gz" >> "${HISTORY_DIR}/md5sum.txt"
+	cat "${CURR_PATH}/README.md" > "${CURR_PATH}/../fancyss_history_package/README.md"
 }
 
 papare(){
