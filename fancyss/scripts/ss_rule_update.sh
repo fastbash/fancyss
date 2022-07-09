@@ -65,7 +65,7 @@ start_update(){
 		if [ "${version_chnroute1}" != "${version_chnroute2}" ];then
 			echo_date "检测到新版本chnroute，开始更新..."
 			echo_date "下载chnroute到临时文件..."
-			wget -4 --no-check-certificate --timeout=8 -qO -" ${rule_url}/chnroute.txt" > /tmp/chnroute.txt
+			wget -4 --no-check-certificate --timeout=8 -qO - "${rule_url}/chnroute.txt" > /tmp/chnroute.txt
 			md5sum_chnroute1=$(md5sum /tmp/chnroute.txt | awk '{print $1}')
 			if [ "${md5sum_chnroute1}" = "${md5sum_chnroute2}" ];then
 				echo_date "下载完成，校验通过，将临时文件覆盖到原始chnroute文件"
