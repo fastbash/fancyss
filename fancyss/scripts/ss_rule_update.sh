@@ -9,9 +9,10 @@ RULE_FILE="/koolshare/ss/rules/rules.json"
 
 start_update(){
 	# version dectet
-	version_gfwlist1=$(/koolshare/bin/jq -r '.gfwlist.date' "${RULE_FILE}" | sed 's/[[:space:]]/_/g')
-	version_chnroute1=$(/koolshare/bin/jq -r '.chnroute.date' "${RULE_FILE}" | sed 's/[[:space:]]/_/g')
-	version_cdn1=$(/koolshare/bin/jq -r '.cdn_china.date' "${RULE_FILE}" | sed 's/[[:space:]]/_/g')
+	#  | sed 's/[[:space:]]/_/g'
+	version_gfwlist1=$(/koolshare/bin/jq -r '.gfwlist.date' "${RULE_FILE}")
+	version_chnroute1=$(/koolshare/bin/jq -r '.chnroute.date' "${RULE_FILE}")
+	version_cdn1=$(/koolshare/bin/jq -r '.cdn_china.date' "${RULE_FILE}")
 	
 	echo ==================================================================================================
 	echo_date "开始更新shadowsocks规则，请等待..."
@@ -24,9 +25,9 @@ start_update(){
 		exit
 	fi
 	
-	version_gfwlist2=$(/koolshare/bin/jq -r '.gfwlist.date' /tmp/rules.json | sed 's/[[:space:]]/_/g')
-	version_chnroute2=$(/koolshare/bin/jq -r '.chnroute.date' /tmp/rules.json | sed 's/[[:space:]]/_/g')
-	version_cdn2=$(/koolshare/bin/jq -r '.cdn_china.date' /tmp/rules.json | sed 's/[[:space:]]/_/g')
+	version_gfwlist2=$(/koolshare/bin/jq -r '.gfwlist.date' /tmp/rules.json)
+	version_chnroute2=$(/koolshare/bin/jq -r '.chnroute.date' /tmp/rules.json)
+	version_cdn2=$(/koolshare/bin/jq -r '.cdn_china.date' /tmp/rules.json)
 	
 	md5sum_gfwlist2=$(/koolshare/bin/jq -r '.gfwlist.md5' /tmp/rules.json)
 	md5sum_chnroute2=$(/koolshare/bin/jq -r '.chnroute.md5' /tmp/rules.json)
