@@ -130,13 +130,13 @@ get_chnroute2(){
 
 	wget -4 "$URL" -qO "${CURR_PATH}/chnroute2_tmp.txt"
 
-	if [ ! -f "chnroute2_tmp.txt" ]; then
+	if [ ! -f "${CURR_PATH}/chnroute2_tmp.txt" ]; then
 		echo "chnroute2 download faild!"
 		exit 1
 	fi
 
 	# 2. process
-	sed -i '/^#/d' chnroute2_tmp.txt
+	sed -i '/^#/d' "${CURR_PATH}/chnroute2_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute2_tmp.txt" | awk '{print $1}')
@@ -181,13 +181,13 @@ get_chnroute3(){
 
 	wget -4 "$URL" -qO "${CURR_PATH}/chnroute3_tmp.txt"
 
-	if [ ! -f "chnroute3_tmp.txt" ]; then
+	if [ ! -f "${CURR_PATH}/chnroute3_tmp.txt" ]; then
 		echo "chnroute3 download faild!"
 		exit 1
 	fi
 
 	# 2. process
-	sed -i '/^#/d' chnroute3_tmp.txt
+	sed -i '/^#/d' "${CURR_PATH}/chnroute3_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute3_tmp.txt" | awk '{print $1}')
