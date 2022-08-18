@@ -1,7 +1,7 @@
-2|apnic|20220818|75300|19830613|20220817|+1000
+2|apnic|20220819|75304|19830613|20220818|+1000
 apnic|*|asn|*|11553|summary
-apnic|*|ipv4|*|50597|summary
-apnic|*|ipv6|*|13150|summary
+apnic|*|ipv4|*|50600|summary
+apnic|*|ipv6|*|13151|summary
 apnic|JP|asn|173|1|20020801|allocated
 apnic|NZ|asn|681|1|20020801|allocated
 apnic|AU|asn|1221|1|20000131|allocated
@@ -18908,6 +18908,7 @@ apnic|IN|ipv4|103.21.184.0|1024|20121016|allocated
 apnic|HK|ipv4|103.21.192.0|256|20220815|assigned
 apnic|NZ|ipv4|103.21.193.0|256|20121017|assigned
 apnic|NZ|ipv4|103.21.194.0|256|20121018|allocated
+apnic|ID|ipv4|103.21.195.0|256|20220818|allocated
 apnic|TW|ipv4|103.21.196.0|1024|20121017|allocated
 apnic|KR|ipv4|103.21.200.0|1024|20121017|allocated
 apnic|ID|ipv4|103.21.204.0|1024|20121018|allocated
@@ -28627,6 +28628,7 @@ apnic|CN|ipv4|103.144.240.0|512|20191106|allocated
 apnic|HK|ipv4|103.144.242.0|512|20191106|allocated
 apnic|HK|ipv4|103.144.244.0|512|20191106|allocated
 apnic|HK|ipv4|103.144.246.0|512|20191106|allocated
+apnic|JP|ipv4|103.144.248.0|512|20220818|allocated
 apnic|ID|ipv4|103.144.250.0|512|20191106|assigned
 apnic|ID|ipv4|103.144.252.0|512|20191106|assigned
 apnic|ID|ipv4|103.144.254.0|512|20191106|assigned
@@ -28673,6 +28675,7 @@ apnic|BD|ipv4|103.145.70.0|512|20191114|allocated
 apnic|CN|ipv4|103.145.72.0|512|20191115|allocated
 apnic|BD|ipv4|103.145.74.0|512|20191115|allocated
 apnic|BD|ipv4|103.145.76.0|512|20191115|allocated
+apnic|VN|ipv4|103.145.78.0|512|20220818|assigned
 apnic|CN|ipv4|103.145.80.0|512|20191115|allocated
 apnic|ID|ipv4|103.145.82.0|256|20191115|assigned
 apnic|ID|ipv4|103.145.83.0|256|20191115|assigned
@@ -64061,6 +64064,7 @@ apnic|IN|ipv6|2001:df1:2540::|48|20220817|assigned
 apnic|HK|ipv6|2001:df1:2580::|48|20190813|assigned
 apnic|IN|ipv6|2001:df1:25c0::|48|20220817|assigned
 apnic|ID|ipv6|2001:df1:2600::|48|20160318|assigned
+apnic|VN|ipv6|2001:df1:2640::|48|20220818|assigned
 apnic|ID|ipv6|2001:df1:2680::|48|20190814|assigned
 apnic|AU|ipv6|2001:df1:2700::|48|20170511|assigned
 apnic|IN|ipv6|2001:df1:2780::|48|20190814|assigned
