@@ -105,7 +105,7 @@ get_chnroute(){
 
 	# 5. update file
 	# echo "update chnroute, total ${LINE_COUN} subnets, ${IP_COUNT} unique IPs !"
-	cat "${CURR_PATH}/chnroute_tmp.txt" > "${RULE_PATH}/chnroute.txt"
+	cat "${CURR_PATH}/chnroute_tmp.txt" "${RULE_PATH}/chnroute2.txt" "${RULE_PATH}/chnroute3.txt" | sort -u > "${RULE_PATH}/chnroute.txt"
 
 	# 4. write json
 	# SOURCE_="misakaio"
@@ -355,9 +355,9 @@ finish(){
 get_rules(){
 	prepare
 	get_gfwlist
-	get_chnroute
 	get_chnroute2
 	get_chnroute3
+	get_chnroute
 	get_cdn
 	get_apple
 	get_google
