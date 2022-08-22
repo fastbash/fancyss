@@ -1,5 +1,8 @@
 fancyss Changelog
 ===========================================
+3.0.4.4
+   - fix chnroute.txt in rules update
+
 3.0.4.3
    - fix chnroute.txt in rules update
    - update from hq450: change chnroute source url, add chnroute2 chnroute3, find nothing changed until now.
