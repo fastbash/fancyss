@@ -127,16 +127,26 @@ get_chnroute2(){
 	# source-2：ipip, 20220604: total 6182 subnets, 13240665434 unique IPs
 	URL="https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/ipip_country/ipip_country_cn.netset"
 
+	wget -4 "$URL" -qO "${CURR_PATH}/chnroute2_2_tmp.txt"
 
-	wget -4 "$URL" -qO "${CURR_PATH}/chnroute2_tmp.txt"
-
-	if [ ! -f "${CURR_PATH}/chnroute2_tmp.txt" ]; then
+	if [ ! -f "${CURR_PATH}/chnroute2_2_tmp.txt" ]; then
 		echo "chnroute2 download faild!"
 		exit 1
 	fi
 
+	# source-3: mayaxcn, 20220604: total 8625 subnets, 343364510 unique IPs
+	# wget -4 https://raw.githubusercontent.com/mayaxcn/china-ip-list/master/chnroute.txt -qO ${CURR_PATH}/chnroute3_tmp.txt
+	URL="https://raw.githubusercontent.com/mayaxcn/china-ip-list/master/chnroute.txt"
+
+	wget -4 "$URL" -qO "${CURR_PATH}/chnroute2_3_tmp.txt"
+
+	if [ ! -f "${CURR_PATH}/chnroute2_3_tmp.txt" ]; then
+		echo "chnroute2.3 download faild!"
+		exit 1
+	fi
+
 	# 2. process
-	sed -i '/^#/d' "${CURR_PATH}/chnroute2_tmp.txt"
+	sed '/^#/d' "${CURR_PATH}/chnroute2_2_tmp.txt" "${CURR_PATH}/chnroute2_3_tmp.txt" | sort -u > "${CURR_PATH}/chnroute2_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute2_tmp.txt" | awk '{print $1}')
@@ -148,7 +158,7 @@ get_chnroute2(){
 	fi
 
 	# 4. write json
-	SOURCE="misakaio"
+	SOURCE="misakaio_mayaxcn"
 	CURR_DATE=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
 	MD5_VALUE="${md5sum1}"
 	LINE_COUN=$(wc -l < "${CURR_PATH}/chnroute2_tmp.txt")
@@ -168,26 +178,32 @@ get_chnroute2(){
 get_chnroute3(){
 	# chnroute3.txt
 
-	# source-3: mayaxcn, 20220604: total 8625 subnets, 343364510 unique IPs
-	# wget -4 https://raw.githubusercontent.com/mayaxcn/china-ip-list/master/chnroute.txt -qO ${CURR_PATH}/chnroute3_tmp.txt
-
 	# source-4: clang, 20220604: total 8625 subnets, 343364510 unique IPs
 	URL="http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
+
+	wget -4 "$URL" -qO "${CURR_PATH}/chnroute3_4_tmp.txt"
+
+	if [ ! -f "${CURR_PATH}/chnroute3_4_tmp.txt" ]; then
+		echo "chnroute3 download faild!"
+		exit 1
+	fi
 
 	# source-5：apnic, 20220604: total 8625 subnets, 343364510 unique IPs
 	# wget -4 -O- http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest -qO ${CURR_PATH}/apnic.txt
 	# cat apnic.txt| awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > ${CURR_PATH}/chnroute3_tmp.txt
 	# rm -rf ${CURR_PATH}/apnic.txt
+	URL="http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
 
-	wget -4 "$URL" -qO "${CURR_PATH}/chnroute3_tmp.txt"
+	wget -4 "$URL" -qO "${CURR_PATH}/chnroute3_5_tmp.txt"
 
-	if [ ! -f "${CURR_PATH}/chnroute3_tmp.txt" ]; then
+	if [ ! -f "${CURR_PATH}/chnroute3_5_tmp.txt" ]; then
 		echo "chnroute3 download faild!"
 		exit 1
 	fi
 
+
 	# 2. process
-	sed -i '/^#/d' "${CURR_PATH}/chnroute3_tmp.txt"
+	awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' "${CURR_PATH}/chnroute3_4_tmp.txt" "${CURR_PATH}/chnroute3_5_tmp.txt" | sed '/^$/d' | sort -u > "${CURR_PATH}/chnroute3_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute3_tmp.txt" | awk '{print $1}')
@@ -338,9 +354,7 @@ finish(){
 	rm -f "${CURR_PATH}/gfwlist_tmp.conf"
 	rm -f "${CURR_PATH}/gfwlist_merge.conf"
 	rm -f "${CURR_PATH}/gfwlist_download.conf"
-	rm -f "${CURR_PATH}/chnroute_tmp.txt"
-	rm -f "${CURR_PATH}/chnroute2_tmp.txt"
-	rm -f "${CURR_PATH}/chnroute3_tmp.txt"
+	rm -f "${CURR_PATH}/chnroute*.txt"
 	rm -f "${CURR_PATH}/cdn_tmp.txt"
 	rm -f "${CURR_PATH}/accelerated-domains.china.conf"
 	rm -f "${CURR_PATH}/cdn_download.txt"
