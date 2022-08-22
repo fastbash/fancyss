@@ -85,15 +85,15 @@ get_chnroute(){
 	# cat apnic.txt| awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > ${CURR_PATH}/chnroute_tmp.txt
 	# rm -rf ${CURR_PATH}/apnic.txt
 
-	wget "$URL" -qO "${CURR_PATH}/chnroute_tmp.txt"
+	wget "$URL" -qO "${CURR_PATH}/chnroute1_tmp.txt"
 	
-	if [ ! -f "${CURR_PATH}/chnroute_tmp.txt" ]; then
+	if [ ! -f "${CURR_PATH}/chnroute1_tmp.txt" ]; then
 		echo "chnroute download faild!"
 		exit 1
 	fi
 
 	# 2. process
-	sed -i '/^#/d' "${CURR_PATH}/chnroute_tmp.txt"
+	sed '/^#/d' "${CURR_PATH}/chnroute1_tmp.txt" "${RULE_PATH}/chnroute2.txt" "${RULE_PATH}/chnroute3.txt" | sort -u > "${CURR_PATH}/chnroute_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute_tmp.txt" | awk '{print $1}')
@@ -105,7 +105,7 @@ get_chnroute(){
 
 	# 5. update file
 	# echo "update chnroute, total ${LINE_COUN} subnets, ${IP_COUNT} unique IPs !"
-	cat "${CURR_PATH}/chnroute_tmp.txt" "${RULE_PATH}/chnroute2.txt" "${RULE_PATH}/chnroute3.txt" | sort -u > "${RULE_PATH}/chnroute.txt"
+	cat "${CURR_PATH}/chnroute_tmp.txt" > "${RULE_PATH}/chnroute.txt"
 
 	# 4. write json
 	# SOURCE_="misakaio"
