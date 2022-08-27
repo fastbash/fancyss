@@ -46,7 +46,7 @@ start_update(){
 				mv /tmp/gfwlist.conf "/koolshare/ss/rules/gfwlist.conf"
 				/koolshare/bin/jq --arg variable "${version_gfwlist2}" '.gfwlist.date = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				/koolshare/bin/jq --arg variable "${md5sum_gfwlist2}" '.gfwlist.md5 = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
-				/koolshare/bin/jq --arg variable "$(wc -l < /tmp/gfwlist.conf)" '.gfwlist.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
+				/koolshare/bin/jq --arg variable "$(wc -l < /koolshare/ss/rules/gfwlist.conf)" '.gfwlist.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				reboot="1"
 				echo_date "【更新成功】你的gfwlist已经更新到最新！"
 			else
@@ -73,8 +73,8 @@ start_update(){
 				mv /tmp/chnroute.txt "/koolshare/ss/rules/chnroute.txt"
 				/koolshare/bin/jq --arg variable "${version_chnroute2}" '.chnroute.date = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				/koolshare/bin/jq --arg variable "${md5sum_chnroute2}" '.chnroute.md5 = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
-				LINE_COUN=$(wc -l < "${CURR_PATH}/chnroute_tmp.txt")
-				IP_COUNT=$(awk -F "/" '{sum += 2^(32-$2)-2};END {print sum}' "${CURR_PATH}/chnroute_tmp.txt")
+				LINE_COUN=$(wc -l < "/koolshare/ss/rules/chnroute.txt")
+				IP_COUNT=$(awk -F "/" '{sum += 2^(32-$2)-2};END {print sum}' "/koolshare/ss/rules/chnroute.txt")
 				/koolshare/bin/jq --arg variable "$LINE_COUN" '.chnroute.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				/koolshare/bin/jq --arg variable "$IP_COUNT" '.chnroute.count_ip = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				reboot="1"
@@ -102,7 +102,7 @@ start_update(){
 				mv /tmp/cdn.txt "/koolshare/ss/rules/cdn.txt"
 				/koolshare/bin/jq --arg variable "${version_cdn2}" '.cdn_china.date = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				/koolshare/bin/jq --arg variable "${md5sum_cdn2}" '.cdn_china.md5 = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
-				/koolshare/bin/jq --arg variable "$(wc -l < /tmp/cdn.txt)" '.cdn_china.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
+				/koolshare/bin/jq --arg variable "$(wc -l < /koolshare/ss/rules/cdn.txt)" '.cdn_china.count = $variable' "${RULE_FILE}" | sponge "${RULE_FILE}"
 				reboot="1"
 				echo_date "【更新成功】你的cdn名单已经更新到最新！"
 			else

@@ -1,5 +1,9 @@
 fancyss Changelog
 ===========================================
+3.0.4.5
+   - fix counts in rules update;
+   - add more options in failover_settings;
+
 3.0.4.4
    - fix chnroute.txt in rules update
 
