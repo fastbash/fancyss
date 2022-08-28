@@ -807,7 +807,7 @@ start_dns() {
 			sed '/^#/d /^$/d /foreign/d' /koolshare/ss/rules/smartdns_template.conf > /tmp/smartdns.conf
 		#fi
 		smartdns -c /tmp/smartdns.conf >/dev/null 2>&1 &
-	elif [ "$ss_dns_china" != "13" ] && [ "$ss_foreign_dns" == "9" ]; then
+	elif [ "$ss_dns_china" != "13" ] && [ "$ss_foreign_dns" = "9" ]; then
 		# 国内不启用SmartDNS，国外启用SmartDNS （此情况下，如果是gfwlist模式则不用cdn.conf；如果是大陆白名单模式则需要使用cdn.conf）
 		[ "$DNS_PLAN" = "1" ] && echo_date "开启SmartDNS，用于【国外gfwlist站点】的DNS解析..."
 		[ "$DNS_PLAN" = "2" ] && echo_date "开启SmartDNS，用于【国外所有网站】的DNS解析..."
@@ -908,22 +908,22 @@ create_dnsmasq_conf() {
 	# these sites need to go ss inside router
 	if [ "$ss_basic_mode" != "6" ]; then
 		echo "#for router itself" >>/tmp/wblist.conf
-		echo "server=/.google.com.tw/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.google.com.tw/router" >>/tmp/wblist.conf
+		echo "server=/google.com.tw/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/google.com.tw/router" >>/tmp/wblist.conf
 		echo "server=/dns.google.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
 		echo "ipset=/dns.google.com/router" >>/tmp/wblist.conf
-		echo "server=/.github.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.github.com/router" >>/tmp/wblist.conf
-		echo "server=/.github.io/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.github.io/router" >>/tmp/wblist.conf
-		echo "server=/.raw.githubusercontent.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.raw.githubusercontent.com/router" >>/tmp/wblist.conf
-		echo "server=/.adblockplus.org/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.adblockplus.org/router" >>/tmp/wblist.conf
-		echo "server=/.entware.net/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.entware.net/router" >>/tmp/wblist.conf
-		echo "server=/.apnic.net/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
-		echo "ipset=/.apnic.net/router" >>/tmp/wblist.conf
+		echo "server=/github.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/github.com/router" >>/tmp/wblist.conf
+		echo "server=/github.io/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/github.io/router" >>/tmp/wblist.conf
+		echo "server=/raw.githubusercontent.com/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/raw.githubusercontent.com/router" >>/tmp/wblist.conf
+		echo "server=/adblockplus.org/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/adblockplus.org/router" >>/tmp/wblist.conf
+		echo "server=/entware.net/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/entware.net/router" >>/tmp/wblist.conf
+		echo "server=/apnic.net/127.0.0.1#${DNSF_PORT}" >>/tmp/wblist.conf
+		echo "ipset=/apnic.net/router" >>/tmp/wblist.conf
 	fi
 
 	# append white domain list, not through ss
@@ -936,11 +936,11 @@ create_dnsmasq_conf() {
 			if [ "$?" = "0" ]; then
 				# 回国模式下，用外国DNS，否则用中国DNS。
 				if [ "$ss_basic_mode" != "6" ]; then
-					echo "$wan_white_domain" | sed "s/^/server=&\/./g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf
-					echo "$wan_white_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
+					echo "$wan_white_domain" | sed "s/^/server=&\//g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf
+					echo "$wan_white_domain" | sed "s/^/ipset=&\//g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
 				else
-					echo "$wan_white_domain" | sed "s/^/server=&\/./g" | sed "s/$/\/$ss_direct_user/g" >>/tmp/wblist.conf
-					echo "$wan_white_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
+					echo "$wan_white_domain" | sed "s/^/server=&\//g" | sed "s/$/\/$ss_direct_user/g" >>/tmp/wblist.conf
+					echo "$wan_white_domain" | sed "s/^/ipset=&\//g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
 				fi
 			else
 				echo_date "！！检测到域名白名单内的【${wan_white_domain}】不是域名格式！！此条将不会添加！！"
@@ -953,9 +953,11 @@ create_dnsmasq_conf() {
 	# 此地址在非回国模式下用国内DNS解析，以免SS/SSR/V2RAY线路挂掉，导致一些走远端解析的情况下，无法获取到dns.msftncsi.com的解析结果，从而使得【网络地图】中网络显示断开。
 	if [ "$ss_basic_mode" != "6" ]; then
 		echo "#for special site (Mandatory China DNS)" >>/tmp/wblist.conf
-		for wan_white_domain2 in "apple.com" "microsoft.com" "dns.msftncsi.com"; do
-			echo "$wan_white_domain2" | sed "s/^/server=&\/./g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf
-			echo "$wan_white_domain2" | sed "s/^/ipset=&\/./g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
+		force_whitelist="apple.com microsoft.com dns.msftncsi.com"
+		force_whitelist="dns.msftncsi.com"
+		for wan_white_domain2 in ${force_whitelist}; do
+			echo "$wan_white_domain2" | sed "s/^/server=&\//g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf
+			echo "$wan_white_domain2" | sed "s/^/ipset=&\//g" | sed "s/$/\/white_list/g" >>/tmp/wblist.conf
 		done
 	fi
 
@@ -968,11 +970,11 @@ create_dnsmasq_conf() {
 			detect_domain "$wan_black_domain"
 			if [ "$?" = "0" ]; then
 				if [ "$ss_basic_mode" != "6" ]; then
-					echo "$wan_black_domain" | sed "s/^/server=&\/./g" | sed "s/$/\/127.0.0.1#$DNSF_PORT/g" >>/tmp/wblist.conf
-					echo "$wan_black_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/black_list/g" >>/tmp/wblist.conf
+					echo "$wan_black_domain" | sed "s/^/server=&\//g" | sed "s/$/\/127.0.0.1#$DNSF_PORT/g" >>/tmp/wblist.conf
+					echo "$wan_black_domain" | sed "s/^/ipset=&\//g" | sed "s/$/\/black_list/g" >>/tmp/wblist.conf
 				else
-					echo "$wan_black_domain" | sed "s/^/server=&\/./g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf
-					echo "$wan_black_domain" | sed "s/^/ipset=&\/./g" | sed "s/$/\/black_list/g" >>/tmp/wblist.conf
+					echo "$wan_black_domain" | sed "s/^/server=&\//g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf
+					echo "$wan_black_domain" | sed "s/^/ipset=&\//g" | sed "s/$/\/black_list/g" >>/tmp/wblist.conf
 				fi
 			else
 				echo_date "！！检测到域名黑名单内的【${wan_black_domain}】不是域名格式！！此条将不会添加！！"
@@ -1027,7 +1029,7 @@ create_dnsmasq_conf() {
 				echo_date "国外解析方案【$(get_dns_name $ss_foreign_dns)】，需要加载cdn.conf提供国内cdn..."
 				echo_date "生成cdn加速列表到/tmp/sscdn.conf，加速用的dns：${CDN}"
 				echo "#for china site CDN acclerate" >>/tmp/sscdn.conf
-				cat /koolshare/ss/rules/cdn.txt | sed "s/^/server=&\/./g" | sed "s/$/\/&${CDN}#${DNSC_PORT}/g" | sort | awk '{if ($0!=line) print;line=$0}' >>/tmp/sscdn.conf
+				cat /koolshare/ss/rules/cdn.txt | sed "s/^/server=&\//g" | sed "s/$/\/&${CDN}#${DNSC_PORT}/g" | sort | awk '{if ($0!=line) print;line=$0}' >>/tmp/sscdn.conf
 			fi
 		fi
 	fi
