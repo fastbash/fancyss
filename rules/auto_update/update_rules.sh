@@ -37,10 +37,10 @@ get_gfwlist(){
 	sort -k 2 -t. -u "${CURR_PATH}/gfwlist_merge.conf" > "${CURR_PATH}/gfwlist_tmp.conf"
 	
 	# 4. post filter: delete site below
-	sed -i '/m-team/d' "${CURR_PATH}/gfwlist_tmp.conf"
-	sed -i '/windowsupdate/d' "${CURR_PATH}/gfwlist_tmp.conf"
-	sed -i '/v2ex/d' "${CURR_PATH}/gfwlist_tmp.conf"
-	sed -i '/apple\.com/d' "${CURR_PATH}/gfwlist_tmp.conf"
+	# sed -i '/m-team/d' "${CURR_PATH}/gfwlist_tmp.conf"
+	# sed -i '/windowsupdate/d' "${CURR_PATH}/gfwlist_tmp.conf"
+	# sed -i '/v2ex/d' "${CURR_PATH}/gfwlist_tmp.conf"
+	# sed -i '/apple\.com/d' "${CURR_PATH}/gfwlist_tmp.conf"
 
 	# 5. compare
 	md5sum1=$(md5sum "${CURR_PATH}/gfwlist_tmp.conf" | awk '{print $1}')
