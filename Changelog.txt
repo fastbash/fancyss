@@ -1,5 +1,8 @@
 fancyss Changelog
 ===========================================
+3.0.5
+   - fix remove some force whitelists & gfwlists in code
+   
 3.0.4.5
    - fix counts in rules update;
    - add more options in failover_settings;
