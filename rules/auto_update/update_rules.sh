@@ -94,7 +94,7 @@ get_chnroute(){
 
 	# 2. process
 	sed '/^#/d' "${CURR_PATH}/chnroute1_tmp.txt" "${RULE_PATH}/chnroute2.txt" "${RULE_PATH}/chnroute3.txt" | sort -u > "${CURR_PATH}/chnroute_tmp.txt"
-	sed -i '1i192.168.0.0/24\n172.16.0.0/16\n10.0.0.0/8' "${RULE_PATH}/chnroute.txt"
+	sed -i '1i192.168.0.0/24\n172.16.0.0/16\n10.0.0.0/8' "${CURR_PATH}/chnroute_tmp.txt"
 
 	# 3. compare
 	md5sum1=$(md5sum "${CURR_PATH}/chnroute_tmp.txt" | awk '{print $1}')
