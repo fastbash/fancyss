@@ -933,7 +933,7 @@ create_dnsmasq_conf() {
 		echo "#for white_domain" >>/tmp/wblist.conf
 		for wan_white_domain in $wanwhitedomain; do
 			detect_domain "$wan_white_domain"
-			if [ "$?" == "0" ]; then
+			if [ "$?" = "0" ]; then
 				# 回国模式下，用外国DNS，否则用中国DNS。
 				if [ "$ss_basic_mode" != "6" ]; then
 					echo "$wan_white_domain" | sed "s/^/server=&\/./g" | sed "s/$/\/$CDN#$DNSC_PORT/g" >>/tmp/wblist.conf

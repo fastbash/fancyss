@@ -30,8 +30,8 @@ get_gfwlist(){
 	fi
 
 	# 2. merge
-	cat "${CURR_PATH}/gfwlist_download.conf" "${CURR_PATH}/gfwlist_fancyss.conf" "${CURR_PATH}/../../../proxy_list.txt" | grep -v '#' | grep -Ev "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sed "s/^/server=&\/./g" | sed "s/$/\/127.0.0.1#7913/g" >"${CURR_PATH}/gfwlist_merge.conf"
-	cat "${CURR_PATH}/gfwlist_download.conf" "${CURR_PATH}/gfwlist_fancyss.conf" "${CURR_PATH}/../../../proxy_list.txt" | grep -v '#' | grep -Ev "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sed "s/^/ipset=&\/./g" | sed "s/$/\/gfwlist/g" >>"${CURR_PATH}/gfwlist_merge.conf"
+	cat "${CURR_PATH}/gfwlist_download.conf" "${CURR_PATH}/gfwlist_fancyss.conf" "${CURR_PATH}/../../../proxy_list.txt" | sed 's#^full:##g' | grep -v '#' | grep -Ev "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sed "s/^/server=&\/./g" | sed "s/$/\/127.0.0.1#7913/g" >"${CURR_PATH}/gfwlist_merge.conf"
+	cat "${CURR_PATH}/gfwlist_download.conf" "${CURR_PATH}/gfwlist_fancyss.conf" "${CURR_PATH}/../../../proxy_list.txt" | sed 's#^full:##g' | grep -v '#' | grep -Ev "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | sed "s/^/ipset=&\/./g" | sed "s/$/\/gfwlist/g" >>"${CURR_PATH}/gfwlist_merge.conf"
 
 	# 3. sort
 	sort -k 2 -t. -u "${CURR_PATH}/gfwlist_merge.conf" > "${CURR_PATH}/gfwlist_tmp.conf"
@@ -106,6 +106,7 @@ get_chnroute(){
 	# 5. update file
 	# echo "update chnroute, total ${LINE_COUN} subnets, ${IP_COUNT} unique IPs !"
 	cat "${CURR_PATH}/chnroute_tmp.txt" > "${RULE_PATH}/chnroute.txt"
+	sed -i '1i192.168.0.0/24;1i172.16.0.0/16;1i10.0.0.0/8' "${RULE_PATH}/chnroute.txt"
 
 	# 4. write json
 	# SOURCE_="misakaio"
@@ -246,7 +247,7 @@ get_cdn(){
 	fi
 	
 	# 2.merge
-	cat "${CURR_PATH}"/{accelerated-domains.china.conf,apple.china.conf,google.china.conf} "${CURR_PATH}/../../../no_proxy_list.txt" | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
+	cat "${CURR_PATH}"/{accelerated-domains.china.conf,apple.china.conf,google.china.conf} "${CURR_PATH}/../../../no_proxy_list.txt" | sed 's#^full:##g' | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
 	cat "${CURR_PATH}/cdn_koolcenter.txt" "${CURR_PATH}/cdn_download.txt" | sort -u > "${CURR_PATH}/cdn_tmp.txt"
 
 	# 3. compare
