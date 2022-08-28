@@ -106,7 +106,7 @@ get_chnroute(){
 	# 5. update file
 	# echo "update chnroute, total ${LINE_COUN} subnets, ${IP_COUNT} unique IPs !"
 	cat "${CURR_PATH}/chnroute_tmp.txt" > "${RULE_PATH}/chnroute.txt"
-	sed -i '1i192.168.0.0/24;1i172.16.0.0/16;1i10.0.0.0/8' "${RULE_PATH}/chnroute.txt"
+	sed -i '1i192.168.0.0/24\n172.16.0.0/16\n10.0.0.0/8' "${RULE_PATH}/chnroute.txt"
 
 	# 4. write json
 	# SOURCE_="misakaio"
