@@ -9,6 +9,7 @@ appldnld.apple.com
 appldnld.g.aaplimg.com
 appleid.cdn-apple.com
 apps.apple.com
+app-site-association.cdn-apple.com
 apps.mzstatic.com
 cdn1.apple-mapkit.com
 cdn2.apple-mapkit.com
@@ -39,6 +40,7 @@ clientflow.apple.com.akadns.net
 configuration.apple.com
 configuration.apple.com.akadns.net
 cstat.apple.com
+cstat.cdn-apple.com
 dd-cdn.origin-apple.com.akadns.net
 download.developer.apple.com
 gs-loc.apple.com
