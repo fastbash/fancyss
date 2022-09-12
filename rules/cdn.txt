@@ -4941,7 +4941,6 @@
 5etv.com
 5ewin.com
 5fen.com
-5fou.com
 5fun.com
 5fwan.com
 5gcg.com
@@ -5527,7 +5526,6 @@
 712100.com
 71360.com
 7139.com
-714.hk
 715083.com
 715300.com
 71668.net
@@ -8095,7 +8093,6 @@ aiyuangong.com
 aiyuke.com
 aizaoqi.com
 aizhan.com
-aizhanku.com
 aizhengli.com
 aizhenrong.com
 aizhet.com
@@ -9796,7 +9793,6 @@ baitiao.com
 baituibao.com
 baiu.com
 baiud.com
-baiudu.com
 baiven.com
 baiwandz.com
 baiwang.com
@@ -24892,7 +24888,6 @@ gusiyuan.com
 gusuwang.com
 gutianfood.com
 gutou.com
-gutouwang.net
 guwan.com
 guweimin.com
 guwenxs.com
@@ -29287,7 +29282,6 @@ idianchou.com
 idianfa.com
 idianshijia.com
 idigi.net
-idkaiu.com
 idler-et.com
 id-linking.com
 idmchina.net
@@ -29896,6 +29890,7 @@ imindmap.cc
 iminho.me
 imipy.com
 imitui.com
+imixpark.com
 imjiayin.com
 imkerwin.com
 imkevinyang.com
@@ -31316,7 +31311,6 @@ jfinal.com
 jfinfo.com
 jfq.com
 jfrogchina.com
-jfscd.com
 jfshare.com
 jfstatic.com
 jfuwu.com
@@ -36694,7 +36688,6 @@ loldytt.com
 loldytt.org
 loldytt.tv
 lolgo.net
-lolhd.com
 loli.cd
 loli.cloud
 loli.ee
@@ -36865,7 +36858,6 @@ lotuseed.com
 lotut.com
 loubobooo.com
 louding.com
-louishan.com
 louislivi.com
 louisvv.com
 loukee.com
@@ -44473,6 +44465,7 @@ qlidc.com
 qljgw.com
 qll-times.com
 qlmoney.com
+ql-msx.com
 qlotc.net
 qlpw.net
 qlrc.com
@@ -50027,7 +50020,6 @@ swap.wang
 swaqds.com
 swarma.net
 swarma.org
-swarmcloud.net
 swatou.com
 swbbsc.com
 sw-bllp.com
@@ -55372,7 +55364,6 @@ weixinjiajia.com
 weixinjia.net
 weixinju.com
 weixinkd.com
-weixinmenu.com
 weixinmuban.com
 weixinmvp.com
 weixinpy.com
@@ -57339,7 +57330,6 @@ xatielu.com
 xatongsheng.net
 xatvs.com
 xatyds.com
-xatyyx.com
 xatzj.com
 xauat-hqc.com
 xaudiopro.com
@@ -59150,6 +59140,7 @@ xqsbw.com
 xqship.com
 xqspx.com
 xqtesting.com
+xqwggg.com
 xqwww.com
 xrcch.com
 xrccp.com
@@ -61062,7 +61053,6 @@ ykt.io
 yktworld.com
 yktz.net
 ykyao.com
-ykydxh.com
 ykzr.com
 yl1001.com
 yladm.com
@@ -61214,7 +61204,6 @@ ynshf.com
 ynshijian.com
 ynsjg.com
 ynsqx.com
-yntc999.com
 ynteng.com
 yn-tobacco.com
 yntsg.com
@@ -61858,7 +61847,6 @@ y.to
 ytoexpress.com
 ytoglobal.com
 ytop8.com
-ytoxl.com
 ytpp.com
 ytrenyu.com
 ytsanchuan.com
@@ -62146,7 +62134,6 @@ yundasys.com
 yundianjia.com
 yundianseo.com
 yundiantech.com
-yundiao365.com
 yundns.vip
 yundongfang.com
 yundonghao.com
