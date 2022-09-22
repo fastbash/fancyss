@@ -58,6 +58,8 @@ gspe19-cn-ssl.ls.apple.com
 gspe21.ls.apple.com
 gspe21-ssl.ls.apple.com
 gspe35-ssl.ls.apple.com
+guzzoni.apple.com
+guzzoni-apple-com.v.aaplimg.com
 iadsdk.apple.com
 icloud.cdn-apple.com
 icloud-cdn.icloud.com.akadns.net
