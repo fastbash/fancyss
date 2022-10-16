@@ -25,8 +25,8 @@
 #
 ######################################################################
 #
-2|apnic|20221016|75816|19830613|20221014|+1000
-apnic|*|asn|*|11647|summary
+2|apnic|20221017|75817|19830613|20221016|+1000
+apnic|*|asn|*|11648|summary
 apnic|*|ipv4|*|50843|summary
 apnic|*|ipv6|*|13326|summary
 apnic|JP|asn|173|1|20020801|allocated
@@ -6675,6 +6675,7 @@ apnic|BD|asn|134599|1|20180814|allocated
 apnic|TH|asn|134600|1|20180814|allocated
 apnic|BD|asn|134601|1|20180814|allocated
 apnic|CN|asn|134602|1|20180814|allocated
+apnic|BD|asn|134603|1|20221016|allocated
 apnic|HK|asn|134604|1|20180816|allocated
 apnic|PG|asn|134605|1|20180816|allocated
 apnic|JP|asn|134606|1|20180816|allocated
