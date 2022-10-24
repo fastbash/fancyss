@@ -979,6 +979,7 @@
 11job.net
 11k.cc
 11lx.com
+11meigui.com
 11pdf.com
 11player.com
 11qp94.com
@@ -2248,7 +2249,6 @@
 2500.tv
 250sy.cc
 251633.com
-2529212.com
 2529.com
 253952.com
 253.com
@@ -3452,7 +3452,6 @@
 44vs.com
 453600.net
 45575.com
-4567.tv
 4567w.com
 456.net
 456ss.com
@@ -11415,7 +11414,6 @@ bluestar-pc.com
 bluestep.cc
 blue-zero.com
 blw.moe
-blyol.com
 blyun.com
 bm001.com
 bm2088.com
@@ -17478,7 +17476,6 @@ danpin.com
 danqi.com
 danqingshaonian.com
 danrenzheng.com
-danseshu.com
 danteng.me
 dantuvc.com
 danxia.com
@@ -18055,7 +18052,6 @@ devexel.com
 devexel-tech.com
 devexpresscn.com
 devio.org
-devkang.com
 devpss.com
 devqinwei.com
 devsiki.com
@@ -18417,7 +18413,6 @@ difanapp.com
 difangfengsu.com
 digcredit.com
 digforfire.net
-digforfire.org
 digg58.com
 dig-gy.com
 digiic.com
@@ -20311,7 +20306,6 @@ eeyy.com
 eezml.com
 ef360.com
 ef360.net
-ef82.com
 ef9377.com
 efala.net
 e-fangtong.com
@@ -21921,7 +21915,6 @@ ffff.cc
 fffzgh.com
 ffhre.com
 ffis.me
-ffjd1.com
 ffmarket.com
 ffmomola.com
 ffmulu.com
@@ -26393,7 +26386,6 @@ hencoder.com
 hengancaifu.com
 hengannet.com
 hengbogroup.com
-hengcaotang.com
 hengchang6.com
 hengdayun.com
 hengdianfilm.com
@@ -32304,6 +32296,7 @@ jmkx.com
 jmlk.co
 jmmuseum.com
 jmonline.org
+jmpcrash.com
 jmqy.com
 jmrsksj.org
 jmsqw.com
@@ -35340,7 +35333,6 @@ leeyegy.com
 leeyuoxs.com
 le-feng.com
 lefeng.com
-lefengmoving.com
 lefinance.com
 leftfm.com
 leftlady.com
@@ -35530,7 +35522,6 @@ letushu.com
 letv8.com
 letv8.net
 letvapp.net
-letv-cdn.com
 letvcdn.com
 letvcloud.com
 letv.com
@@ -44195,7 +44186,6 @@ qishu.co
 qishunbao.com
 qishu.tw
 qisool.com
-qisuu.la
 qita.love
 qitete.com
 qiti88.com
@@ -52481,6 +52471,7 @@ ttsz8.com
 t.tt
 tttarot.com
 ttthing.com
+ttt.sh
 tttuangou.net
 tttxf.com
 tttz.com
@@ -52981,7 +52972,6 @@ tzdjzu.com
 tz-dsp.com
 tzfdc.com
 tzfeize.xyz
-tzfile.com
 tzfuke.com
 tzgcjie.com
 tzhubo.com
@@ -57855,7 +57845,6 @@ xiaoenai.com
 xiaoeryi.com
 xiaoe-tech.com
 xiaoe-tools.com
-xiaofangdeng.com
 xiaofantian.com
 xiaofeng.org
 xiaogan.com
@@ -58173,7 +58162,6 @@ xidie.com
 xidong.net
 xidongv.com
 xiduobaby.com
-xieat.com
 xiebao18.com
 xieboke.net
 xiechao.org
@@ -60209,6 +60197,7 @@ yejuu.com
 yelanxiaoyu.com
 yelinmall.com
 yelixiali.com
+yellowjm.com
 yelook.com
 yemablog.com
 yemacaijing.com
@@ -61823,7 +61812,6 @@ yuancailiao.net
 yuancdn.com
 yuancefund.com
 yuanchengxiezuo.com
-yuanchuangchi.com
 yuandiancredit.com
 yuandi.com
 yuandongjixie.com
@@ -62312,7 +62300,6 @@ yunzujia.com
 yunzz.net
 yupiao.info
 yupoo.com
-yupsky.com
 yupu.com
 yuqianshu.com
 yuqiaolong.com
@@ -63465,7 +63452,6 @@ zhenwu.com
 zhenxiad.com
 zhenxian.fm
 zhenxingkuangchanpin.com
-zhenyouhuo.com
 zhenyouliao.com
 zhenyouweb.com
 zhenzanzixun.com
@@ -64867,6 +64853,7 @@ zsr.cc
 zs-rh.com
 zsso03.com
 zssph.com
+zssq8.com
 zssxczxyey.com
 zstack.io
 zstzs.com
