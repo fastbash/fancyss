@@ -1,16 +1,16 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2022-11-02 02:10",
-    "md5": "c2ea93742f62c02fc51c1869cb2b8554",
-    "count": "5658"
+    "date": "2022-11-08 02:10",
+    "md5": "d34be4f0e5fda7de6fd84a78cab9b315",
+    "count": "5649"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2022-11-06 15:11",
-    "md5": "8415e619d96ec76038ad995a690d807a",
+    "date": "2022-11-08 02:10",
+    "md5": "a184de8136673c3d035822ad908d33b2",
     "count": "12418",
-    "count_ip": "13396406434"
+    "count_ip": "13396406690"
   },
   "cdn_china": {
     "name": "cdn.txt",
@@ -37,15 +37,15 @@
     "count": "81"
   },
   "chnroute2": {
-    "date": "2022-11-05 02:10",
-    "md5": "80266907d94d8ace55a5525285007a47",
-    "count": "10770",
-    "count_ip": "13347229314"
+    "date": "2022-11-08 02:10",
+    "md5": "0ba56b1e54c7704672b8bcd881d88d6c",
+    "count": "10771",
+    "count_ip": "13347229824"
   },
   "chnroute3": {
-    "date": "2022-11-05 02:11",
-    "md5": "a6994aacce603808da212baa71fc32ff",
-    "count": "8620",
-    "count_ip": "343221160"
+    "date": "2022-11-08 02:10",
+    "md5": "17a6b95cbec5beedbd0825c34caf5db5",
+    "count": "8621",
+    "count_ip": "343221670"
   }
 }
