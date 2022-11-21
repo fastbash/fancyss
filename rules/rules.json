@@ -7,16 +7,16 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2022-11-20 02:11",
-    "md5": "c74fb11de774455d1daa33f700308d01",
+    "date": "2022-11-22 02:11",
+    "md5": "f925fb76970779a7e032357615827e39",
     "count": "12402",
-    "count_ip": "13397336258"
+    "count_ip": "13397335490"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2022-11-19 02:11",
-    "md5": "5c3c958501dc2cdf2c237d098ea557a7",
-    "count": "65329"
+    "date": "2022-11-22 02:11",
+    "md5": "d2a9a2c0ca6218661a572dc1dd56542c",
+    "count": "65237"
   },
   "apple_china": {
     "name": "apple_china.txt",
@@ -37,15 +37,15 @@
     "count": "81"
   },
   "chnroute2": {
-    "date": "2022-11-19 02:10",
-    "md5": "ce07b375f76874102ab7ce5aec81d20b",
-    "count": "10768",
-    "count_ip": "13347226246"
+    "date": "2022-11-22 02:11",
+    "md5": "005a5165d0ea9edd2ce0ba6725f7058a",
+    "count": "10767",
+    "count_ip": "13347225224"
   },
   "chnroute3": {
-    "date": "2022-11-19 02:11",
-    "md5": "fa223118c207d75b47a4a18c8b30f9cb",
-    "count": "8618",
-    "count_ip": "343218092"
+    "date": "2022-11-22 02:11",
+    "md5": "cc5bc439fafa180cc66e6719b3675a0c",
+    "count": "8617",
+    "count_ip": "343217070"
   }
 }
