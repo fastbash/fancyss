@@ -1,4 +1,3 @@
-
 00000.host
 00042.com
 00058.com
@@ -7133,7 +7132,6 @@ aadongman.com
 aads-cng.net
 aamachina.org
 aaniao.com
-aaplimg.com
 aaqqw.com
 aarch64.me
 aardio.com
@@ -8032,10 +8030,8 @@ ajyg.com
 ak0.tw
 ak1ak1.com
 ak47ids.com
-akadns.net
 akaifa.com
 akaiwl.com
-akamaiedge.net
 akandou.com
 akaxin.com
 akbe.com
@@ -8858,11 +8854,8 @@ apple88.net
 appleadstech.com
 appleads-trk.com
 applebl.com
-apple-cloudkit.com
-apple.com
 applehunt.com
 appleid.cdn-apple.com
-apple-mapkit.com
 applemei.com
 appletuan.com
 applex.net
@@ -12894,7 +12887,6 @@ cdn56.com
 cdn86.net
 cdn88.cc
 cdnaaa.net
-cdn-apple.com
 cdn.apple-mapkit.com
 cdnbuild.net
 cdnbye.com
@@ -20059,7 +20051,6 @@ eddic.net
 eddycjy.com
 ede35.com
 e-deehoo.com
-edgekey.net
 edgesrv.com
 edgesrv.xyz
 edhic.com
@@ -28879,8 +28870,6 @@ iclickstatic.com
 icloud.cdn-apple.com
 icloud-cdn.icloud.com.akadns.net
 icloudcity.com
-icloud.com
-icloud-content.com
 icloudgslb.com
 icloudnative.io
 icloudnews.net
@@ -37868,7 +37857,6 @@ mechatim.com
 mechr.com
 mechrevo.com
 me-city.com
-me.com
 mecoxlane.com
 med126.com
 med66.com
@@ -39842,7 +39830,6 @@ mzread.com
 mzres.com
 mzsky.cc
 mzsmn.com
-mzstatic.com
 mztgame.com
 mztzzx.com
 mzuan.com
@@ -45887,7 +45874,6 @@ saebbs.com
 sa-ec.com
 sae-china.org
 safebrowsing.googleapis.com
-safebrowsing.urlsec.qq.com
 safecenter.com
 safehoo.com
 safejmp.com
