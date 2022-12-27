@@ -5206,6 +5206,7 @@
 66ruian.com
 66shouyou.com
 66sj.com
+66ss.org
 66sy.com
 66team.com
 66test.com
@@ -11058,6 +11059,7 @@ bjmti.com
 bjnaxl.com
 bjnsr.com
 bjp321.com
+bjpag.com
 bjpowernode.com
 bjqcjdcj.com
 bjqhgjj.com
@@ -11749,6 +11751,7 @@ btv.org
 btwob.net
 btwuji.com
 btxl8.com
+btydjxc.com
 btyou.com
 btzhcc.com
 buaaer.com
@@ -12874,6 +12877,7 @@ cdnhwc3.com
 cdnhwc5.com
 cdnhwc6.com
 cdnhwc8.com
+cdnhwcedt124.com
 cdnhwchcg02.com
 cdnhwcibv122.com
 cdnidc.net
@@ -14865,6 +14869,7 @@ cjhospital.com
 cjhxfund.com
 cjienc.com
 cjiit.com
+cjjd04.com
 cjjd08.com
 cjjhb.com
 cjjjs.com
@@ -15014,6 +15019,7 @@ cloud-dns.vip
 clouddns.vip
 clouddream.net
 cloudflare520.com
+cloudflare-cn.com
 cloud-frame.com
 cloudgap.net
 cloudgfw.com
@@ -17046,6 +17052,7 @@ d7vg.com
 d8th.com
 da88.net
 daanbar.com
+daanche.com
 da.anythinktech.com
 daba.com
 dabaicai.com
@@ -17906,6 +17913,7 @@ dexian.mobi
 dexindat.com
 dexingrv.com
 dexinsg.com
+dextercai.com
 dexuee.com
 dexunyun.com
 deyang5.com
@@ -40802,6 +40810,7 @@ ntwzy.com
 ntxiru.com
 ntyswlkj.com
 ntyy888.com
+ntzcb2b.com
 nu1l.com
 nuandao.com
 nuan.io
@@ -41619,6 +41628,7 @@ ouyabosi.com
 ouyada.com
 ouyaoxiazai.com
 ouyeel.com
+ouyi.date
 ouyingyimin.com
 ouyi.zone
 ouzhougoufang.com
@@ -44480,6 +44490,8 @@ queniubg.com
 queniucf.com
 queniuck.com
 queniufm.com
+queniuhy.com
+queniukr.com
 queniuso.com
 queniusy.com
 queniuuf.com
@@ -45852,6 +45864,7 @@ saitjr.com
 saiyangame.com
 saiyouedu.net
 saiyunyx.com
+sakesi.club
 sakway.com
 salasolo.com
 saleoilpaintings.com
@@ -47311,6 +47324,7 @@ shiyicunxiao.com
 shiyide.com
 shiyiyx.com
 shiyongjun.biz
+shiyouhome.com
 shiyousan.com
 shiyue.com
 shiyuegame.com
@@ -49959,6 +49973,7 @@ szaiten.com
 sz-amdc.com
 szande.com
 szaudio.com
+szbaoly.com
 szbbs.org
 szbcase.com
 szbdyd.com
@@ -51482,6 +51497,7 @@ tjzfcg.com
 tjzhongyiyao.com
 tj-zt.com
 tjzyec.com
+tjzyfw.com
 tk163.com
 tk.anythinktech.com
 tkf.ink
@@ -55257,6 +55273,7 @@ wezhan.us
 wezhuiyi.com
 wf163.com
 wf66.com
+wfaozhuo.com
 wfbaiyou.com
 wfbbs.com
 wfbrood.com
@@ -60315,6 +60332,7 @@ yingyinglicai.com
 yingyonghao8.com
 yingyonghui.com
 yingyongmiao.com
+yingyuchat.com
 yingyu.com
 yingyurumen.com
 yingyushijie.com
@@ -62053,7 +62071,6 @@ ywyanxing.com
 yx0599.com
 yx090.com
 yx10011.com
-yx129.net
 yx192.com
 yx231.com
 yx643.com
@@ -62563,6 +62580,7 @@ zechoriah.com
 zechunbengye.com
 zeda1.com
 zedukm.com
+zeekrlife.com
 zeelis.com
 zeesin.com
 zego.im
