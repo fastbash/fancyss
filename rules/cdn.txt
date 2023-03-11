@@ -5380,7 +5380,6 @@
 71lady.com
 71lady.net
 71.net
-71one.net
 71p.net
 71study.com
 71txt.com
@@ -8567,7 +8566,6 @@ aoapp.com
 aobacore.com
 aobaishi.com
 aobosoft.com
-aoc.com
 aocde.com
 aocdn.com
 aoch.com
@@ -10144,7 +10142,6 @@ beianw.net
 beibaozq.com
 beibeicdn.com
 beibei.com
-beibj.com
 beicdn.com
 beidahuang.net
 beidasoft.com
@@ -11269,7 +11266,6 @@ bnzt88.com
 bo56.com
 boai.com
 boanying.com
-bob2012.com
 bob4885.com
 bobaow.com
 bobbns.com
@@ -11509,7 +11505,6 @@ bqg8.cc
 bqg8.la
 bqg99.cc
 bqgyy.com
-bqiapp.com
 bqimg.com
 bqpoint.com
 bqq8.com
@@ -12635,7 +12630,6 @@ ccxjd.com
 ccyjjd.com
 ccyts.com
 ccyunmai.com
-ccyyls.com
 ccziben.com
 cd120.com
 cd23f.com
@@ -21028,7 +21022,6 @@ fangchanhz.com
 fangchip.com
 fangcloud.com
 fang.com
-fangcs.net
 fangdaijisuanqi.com
 fangdd.com
 fangdichanceo.com
@@ -23071,7 +23064,6 @@ geekfan.net
 geekfans.com
 geekhub.com
 geekiron.com
-geekjc.com
 geekluo.com
 geekmaker.com
 geekman.vip
@@ -25465,7 +25457,6 @@ hat358.com
 hatfav.com
 hatlonely.com
 hatoem.com
-hat-toraya.com
 haval-global.com
 havefun.im
 have.ink
@@ -27026,7 +27017,6 @@ hp123.com
 hp888.com
 hpccake.com
 hpdwfd2.com
-hpicss.com
 hp-marathon.com
 hpoi.net
 hpool.online
@@ -28848,7 +28838,6 @@ iegcom.com
 iegee.net
 iegourl.com
 iejiu.com
-i-element.org
 ielts68.com
 ieltschn.com
 iemblog.com
@@ -30495,7 +30484,6 @@ jasolar.com
 jasongj.com
 jason-z.com
 jasperxu.com
-jasve.com
 jatd.org
 java1234.com
 java2000.net
@@ -30967,7 +30955,6 @@ jiangxianli.com
 jiangxindaojia.com
 jiangxinlingdu.com
 jiangxiol.com
-jiangxipiaoliu.com
 jiangzi.com
 jianhaobao.com
 jianhen.net
@@ -32440,7 +32427,6 @@ julyedu.com
 julysong.com
 jumanhua.com
 jumei.com
-jumeiglobal.com
 jumeinet.com
 jumengren.com
 jumi18.com
@@ -33691,7 +33677,6 @@ kokojia.com
 kole8.com
 kolrank.com
 kolstore.com
-komatech-china.com
 komect.com
 kometo.com
 koncoo.com
@@ -34308,7 +34293,6 @@ l2t7.cc
 l36h.com
 l5550.com
 l68.net
-l6bxs.com
 l77777777.com
 l7audiolab.com
 l99.com
@@ -40461,6 +40445,7 @@ ntjob88.com
 ntjoy.com
 ntjrchina.com
 ntjymall.com
+ntlcjd.com
 ntneuro.org
 ntpcb.com
 ntp.felixc.at
@@ -44025,6 +44010,7 @@ qtumist.com
 qtvcd.com
 qtx.com
 qtyd.com
+qtymyy.com
 qu02.com
 qu247.com
 qua.com
@@ -47443,7 +47429,6 @@ shzbc.com
 sh-zbfm.com
 shzbh.com
 shzbkj.com
-shzcgs.org
 shzf.com
 shzfzz.net
 shzgd.org
@@ -52421,7 +52406,6 @@ uchuanbo.com
 uchuhimo.me
 ucicq.com
 ucjoy.com
-uckendo.com
 uclmad.com
 uclmimg.com
 uclmjs.com
@@ -53044,7 +53028,6 @@ uzai.com
 uzbox.com
 uzing.net
 uzise.com
-uzmzm.com
 uzshare.com
 uzuzuz.com
 uzzf.com
@@ -55446,7 +55429,6 @@ wjyanghu.com
 wjyh.com
 wjyt-china.org
 wjyw.com
-wjz0098.me
 wjzj.vip
 wk007.com
 wk2.com
@@ -59565,7 +59547,6 @@ yhres.com
 yhshapp.com
 yhsms.com
 yhspy.com
-yhsrv.com
 yhtools.cc
 yhtx.tv
 yhudxc.com
@@ -61473,7 +61454,6 @@ yuqianshu.com
 yuqiaolong.com
 yuquanhosp.com
 yuque.com
-yureen.com
 yuriimg.com
 yusainorthwest.com
 yusa.me
@@ -61673,7 +61653,6 @@ yycoin.com
 yy.com
 yycqc.com
 yycro.com
-yydatas.com
 yydbzz.com
 yydcs.com
 yydidai.com
@@ -62533,7 +62512,6 @@ zh.cc
 zhcf001.com
 zhcw.com
 zhdba.com
-zhdchb.com
 zhdgps.com
 zhe28.com
 zhe2.com
