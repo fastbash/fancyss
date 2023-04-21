@@ -25,10 +25,10 @@
 #
 ######################################################################
 #
-2|apnic|20230421|76227|19830613|20230420|+1000
-apnic|*|asn|*|11928|summary
-apnic|*|ipv4|*|50348|summary
-apnic|*|ipv6|*|13951|summary
+2|apnic|20230422|76234|19830613|20230421|+1000
+apnic|*|asn|*|11930|summary
+apnic|*|ipv4|*|50351|summary
+apnic|*|ipv6|*|13953|summary
 apnic|JP|asn|173|1|20020801|allocated
 apnic|NZ|asn|681|1|20020801|allocated
 apnic|AU|asn|1221|1|20000131|allocated
@@ -11957,6 +11957,8 @@ apnic|CN|asn|151194|1|20230420|allocated
 apnic|JP|asn|151195|1|20230420|allocated
 apnic|HK|asn|151196|1|20230420|allocated
 apnic|LK|asn|151197|1|20230420|allocated
+apnic|MY|asn|151198|1|20230421|allocated
+apnic|IN|asn|151199|1|20230421|allocated
 apnic|AU|ipv4|1.0.0.0|256|20110811|assigned
 apnic|CN|ipv4|1.0.1.0|256|20110414|allocated
 apnic|CN|ipv4|1.0.2.0|512|20110414|allocated
@@ -25770,7 +25772,7 @@ apnic|AU|ipv4|103.101.168.0|1024|20170928|allocated
 apnic|IN|ipv4|103.101.172.0|256|20170928|allocated
 apnic|AU|ipv4|103.101.173.0|256|20170928|assigned
 apnic|IN|ipv4|103.101.174.0|512|20170928|allocated
-apnic|GB|ipv4|103.101.176.0|1024|20170928|allocated
+apnic|US|ipv4|103.101.176.0|1024|20170928|allocated
 apnic|CN|ipv4|103.101.180.0|1024|20170928|allocated
 apnic|CN|ipv4|103.101.184.0|1024|20170928|allocated
 apnic|HK|ipv4|103.101.188.0|1024|20170929|allocated
@@ -29328,6 +29330,7 @@ apnic|EE|ipv4|103.140.186.0|512|20190703|allocated
 apnic|ID|ipv4|103.140.188.0|512|20190703|allocated
 apnic|IN|ipv4|103.140.190.0|512|20190703|allocated
 apnic|CN|ipv4|103.140.192.0|512|20190703|allocated
+apnic|LK|ipv4|103.140.194.0|512|20230421|assigned
 apnic|NZ|ipv4|103.140.196.0|512|20190704|assigned
 apnic|AU|ipv4|103.140.198.0|256|20190704|assigned
 apnic|ID|ipv4|103.140.199.0|256|20190705|assigned
@@ -32417,6 +32420,7 @@ apnic|CN|ipv4|103.162.32.0|512|20210126|allocated
 apnic|ID|ipv4|103.162.34.0|256|20210126|allocated
 apnic|ID|ipv4|103.162.35.0|256|20210127|assigned
 apnic|ID|ipv4|103.162.36.0|512|20210126|allocated
+apnic|HK|ipv4|103.162.38.0|512|20230420|assigned
 apnic|PK|ipv4|103.162.40.0|512|20210127|allocated
 apnic|TH|ipv4|103.162.42.0|256|20210127|assigned
 apnic|ID|ipv4|103.162.43.0|256|20210128|allocated
@@ -36611,7 +36615,7 @@ apnic|JP|ipv4|103.197.12.0|1024|20150930|allocated
 apnic|IN|ipv4|103.197.16.0|1024|20151001|allocated
 apnic|MY|ipv4|103.197.20.0|1024|20151001|allocated
 apnic|HK|ipv4|103.197.24.0|1024|20151001|assigned
-apnic|IN|ipv4|103.197.28.0|1024|20151001|allocated
+apnic|SG|ipv4|103.197.28.0|1024|20151001|allocated
 apnic|IN|ipv4|103.197.32.0|1024|20151001|allocated
 apnic|IN|ipv4|103.197.36.0|1024|20151001|assigned
 apnic|IN|ipv4|103.197.40.0|1024|20151001|allocated
@@ -39301,6 +39305,7 @@ apnic|PK|ipv4|103.235.76.0|1024|20160914|allocated
 apnic|CN|ipv4|103.235.80.0|1024|20140703|allocated
 apnic|CN|ipv4|103.235.84.0|1024|20140703|allocated
 apnic|TW|ipv4|103.235.88.0|512|20140703|assigned
+apnic|IN|ipv4|103.235.90.0|512|20230421|assigned
 apnic|US|ipv4|103.235.92.0|1024|20140703|allocated
 apnic|AU|ipv4|103.235.96.0|1024|20140703|assigned
 apnic|CN|ipv4|103.235.100.0|1024|20140703|allocated
@@ -65358,7 +65363,9 @@ apnic|VN|ipv6|2001:df2:4d40::|48|20230420|assigned
 apnic|PH|ipv6|2001:df2:4d80::|48|20191209|assigned
 apnic|VN|ipv6|2001:df2:4dc0::|48|20230420|assigned
 apnic|ID|ipv6|2001:df2:4e00::|48|20160520|assigned
+apnic|IN|ipv6|2001:df2:4e40::|48|20230421|assigned
 apnic|MM|ipv6|2001:df2:4e80::|48|20191209|assigned
+apnic|LK|ipv6|2001:df2:4ec0::|48|20230421|assigned
 apnic|AU|ipv6|2001:df2:4f00::|48|20170821|assigned
 apnic|BD|ipv6|2001:df2:4f80::|48|20191209|assigned
 apnic|IN|ipv6|2001:df2:5080::|48|20191209|assigned
