@@ -7,10 +7,10 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2023-04-27 02:11",
-    "md5": "306e2d28bcdffc0cc7f021de3ceb4886",
-    "count": "12573",
-    "count_ip": "17694596682"
+    "date": "2023-04-28 02:11",
+    "md5": "08cb3c30ad05faa8f36191d7185622af",
+    "count": "12576",
+    "count_ip": "17694598980"
   },
   "cdn_china": {
     "name": "cdn.txt",
@@ -43,9 +43,9 @@
     "count_ip": "17640681762"
   },
   "chnroute3": {
-    "date": "2023-04-27 02:11",
-    "md5": "0ab4a822d934bb9d64d1f987827adc56",
-    "count": "8610",
-    "count_ip": "343168700"
+    "date": "2023-04-28 02:11",
+    "md5": "c7b372501ed23d0d0a75df42a2fe7ac9",
+    "count": "8609",
+    "count_ip": "343103166"
   }
 }
