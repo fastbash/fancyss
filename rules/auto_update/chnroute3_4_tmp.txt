@@ -25,8 +25,8 @@
 #
 ######################################################################
 #
-2|apnic|20230507|76365|19830613|20230505|+1000
-apnic|*|asn|*|11951|summary
+2|apnic|20230508|76367|19830613|20230507|+1000
+apnic|*|asn|*|11953|summary
 apnic|*|ipv4|*|50411|summary
 apnic|*|ipv6|*|14003|summary
 apnic|JP|asn|173|1|20020801|allocated
@@ -11980,6 +11980,8 @@ apnic|MM|asn|151210|1|20230503|allocated
 apnic|AU|asn|151211|1|20230504|allocated
 apnic|PH|asn|151212|1|20230504|allocated
 apnic|AU|asn|151213|1|20230504|allocated
+apnic|BD|asn|151214|1|20230507|allocated
+apnic|BD|asn|151215|1|20230507|allocated
 apnic|AU|ipv4|1.0.0.0|256|20110811|assigned
 apnic|CN|ipv4|1.0.1.0|256|20110414|allocated
 apnic|CN|ipv4|1.0.2.0|512|20110414|allocated
