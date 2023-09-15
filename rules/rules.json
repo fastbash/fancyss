@@ -7,10 +7,10 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2023-09-15 02:11",
-    "md5": "37cefc5debb296483b3a857d0509b2e0",
-    "count": "12522",
-    "count_ip": "17695749552"
+    "date": "2023-09-16 02:11",
+    "md5": "ec882547cac8afae7af488c867e9a6a3",
+    "count": "12521",
+    "count_ip": "17695749298"
   },
   "cdn_china": {
     "name": "cdn.txt",
@@ -37,15 +37,15 @@
     "count": "82"
   },
   "chnroute2": {
-    "date": "2023-09-15 02:11",
-    "md5": "847945fe8494a9e7d1331d23fc55bae5",
-    "count": "10942",
-    "count_ip": "17640686600"
+    "date": "2023-09-16 02:11",
+    "md5": "1effdfb2b4e3ebdd1428f6d45de08f66",
+    "count": "10943",
+    "count_ip": "17640687110"
   },
   "chnroute3": {
-    "date": "2023-09-15 02:11",
-    "md5": "c84c7e062a51b913c827b304179d8b43",
-    "count": "8612",
-    "count_ip": "343098808"
+    "date": "2023-09-16 02:11",
+    "md5": "abf76deaca521da7d7b721d8e8ed82b3",
+    "count": "8613",
+    "count_ip": "343099318"
   }
 }
