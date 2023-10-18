@@ -1,4 +1,3 @@
-
 00042.com
 00058.com
 0006266.com
@@ -48934,6 +48933,7 @@ syn029.com
 synacast.com
 synball.com
 syncedoffplanet.com
+sync.services.mozilla.com
 sync.sh
 synjones.com
 synjones.net
