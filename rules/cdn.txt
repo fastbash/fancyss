@@ -8407,6 +8407,7 @@ aoogee.com
 aoomoo.com
 aoongmob.com
 aopayun.com
+aorankj.com
 aoratec.com
 aoscdn.com
 aoscom.net
@@ -14669,6 +14670,7 @@ cloud-dns.vip
 clouddns.vip
 clouddream.net
 cloudflare-cn.com
+cloudflarecn.net
 cloud-frame.com
 cloudgap.net
 cloudgfw.com
@@ -17755,7 +17757,6 @@ dianxiaobao.net
 dianxin.net
 dianxinnews.com
 dianxinos.com
-dianyatc.com
 dian-ying.com
 dianyingjie.com
 dianyingshow.com
@@ -28910,6 +28911,7 @@ im520.com
 im577.com
 im5i.com
 imaccn.com
+imacso.com
 imaegoo.com
 imageaccelerate.com
 imageedu.com
@@ -29206,6 +29208,7 @@ initroot.com
 init-s01st-lb.push-apple.com.akadns.net
 init-s01st.push.apple.com
 inja.com
+injoinic.com
 inkankan.com
 inkanke.com
 inkcn.com
@@ -29223,6 +29226,7 @@ inmeng.net
 inmuu.com
 inneed.club
 innity.com
+innity.net
 innjia.com
 innocn.com
 innocomn.com
@@ -31563,6 +31567,7 @@ job98.com
 job9981.com
 jobcdp.com
 jobcn.com
+job-cunni.com
 jobdogame.com
 jobeast.com
 jobgojob.com
@@ -38255,6 +38260,7 @@ mooreiot.com
 moore.live
 moore.ren
 mooreren.com
+moorext.com
 moowo.com
 mopaasapp.com
 mopaas.com
@@ -40170,7 +40176,6 @@ oceanengine.com
 oceanlau.com
 oceanol.com
 oceanplayable.com
-oceeq.com
 ocideal.com
 ocimg.com
 oclkj.com
@@ -46501,6 +46506,7 @@ shop.globalsign.com
 shopin.net
 shopj.net
 shopjyh.com
+shoplazza.com
 shopmaxmb.com
 shopnc.net
 shopplus.vip
@@ -57737,7 +57743,6 @@ xsycps.com
 xsyk021.com
 xsyqmztg.com
 xsy.science
-xsyushan.com
 xsyxsc.com
 xsyx.xyz
 xszp.cc
@@ -60887,7 +60892,6 @@ ywork.me
 ywshouyou.com
 ywsoftware.com
 ywtd.xyz
-ywtrzm.com
 ywtuchuang1.com
 ywwpay.com
 ywxue.com
@@ -62031,6 +62035,7 @@ zhihengwangchen.com
 zhihevip.com
 zhihjf.com
 zhi.hu
+zhihuclub.com
 zhihu.com
 zhihu.dev
 zhihudsp.com
@@ -62172,7 +62177,6 @@ zhiyinghui.com
 zhiyinhao.com
 zhiyinlou.com
 zhiyinmedia.com
-zhiyoo.com
 zhiyoubao.com
 zhiyousx.com
 zhiyuan98.com
@@ -62770,6 +62774,7 @@ zjags.com
 zjapk.com
 zjaqxy.com
 zjautoparts.com
+zjbinya.com
 zjbiz.net
 zjbyte.com
 zjca.org
