@@ -689,7 +689,7 @@ start_dns() {
 		if [ "$ss_basic_type" = "1" ]; then
 			[ "$DNS_PLAN" = "1" ] && echo_date "开启ssr-tunnel，用于【国外gfwlist站点】的DNS解析..."
 			[ "$DNS_PLAN" = "2" ] && echo_date "开启ssr-tunnel，用于【国外所有网站】的DNS解析..."
-			rss-tunnel -c "$CONFIG_FILE "-l "$DNSF_PORT" -L "$ss_sstunnel_user" -u -f /var/run/sstunnel.pid >/dev/null 2>&1
+			rss-tunnel -c "$CONFIG_FILE " -l "$DNSF_PORT" -L "$ss_sstunnel_user" -u -f /var/run/sstunnel.pid >/dev/null 2>&1
 		elif [ "$ss_basic_type" = "0" ]; then
 			[ "$DNS_PLAN" = "1" ] && echo_date "开启ss-tunnel，用于【国外gfwlist站点】的DNS解析..."
 			[ "$DNS_PLAN" = "2" ] && echo_date "开启ss-tunnel，用于【国外所有网站】的DNS解析..."

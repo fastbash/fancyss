@@ -3042,6 +3042,12 @@ function update_ss() {
 	push_data("ss_update.sh", "update",  dbus_post);
 }
 
+function check_rule() {
+	// var dbus_post = {};
+	// db_ss["ss_basic_action"] = "7";
+	push_data("ss_check_rule.sh", E("check_rule_value").value,  "");
+}
+
 function tabSelect(w) {
 	for (var i = 0; i <= 10; i++) {
 		$('.show-btn' + i).removeClass('active');
@@ -4382,7 +4388,7 @@ function save_failover() {
 															{ suffix: '<input type="checkbox" id="ss_basic_ping_dns">使用ping解析' }
 														]},
 														{ title: '节点域名解析DNS服务器', hint:'107', multi: [
-															{ id: 'ss_basic_server_resolver', type:'select', func:'u', options:option_dnsr, style:'width:auto;', value:'8'},
+															{ id: 'ss_basic_server_resolver', type:'select', func:'u', options:option_dnsr, style:'width:auto;', value:'1'},
 															{ id: 'ss_basic_server_resolver_user', type: 'text'},
 														]},	
 														{ title: '自定义dnsmasq', id:'ss_dnsmasq', type:'textarea', hint:'34', rows:'12', ph:ph3},
@@ -4745,6 +4751,11 @@ function save_failover() {
 													var option_trit = [["0", "关闭"], ["2", "每隔2分钟"], ["5", "每隔5分钟"], ["10", "每隔10分钟"], ["15", "每隔15分钟"], ["20", "每隔20分钟"], ["25", "每隔25分钟"], ["30", "每隔30分钟"]];
 													var pingm = [["1", "ping(1次/节点)"], ["2", "ping(5次/节点)"], ["3", "ping(10次/节点)"], ["4", "ping(20次/节点)"]];
 													$('#table_addons').forms([
+														{ td: '<tr><td class="smth" style="font-weight: bold;" colspan="2">规则测试</td></tr>'},
+														{ title: '&nbsp;&nbsp;&nbsp;&nbsp;输入检测域名', hint:'24', multi: [
+															{ suffix:'<input id="check_rule_value" type="text" class="input_ss_table" style="width:140px;" placeholder="example.com">'},
+															{ suffix:'&nbsp;<input type="button" class="ss_btn" style="cursor:pointer;" onclick="check_rule();" value="检测">'}
+														]},
 														{ td: '<tr><td class="smth" style="font-weight: bold;" colspan="2">备份/恢复</td></tr>'},
 														{ title: '&nbsp;&nbsp;&nbsp;&nbsp;导出SS配置', hint:'24', multi: [
 															{ suffix:'<input type="button" class="ss_btn" style="cursor:pointer;" onclick="download_SS_node(1);" value="导出配置">'},

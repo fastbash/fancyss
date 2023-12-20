@@ -1,51 +1,51 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2022-08-28 15:19",
-    "md5": "f2d07913be83b37af3179469451c8517",
-    "count": "5650"
+    "date": "2023-12-03 02:11",
+    "md5": "bcd9aff9ccb017d5ae0fcb816b8f5858",
+    "count": "4934"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2022-08-28 15:47",
-    "md5": "d01c16a75b84b328fb87755534dd2c39",
-    "count": "14066",
-    "count_ip": "13409651138"
+    "date": "2023-12-20 02:12",
+    "md5": "7a55e28e3029ff9042e5d61fccf7a27c",
+    "count": "12969",
+    "count_ip": "369884648478"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2022-08-27 23:50",
-    "md5": "c32cf042818e1d57ad6dffbcd1b4a6fb",
-    "count": "65527"
+    "date": "2023-12-17 02:11",
+    "md5": "aed16bbe3e44d89c1f4dfd5df2bcef7e",
+    "count": "63215"
   },
   "apple_china": {
     "name": "apple_china.txt",
-    "date": "2022-08-21 02:10",
-    "md5": "7c6ab7c74f8b86bd5c8921e44232c7a2",
-    "count": "130"
+    "date": "2023-05-29 02:11",
+    "md5": "44bae4961701c156b34f06bb43df54e1",
+    "count": "140"
   },
   "google_china": {
     "name": "google_china.txt",
-    "date": "2022-06-24 14:31",
-    "md5": "24986fc4b1d9216b5e24b7e54100df3d",
-    "count": "71"
+    "date": "2023-04-23 02:11",
+    "md5": "a4d215b3c100de14d83ee2416c19cb7b",
+    "count": "159"
   },
   "cdn_test": {
     "name": "cdn_test.txt",
-    "date": "2022-08-15 23:45",
-    "md5": "184940de55be964c8d6b814b9aedb07c",
-    "count": "72"
+    "date": "2023-07-09 02:11",
+    "md5": "903ac79bac193dc59cb1eed69c7d6cc6",
+    "count": "82"
   },
   "chnroute2": {
-    "date": "2022-08-27 02:10",
-    "md5": "1993126272b2ebf644020f99d6640faf",
-    "count": "10787",
-    "count_ip": "13347246176"
+    "date": "2023-12-16 02:11",
+    "md5": "fde5e1dfb4fd896b652c4e765607065d",
+    "count": "11356",
+    "count_ip": "369827437240"
   },
   "chnroute3": {
-    "date": "2022-08-27 02:10",
-    "md5": "ced72fec73e64f5c682ec41f21925dd6",
-    "count": "8637",
-    "count_ip": "343238022"
+    "date": "2023-12-16 02:11",
+    "md5": "613d0257f384e887611e7b7cd62217d6",
+    "count": "8647",
+    "count_ip": "343061874"
   }
 }

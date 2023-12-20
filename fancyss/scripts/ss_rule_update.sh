@@ -142,9 +142,9 @@ start_update(){
 change_cru(){
 	echo ==================================================================================================
 	sed -i '/ssupdate/d' /var/spool/cron/crontabs/* >/dev/null 2>&1
-	if [ "1" = "${ss_basic_rule_update}" ]; then
-		echo_date "应用ss规则定时更新任务：每天${ss_basic_rule_update_time}自动检测更新规则."
-		cru a ssupdate "0 ${ss_basic_rule_update_time} * * * /bin/sh /koolshare/scripts/ss_rule_update.sh"
+	if [ "1" = "$ss_basic_rule_update" ]; then
+		echo_date "应用ss规则定时更新任务：每天 $ss_basic_rule_update_time 自动检测更新规则."
+		cru a ssupdate "0 $ss_basic_rule_update_time * * * /bin/sh /koolshare/scripts/ss_rule_update.sh"
 	else
 		echo_date "ss规则定时更新任务未启用！"
 	fi

@@ -1,5 +1,9 @@
 fancyss Changelog
 ===========================================
+3.0.6
+   - fix sth.
+   - add rule check
+   
 3.0.5
    - fix remove some force whitelists & gfwlists in code
    
