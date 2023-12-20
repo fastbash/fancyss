@@ -2,8 +2,16 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-. "$(find -name ss_base.sh)"
-if [ "$MODULE" = "" ];then . "$(find /tmp -name 'ss_var.sh')";fi
+# . "$(find -name ss_base.sh)"
+for file in $(find -name ss_base.sh);do
+	. "$file"
+done
+if [ "$MODULE" = "" ];then 
+	# . "$(find /tmp -name 'ss_var.sh')"
+	for file in $(find /tmp -name ss_var.sh);do
+		. "$file"
+	done
+fi
 # alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 MODEL=
 FW_TYPE_NAME=
@@ -331,11 +339,11 @@ install_now(){
 	[ -z "$(dbus get ss_basic_interval)" ] && dbus set ss_basic_interval=2
 	# 关闭 ping
 	dbus set ss_basic_ping_node=off
-	dbus set ss_basic_ping_dns=1
+	# dbus set ss_basic_ping_dns=1
 	# rule 
 	[ -z "$(dbus get ss_basic_rule_update)" ] && { 
 		dbus set ss_basic_rule_update=1
-		dbus set ss_basic_rule_update_time=4
+		dbus set ss_basic_rule_update_time=3
 		dbus set ss_basic_gfwlist_update=1
 		dbus set ss_basic_chnroute_update=1
 		dbus set ss_basic_cdn_update=1
@@ -380,6 +388,9 @@ install_now(){
 	dbus set softcenter_module_${module}_name="${module}"
 	dbus set softcenter_module_${module}_title="${TITLE}"
 	dbus set softcenter_module_${module}_description="${DESCR}"
+	if [ "$(dbus get ss_basic_ping_dns)" = "" ];then
+		dbus set ss_basic_ping_dns="ping"
+	fi
 	
 	# finish
 	echo_date "${TITLE}插件安装安装成功！"

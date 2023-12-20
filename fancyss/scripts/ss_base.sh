@@ -136,11 +136,14 @@ __resolve_ip() {
 		return 2
 	else
 		# domain format
-		if [ "$2" = "1" ];then
-			SERVER_IP=$(ping -s 1 -c 1 -w 1 -W 1 -q "$1" | grep "PING $1" | awk -F '[ ()]+' '{print $3}')
-		else
+		if [ "$2" = "resolveip" ] && [ -f /koolshare/bin/resolveip ];then
+			SERVER_IP=$(/koolshare/bin/resolveip "$1" | shuf | awk 'NR==1{print}')
+		elif [ "$2" = "nslookup" ];then
 			SERVER_IP=$(nslookup "$1" "$(__get_server_resolver):$(__get_server_resolver_port)" | sed '1,4d' | awk '{print $3}' | grep -v : | awk 'NR==1{print}' 2>/dev/null)
+		else
+			SERVER_IP=$(ping -w 1 -W 1 -q "$1" | grep "PING $1" | awk -F '[ ()]+' '{print $3}')
 		fi
+		
 		SERVER_IP=$(__valid_ip "$SERVER_IP")
 		if [ -n "$SERVER_IP" ]; then
 			# success resolved

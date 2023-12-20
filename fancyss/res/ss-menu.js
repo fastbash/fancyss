@@ -192,12 +192,8 @@ function pop_help() {
 				<a target="_blank" href="https://github.com/XTLS/xray-core"><u>Xray</u></a>、\
 				<a target="_blank" href="https://github.com/trojan-gfw/trojan"><u>Trojan</u></a>\
 				六种客户端的科学上网、游戏加速工具。<br \>\
-				本插件支持以Asuswrt、Asuswrt-Merlin为基础的，带软件中心的固件，目前固件均由<a style="color:#e7bd16" target="_blank" href="https://www.koolcenter.com/">https:\/\/www.koolcenter.com/</a>提供。<br \>\
-				使用本插件有任何问题，可以前往<a style="color:#e7bd16" target="_blank" href="https://github.com/hq450/fancyss/issues"><u>github的issue页面</u></a>反馈~<br \><br \>\
-				● SS/SSR一键脚本：<a style="color:#e7bd16" target="_blank" href="https://github.com/onekeyshell/kcptun_for_ss_ssr/tree/master"><u>一键安装KCPTUN for SS/SSR on Linux</u></a><br \>\
-				● koolgame一键脚本：<a style="color:#e7bd16" target="_blank" href="https://github.com/clangcn/game-server"><u>一键安装koolgame服务器端脚本，完美支持nat2</u></a><br \>\
-				● V2Ray一键脚本：<a style="color:#e7bd16" target="_blank" href="https://233blog.com/post/17/"><u>V2Ray 搭建和优化详细图文教程</u></a><br \>\
-				● 插件交流：<a style="color:#e7bd16" target="_blank" href="https://t.me/joinchat/AAAAAEC7pgV9vPdPcJ4dJw"><u>加入telegram群组</u></a><br \><br \>\
+				本插件支持以Asuswrt、Asuswrt-Merlin为基础的，带软件中心的固件，目前固件均由 <a style="color:#e7bd16" target="_blank" href="https://www.koolcenter.com/">https:\/\/www.koolcenter.com/</a> 提供。<br \>\
+				使用本插件有任何问题，可以前往 <a style="color:#e7bd16" target="_blank" href="https://github.com/fastbash/fancyss/issues"><u>github的issue页面</u></a> 反馈~<br \><br \>\
 				我们的征途是星辰大海 ^_^</div>'
 		});
 	});
@@ -912,7 +908,7 @@ function openssHint(itemNum) {
 		_caption = "说明：";
 	} else if (itemNum == 107) {
 		width = "600px";
-		statusmenu = "节点域名解析DNS服务器.<br />&nbsp;&nbsp;&nbsp;&nbsp;一些SS/SSR/V2RAY的服务器为域名格式，在启用的时候需要对其进行解析，以获取正确的IP地址，此处定义用以解析服务器域名的DNS服务器。<br />&nbsp;&nbsp;&nbsp;&nbsp;一些机场节点的域名托管在国外服务商，此时自定义定义国外的DNS服务器效果可能更好。"
+		statusmenu = "<ul><li>以上 节点域名解析方式 为 nslookup 时才生效</li><li>当节点服务器为域名格式，在启用的时候需要对其进行解析，以获取正确的IP地址，此处定义用以解析服务器域名的DNS服务器。</li><li>一些机场节点的域名托管在国外服务商，此时自定义定义国外的DNS服务器效果可能更好。</li></ul>"
 		_caption = "说明：";
 	} else if (itemNum == 108) {
 		statusmenu = "ss/ssr/trojan多核心支持.<br />&nbsp;&nbsp;&nbsp;&nbsp;开启后ss-redir/rss-redir/trojan将同时运行在路由器的全部核心上，最大化ss-redir/rss-redir/trojan的性能。注意：如果线路速度不存在瓶颈，可能使CPU全部核心满载，影响路由的稳定性。"
@@ -955,6 +951,12 @@ function openssHint(itemNum) {
 		_caption = "说明";
 	} else if (itemNum == 120) {
 		statusmenu = "&nbsp;&nbsp;&nbsp;&nbsp;一些trojan机场节点需要允许不安全才能正常工作，但是其节点订阅却没有指定允许不安全，此时可以开启此处，开启后会强制所有trojan节点允许不安全";
+		_caption = "说明";
+	} else if (itemNum == 121) {
+		statusmenu = "ping: 默认dns解析。<br>resolveip: 默认dns解析。<br>nslookup: 使用下方 节点域名解析DNS服务器 指定内容解析。";
+		_caption = "说明";
+	} else if (itemNum == 122) {
+		statusmenu = "输入域名点击 检测，可判断当前域名是否过代理：<br>DIRECT 直连不过代理<br>PROXY 过代理";
 		_caption = "说明";
 	}
 	return overlib(statusmenu, OFFSETX, -160, LEFT, STICKY, WIDTH, 'width', CAPTION, _caption, CLOSETITLE, '');

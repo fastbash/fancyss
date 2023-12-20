@@ -388,15 +388,12 @@ resolv_server_ip() {
 			dbus set ss_basic_server_ip=$ss_basic_server
 		else
 			echo_date "检测到你的$(__get_type_abbr_name)服务器：【${ss_basic_server}】不是ip格式！"
-			if [ "$ss_basic_ping_dns" = "1" ];then 
-				echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用ping解析"
-				echo_date "如果此处等待时间较久，建议在【节点域名解析DNS服务器】处取消勾选ping解析..."
-
-			else
+				echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用 $ss_basic_ping_dns 方式解析"
+			if [ "$ss_basic_ping_dns" = "nslookup" ];then 
 				echo_date "尝试解析$(__get_type_abbr_name)服务器的ip地址，使用DNS：$(__get_server_resolver):$(__get_server_resolver_port)"
-				echo_date "如果此处等待时间较久，建议在【节点域名解析DNS服务器】处更换 DNS 服务器..."
 			fi
-			server_ip=$(__resolve_ip "$ss_basic_server" "$ss_basic_ping_node")
+			echo_date "如果此处等待时间较久，建议在 【DNS设定】 页面处更换 【节点域名解析方式】 或 更换 【节点域名解析DNS服务器】..."
+			server_ip=$(__resolve_ip "$ss_basic_server" "$ss_basic_ping_dns")
 			case $? in
 			0)
 				echo_date "$(__get_type_abbr_name)服务器【${ss_basic_server}】的ip地址解析成功：${server_ip}"
