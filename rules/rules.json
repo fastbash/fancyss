@@ -7,16 +7,16 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2024-04-26 02:11",
-    "md5": "e646ae0a1b422a5836ac8f560324131a",
-    "count": "13073",
-    "count_ip": "374178377430"
+    "date": "2024-04-27 02:11",
+    "md5": "c801d8f2316137589c275e3a73114211",
+    "count": "13075",
+    "count_ip": "374178410450"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2024-04-26 02:11",
-    "md5": "1dc7347cf8375e9b63b6659702e39c57",
-    "count": "73269"
+    "date": "2024-04-27 02:11",
+    "md5": "9bad4cc4755e48e94e69b6a3cc853960",
+    "count": "73251"
   },
   "apple_china": {
     "name": "apple_china.txt",
@@ -37,15 +37,15 @@
     "count": "82"
   },
   "chnroute2": {
-    "date": "2024-04-25 02:10",
-    "md5": "25acba1d6ba18c89a29f1d5ffe3eb966",
-    "count": "11374",
-    "count_ip": "374122593052"
+    "date": "2024-04-27 02:10",
+    "md5": "fc5e766a2387a9b6e01fb7a35d6baa69",
+    "count": "11375",
+    "count_ip": "374122593562"
   },
   "chnroute3": {
-    "date": "2024-04-25 02:11",
-    "md5": "6ba9c146a34263f656db5221ade79466",
-    "count": "8651",
-    "count_ip": "343130218"
+    "date": "2024-04-27 02:11",
+    "md5": "a1dd9fcbbde2cb8c54040cbe42fd7add",
+    "count": "8652",
+    "count_ip": "343130728"
   }
 }
