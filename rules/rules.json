@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2024-05-10 02:10",
-    "md5": "7aa20b7edcadbeb9b840198ee6d65a17",
-    "count": "5055"
+    "date": "2024-05-13 02:10",
+    "md5": "9356bf8920aeec629764d54b869dc9fe",
+    "count": "5056"
   },
   "chnroute": {
     "name": "chnroute.txt",
@@ -14,9 +14,9 @@
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2024-05-12 02:11",
-    "md5": "ac91a5de17282728e765639e7f275a56",
-    "count": "73559"
+    "date": "2024-05-13 02:11",
+    "md5": "1ad8860b00824504355976fbe24184be",
+    "count": "73542"
   },
   "apple_china": {
     "name": "apple_china.txt",
