@@ -108,6 +108,7 @@ mesu-china.apple.com.akadns.net
 ml.cdn-apple.com
 music.apple.com
 ocsp2.apple.com
+ocsp2-lb.apple.com.akadns.net
 ocsp.apple.com
 ocsp-lb.apple.com.akadns.net
 oscdn.apple.com
