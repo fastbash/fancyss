@@ -1,16 +1,16 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2024-06-01 02:11",
-    "md5": "7232fc7fc70bd2379409c56c30239c96",
-    "count": "5082"
+    "date": "2024-06-07 02:11",
+    "md5": "eadf27a1e0772519fd28d944ae86758e",
+    "count": "5084"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2024-06-06 02:11",
-    "md5": "2df2c40ed75059991e244f97ff146dcf",
-    "count": "13074",
-    "count_ip": "374178443220"
+    "date": "2024-06-07 02:11",
+    "md5": "69be2e11920d821ea5f57f38b6b9465f",
+    "count": "13078",
+    "count_ip": "374178444492"
   },
   "cdn_china": {
     "name": "cdn.txt",
@@ -37,15 +37,15 @@
     "count": "82"
   },
   "chnroute2": {
-    "date": "2024-06-06 02:10",
-    "md5": "7b74c02feec652c322ca4963691c0d0a",
-    "count": "11374",
-    "count_ip": "374122589468"
+    "date": "2024-06-07 02:11",
+    "md5": "39c0a45f5ce6414b849df19e7594d984",
+    "count": "11375",
+    "count_ip": "374122589978"
   },
   "chnroute3": {
-    "date": "2024-06-06 02:11",
-    "md5": "6e64c7b15f336736ed4dcc593a3db6f0",
-    "count": "8651",
-    "count_ip": "343126634"
+    "date": "2024-06-07 02:11",
+    "md5": "cf6e9c3666babb9a75f7c3dcf8cea521",
+    "count": "8652",
+    "count_ip": "343127144"
   }
 }
