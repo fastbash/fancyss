@@ -6,6 +6,7 @@ a5.mzstatic.com
 adcdownload.apple.com
 adcdownload.apple.com.akadns.net
 amp-api.media.apple.com
+amp-api-updates.apps.apple.com
 api-p-ap-c.smoot.apple.com
 api-p-ap-d.smoot.apple.com
 api-p-ap-e.smoot.apple.com
@@ -15,6 +16,7 @@ appleid.cdn-apple.com
 apps.apple.com
 app-site-association.cdn-apple.com
 apps.mzstatic.com
+bag-cdn.itunes-apple.com.akadns.net
 cdn1.apple-mapkit.com
 cdn2.apple-mapkit.com
 cdn3.apple-mapkit.com
@@ -61,6 +63,7 @@ gsp4-cn.ls.apple.com.edgekey.net.globalredir.akadns.net
 gsp5-cn.ls.apple.com
 gsp85-cn-ssl.ls.apple.com
 gspe19-2-cn-ssl.ls.apple.com
+gspe19-2-cn-ssl.ls-apple.com.akadns.net
 gspe19-cn.ls.apple.com
 gspe19-cn.ls-apple.com.akadns.net
 gspe19-cn-ssl.ls.apple.com
@@ -99,6 +102,7 @@ is4.mzstatic.com
 is4-ssl.mzstatic.com
 is5.mzstatic.com
 is5-ssl.mzstatic.com
+is-ssl.mzstatic.com-cn-lb.itunes-apple.com.akadns.net
 itunes.apple.com
 itunes-apple.com.akadns.net
 itunesconnect.apple.com
