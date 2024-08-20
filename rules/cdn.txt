@@ -67459,6 +67459,7 @@ stdwp.com
 steambang.com
 steambig.com
 steamboxs.com
+steamcdn-a.akamaihd.net
 steamchina.com
 steamcn.com
 steamdd.com
@@ -67466,6 +67467,7 @@ steampp.net
 steamproxy.net
 steampy.com
 steamrepcn.com
+steamserver.net
 steamxdf.com
 stec.net
 stedu.net
