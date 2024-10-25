@@ -2416,6 +2416,7 @@
 2345ff.com
 2345.gd
 2345ii.com
+2345li.com
 2345mbrowser.com
 2345.net
 2345soso.com
@@ -5296,6 +5297,7 @@
 588art.com
 588ku.com
 589398.com
+589465113.com
 5898yun.com
 58abb.com
 58auv.com
@@ -8522,7 +8524,6 @@ adssaas.com
 adssap.com
 adsspr.com
 adstarcharm.com
-adsunflower.com
 ad-survey.com
 adt100.com
 adtaipo.com
@@ -8946,7 +8947,6 @@ aifang.com
 aifangke.com
 aifanyi.net
 aifcdn.com
-aifei8.net
 aifengjie.com
 aifenlei.com
 aifont.com
@@ -11797,6 +11797,7 @@ baobeituan.com
 baocdn.com
 baochaojianghu.com
 baochenykk.com
+baochunyiran.com
 baodan100.com
 baodan360.com
 baodaohealth.com
@@ -12200,6 +12201,7 @@ bdpnt.com
 bdqn027.com
 bdqn666.com
 bdqnwh.com
+bds666.com
 bdsana.com
 bds-cn.com
 bdsd.design
@@ -12925,6 +12927,7 @@ bigjpg.com
 bigma.cc
 bigniu.com
 bignox.com
+bigolive.tv
 bigops.com
 bigplayers.com
 bigpt8.com
@@ -14526,7 +14529,6 @@ buguangdeng.com
 bugucn.com
 bugukj.com
 bugutime.com
-bugxia.com
 buhuangziben.com
 buhuixiao.com
 buhuyo.com
@@ -18679,6 +18681,7 @@ clouddream.net
 cloudencent.com
 cloudflare-cn.com
 cloudflarecn.net
+cloudflare.fun
 cloud-frame.com
 cloudgap.net
 cloudgfw.com
@@ -22389,6 +22392,7 @@ devexel.com
 devexel-tech.com
 devexpresscn.com
 devicewell.com
+devimages-cdn.apple.com
 devio.org
 devops-dev.com
 devourad.com
@@ -25674,6 +25678,7 @@ emodor.com
 emoji6.com
 emojimobile.com
 emots.cc
+emqx.cloud
 emqx.com
 emqx.net
 ems517.com
@@ -37791,7 +37796,6 @@ hshuiyi.com
 hshw.com
 hshy.net
 hsigus.com
-hsiuyang.net
 hsjkaoyan.com
 hsjk.com
 hsjlrhy.com
@@ -43220,6 +43224,7 @@ jingcaipaint.com
 jingc.com
 jingchang.tv
 jingchengwl.com
+jingchi.net
 jingchuhao.com
 jingchurc.com
 jingdajiance.com
@@ -48726,7 +48731,6 @@ liaoyuanchats.com
 liaoyuanedu.org
 liaozhai.tv
 li.auto
-lib4d.com
 lib520.com
 liba88.com
 libaclub.com
@@ -52336,6 +52340,7 @@ metrofastpass.com
 metstr.com
 metword.co
 meuicat.com
+meutu.com
 mewednesday.shop
 mew.fun
 mewx.art
@@ -55264,6 +55269,7 @@ niiwoo.com
 nikanpian.com
 nikebiji.com
 nike-inc.com.tw
+nikke-global.com
 nikkisoft.com
 nikkiup2u2.com
 nilai.com
@@ -56542,6 +56548,7 @@ oceanplayable.com
 ocent.net
 ocetest.com
 ocici.com
+ocic-static.com
 ocideal.com
 ocimg.com
 oclean.com
@@ -56860,6 +56867,7 @@ oneic.com
 onein.com
 oneinf.com
 oneinstack.com
+oneitfarm.com
 oneiwff.com
 onekey.cc
 onekeyghost.com
@@ -70942,6 +70950,7 @@ tkfangzhouapp.com
 tkgame.com
 tkhealthcare.com
 tkoubei.com
+tkpension.com
 tkplusemi.com
 tk-rays.com
 tkrlab.com
@@ -71137,6 +71146,7 @@ tomdiy.com
 tomonline-inc.com
 tomotoes.com
 tompda.com
+tomson-riviera.com
 tomujiang.com
 tomwx.net
 tonbao.com
@@ -71813,6 +71823,7 @@ tt65org.com
 tt787.com
 tt96596.com
 ttaidu.com
+ttalkai.com
 ttbba.com
 ttbbss.com
 tt-bike.com
@@ -74215,7 +74226,6 @@ vunion.net
 vurl3.vip
 vurl.link
 vutimes.com
-vux.li
 vuz.me
 vv881.com
 vv8.com
@@ -78208,6 +78218,7 @@ xf4hs.com
 xf5z.com
 xfabs.com
 xfannix.com
+xfap.cc
 xfaqwlw.com
 xfb315.com
 xfc888.com
@@ -78551,6 +78562,7 @@ xianrenzhang.net
 xianruan.com
 xianshangzixun.net
 xianshiqiba.com
+xianshishangmao.com
 xianshuabao.com
 xianshua.net
 xianshu.com
@@ -86653,6 +86665,7 @@ zhicaiwang.com
 zhicall.com
 zhichanli.com
 zhichaoxt.com
+zhichepai.com
 zhichepin.com
 zhichi.com
 zhichidata.com
@@ -88480,6 +88493,7 @@ ztautoparts.com
 ztbeijixing.com
 ztbest.com
 ztcadx.com
+ztcdata.com
 ztch.ltd
 ztcia.com
 ztcnwy.com
