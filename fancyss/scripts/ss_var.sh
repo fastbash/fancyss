@@ -1,0 +1,3 @@
+#!/bin/sh
+
+MODULE=planesocks
