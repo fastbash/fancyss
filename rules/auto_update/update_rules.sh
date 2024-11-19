@@ -680,6 +680,7 @@ get_rules(){
 	# get_cdntest
 	curl -4sk https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/cdn-testlist.txt > "${CURR_PATH}/cdn_test.txt"
 	get_file "0" "cdn_test" "cdn_test"
+	cat "${RULE_FILE}" > "${RULE_FILE%.*}"
 	finish
 }
 
