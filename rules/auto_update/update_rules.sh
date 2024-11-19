@@ -5,6 +5,8 @@ RULE_PATH=${CURR_PATH%\/*}
 RULE_FILE=${RULE_PATH}/rules.json.js
 OBJECT_1='{}'
 
+# iprange https://github.com/firehol/iprange
+
 prepare(){
 	if ! type -p sponge &>/dev/null; then
 		if which yum >/dev/null 2>&1;then
@@ -23,6 +25,7 @@ get_gfwlist(){
 	# gfwlist.conf
 
 	# 1. download
+	chmod +x "${CURR_PATH}/fwlist.py"
 	"${CURR_PATH}/fwlist.py" gfwlist_1.txt >/dev/null 2>&1
 	if [ ! -f "gfwlist_1.txt" ]; then
 		echo "gfwlist download faild!"
@@ -682,7 +685,7 @@ get_rules(){
 	get_file "google.china.conf" "google_download.txt" "google_china"
 	# get_cdntest
 	curl -4sk https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/cdn-testlist.txt > "${CURR_PATH}/cdn_test.txt"
-	get_file "0" "cdn_test" "cdn_test"
+	get_file "0" "cdn_test.txt" "cdn_test"
 	cat "${RULE_FILE}" > "${RULE_FILE%.*}"
 	finish
 }
