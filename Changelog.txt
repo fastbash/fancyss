@@ -5,6 +5,7 @@ fancyss Changelog
    - update 关闭了延时测试减少资源占用
    - update 强制打开了规则、订阅更新
    - remove 去除广告
+   - add    规则测试
 3.3.4 (todo)
    - note	此次主要更新各个协议的二进制，同时进一步优化jffs空间占用，另外修复了国内外出口检测的一些bug。
    - update	shadowsocks-rust二进制更新到v1.21.0，且安装包内置

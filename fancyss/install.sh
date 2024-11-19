@@ -835,6 +835,8 @@ install_now(){
 	# 因版本变化导致一些值没有了，更改一下
 	if [ "${ss_basic_chng_china_2_tcp}" == "5" ];then
 		dbus set ss_basic_chng_china_2_tcp="6"
+		dbus set ss_basic_olddns=1
+		dbus set ss_basic_advdns=0
 	fi
 	
 	# lite
@@ -860,13 +862,17 @@ install_now(){
 	dbus set ss_basic_gfwlist_update=1
 	dbus set ss_basic_chnroute_update=1
 	dbus set ss_basic_cdn_update=1
-	cru a ssupdate "0 3 * * * /bin/sh /koolshare/scripts/ss_rule_update.sh"
+	if ! cru l | grep -q ssupdate;then
+		cru a ssupdate "0 3 * * * /bin/sh /koolshare/scripts/ss_rule_update.sh"
+	fi
 	# 强制订阅更新任务
 	dbus set ss_adv_sub=1
 	dbus set ss_basic_node_update=1
 	dbus set ss_basic_node_update_day=7
 	dbus set ss_basic_node_update_hr=4
-	cru a ssnodeupdate "0 4 * * * /koolshare/scripts/ss_online_update.sh fancyss 3"
+	if ! cru l | grep -q ssnodeupdate;then
+		cru a ssnodeupdate "0 4 * * * /koolshare/scripts/ss_online_update.sh fancyss 3"
+	fi
 
 	# dbus value
 	echo_date "设置插件安装参数..."

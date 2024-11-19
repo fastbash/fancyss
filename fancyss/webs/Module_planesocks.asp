@@ -4130,6 +4130,12 @@ function update_ss() {
 	push_data("ss_update.sh", "update",  dbus_post);
 }
 
+function check_rule() {
+	// var dbus_post = {};
+	// db_ss["ss_basic_action"] = "7";
+	push_data("ss_check_rule.sh", E("check_rule_value").value,  "");
+}
+
 function tabSelect(w) {
 	for (var i = 0; i <= 10; i++) {
 		$('.show-btn' + i).removeClass('active');
@@ -6687,6 +6693,11 @@ function save_failover() {
 														var pingm = [["1", "1次/节点"], ["2", "5次/节点"], ["3", "10次/节点"], ["4", "20次/节点"]];
 														var weburl = ["developer.google.cn/generate_204", "connectivitycheck.gstatic.com/generate_204", "www.gstatic.com/generate_204"];
 														$('#table_addons').forms([
+															{ td: '<tr><td class="smth" style="font-weight: bold;" colspan="2">规则测试</td></tr>'},
+															{ title: '&nbsp;&nbsp;&nbsp;&nbsp;输入检测域名', hint:'122', multi: [
+																{ suffix:'<input id="check_rule_value" type="text" class="input_ss_table" style="width:140px;" placeholder="example.com">'},
+																{ suffix:'&nbsp;<input type="button" class="ss_btn" style="cursor:pointer;" onclick="check_rule();" value="检测">'}
+															]},
 															{ td: '<tr><td class="smth" style="font-weight: bold;" colspan="2">备份/恢复</td></tr>'},
 															{ title: '导出fancyss配置', hint:'24', multi: [
 																{ suffix:'<input type="button" class="ss_btn" style="cursor:pointer;" onclick="download_route_file(1);" value="导出配置">'},
