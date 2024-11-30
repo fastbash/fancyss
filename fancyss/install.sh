@@ -678,7 +678,8 @@ install_now(){
 		local SPACE_DATA_AVAL1
 		SPACE_DATA_AVAL1=$(df 2>/dev/null| grep -w "/data" | awk '{print $4}')
 		echo_date "/data分区剩余空间为：${SPACE_DATA_AVAL1}KB"
-		local _BINS="xray v2ray hysteria2 naive sslocal ss-local ss-redir ss-tunnel rss-local rss-tunnel rss-redir"
+		local _BINS
+		_BINS="xray v2ray hysteria2 naive sslocal ss-local ss-redir ss-tunnel rss-local rss-tunnel rss-redir"
 		for _BIN in ${_BINS}
 		do
 			if [ -f "/tmp/${MODULE}/bin/${_BIN}" ];then
@@ -691,7 +692,7 @@ install_now(){
 				if [ "${BIN_SIZE}" -lt "${SPACE_DATA_AVAL2}" ];then
 					echo_date "将${_BIN}安装到/data分区..."
 					mv "/tmp/${MODULE}/bin/${_BIN}" /data/
-					chmod +x "/data/${_BIN} "
+					chmod +x "/data/${_BIN}"
 					ln -sf "/data/${_BIN}" "/koolshare/bin/${_BIN}"
 				fi
 				sync
