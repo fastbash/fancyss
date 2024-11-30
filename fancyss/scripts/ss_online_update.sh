@@ -418,35 +418,6 @@ clear_nodes(){
 	echo_date "🆗准备完成！"
 }
 
-get_type_name() {
-	case "$1" in
-		0)
-			echo "ss"
-		;;
-		1)
-			echo "ssr"
-		;;
-		3)
-			echo "V2ray"
-		;;
-		4)
-			echo "xray"
-		;;
-		5)
-			echo "trojan"
-		;;
-		6)
-			echo "NaïveProxy"
-		;;
-		7)
-			echo "tuic"
-		;;
-		8)
-			echo "hysteria2"
-		;;
-	esac
-}
-
 # 清除已有的所有旧配置的节点
 remove_all_node(){
 	echo_date "删除所有节点信息！"

@@ -4,6 +4,34 @@ if [ -z "$CURR_NODE" ];then
     CURR_NODE=$(dbus get ssconf_basic_node)
 fi
 
+get_type_name() {
+	case "$1" in
+		0)
+			echo "ss"
+		;;
+		1)
+			echo "ssr"
+		;;
+		3)
+			echo "V2ray"
+		;;
+		4)
+			echo "xray"
+		;;
+		5)
+			echo "trojan"
+		;;
+		6)
+			echo "NaïveProxy"
+		;;
+		7)
+			echo "tuic"
+		;;
+		8)
+			echo "hysteria2"
+		;;
+	esac
+}
 
 dnsmasq_rule(){
 	# better way todo: resolve first and add ip to ipset:router mannuly
