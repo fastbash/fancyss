@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2024-11-30 02:11",
-    "md5": "4c1c6d42cc3e2a49eeb15c655ac484b6",
-    "count": "4199",
-    "count_ip": "285631488",
+    "date": "2024-12-01 02:12",
+    "md5": "8f5f3fe7a34bedb9e386065bdcfcaf91",
+    "count": "4204",
+    "count_ip": "285676800",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -52,27 +52,27 @@
   },
   "chnroute_apnic": {
     "name": "chnroute_apnic.txt",
-    "date": "2024-11-29 02:11",
-    "md5": "d41d8cd98f00b204e9800998ecf8427e",
-    "count": "0",
-    "count_ip": "",
+    "date": "2024-12-01 02:12",
+    "md5": "ab67298d7041ecbf083b59db5996eae2",
+    "count": "8666",
+    "count_ip": "343141632",
     "source": "apnic",
     "url": "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2024-11-30 02:11",
-    "md5": "42a209ab795b63cca67f33c5a417844a",
-    "count": "8396",
-    "count_ip": "376110065",
+    "date": "2024-12-01 02:12",
+    "md5": "c3976438f9b5d9455d9ce502ebeb9129",
+    "count": "8403",
+    "count_ip": "376300036",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss/tree/3.0/rules"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2024-11-29 02:11",
-    "md5": "c810b41be410e956ac65ea765391b394",
-    "count": "94188"
+    "date": "2024-12-01 02:12",
+    "md5": "e0bb767887c57019380cae91a2d7c5e4",
+    "count": "94118"
   },
   "apple_china": {
     "name": "apple_china.txt",
