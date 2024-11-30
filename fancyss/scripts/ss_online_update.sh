@@ -1617,17 +1617,17 @@ get_online_rule_now(){
 	fi
 	
 	local NODE_NU_SS
-	NODE_NU_SS=$(grep -Ec "^ss://" "$_subscribe_decode_file") || "0"
+	NODE_NU_SS=$(grep -Ec "^ss://" "$_subscribe_decode_file" 2>/dev/null) || NODE_NU_SS=0
 	local NODE_NU_SR
-	NODE_NU_SR=$(grep -Ec "^ssr://" "$_subscribe_decode_file") || "0"
+	NODE_NU_SR=$(grep -Ec "^ssr://" "$_subscribe_decode_file" 2>/dev/null) || NODE_NU_SR=0
 	local NODE_NU_VM
-	NODE_NU_VM=$(grep -Ec "^vmess://" "$_subscribe_decode_file") || "0"
+	NODE_NU_VM=$(grep -Ec "^vmess://" "$_subscribe_decode_file" 2>/dev/null) || NODE_NU_VM=0
 	local NODE_NU_VL
-	NODE_NU_VL=$(grep -Ec "^vless://" "$_subscribe_decode_file") || "0"
+	NODE_NU_VL=$(grep -Ec "^vless://" "$_subscribe_decode_file" 2>/dev/null) || NODE_NU_VL=0
 	local NODE_NU_TJ
-	NODE_NU_TJ=$(grep -Ec "^trojan://" "$_subscribe_decode_file") || "0"
+	NODE_NU_TJ=$(grep -Ec "^trojan://" "$_subscribe_decode_file" 2>/dev/null) || NODE_NU_TJ=0
 	local NODE_NU_H2
-	NODE_NU_H2=$(grep -Ec "^hysteria2://" "$_subscribe_decode_file") || "0"
+	NODE_NU_H2=$(grep -Ec "^hysteria2://" "$_subscribe_decode_file" 2>/dev/null) || NODE_NU_H2=0
 	local NODE_NU_TT
 	NODE_NU_TT=$((NODE_NU_SS + NODE_NU_SR + NODE_NU_VM + NODE_NU_VL + NODE_NU_TJ + NODE_NU_H2))
 	if [ "${NODE_NU_TT}" -lt "${NODE_NU_RAW}" ];then
