@@ -2,8 +2,7 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/ss_var.sh
-source /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/ss_base.sh
 
 LOGFILE_F=/tmp/upload/ssf_status.txt
 LOGFILE_C=/tmp/upload/ssc_status.txt
@@ -15,22 +14,24 @@ COUNT=1
 rm -rf /tmp/upload/test.txt
 
 clean_f_log() {
-	[ $(wc -l "$LOGFILE_F" | awk '{print $1}') -le "$LOG_MAX" ] && return
-	local logdata=$(tail -n 500 "$LOGFILE_F")
+	[ "$(wc -l < "$LOGFILE_F")" -le "$LOG_MAX" ] && return
+	local logdata
+	logdata=$(tail -n 500 "$LOGFILE_F")
 	echo "$logdata" > $LOGFILE_F 2> /dev/null
 	unset logdata
 }
 
 clean_c_log() {
-	[ $(wc -l "$LOGFILE_C" | awk '{print $1}') -le "$LOG_MAX" ] && return
-	local logdata=$(tail -n 500 "$LOGFILE_C")
+	[ "$(wc -l < "$LOGFILE_C")" -le "$LOG_MAX" ] && return
+	local logdata
+	logdata=$(tail -n 500 "$LOGFILE_C")
 	echo "$logdata" > $LOGFILE_C 2> /dev/null
 	unset logdata
 }
 
 LOGM() {
-	echo $1
-	logger $1
+	echo "$1"
+	logger "$1"
 }
 
 _get_interval() {

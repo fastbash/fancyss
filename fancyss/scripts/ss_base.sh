@@ -8,12 +8,12 @@
 # 引用方法：source /koolshare/scripts/ss_base.sh
 
 export KSROOT=/koolshare
-source $KSROOT/scripts/base.sh
-source /koolshare/scripts/ss_var.sh
-NEW_PATH=$(echo $PATH|tr ':' '\n'|sed '/opt/d;/mmc/d'|awk '!a[$0]++'|tr '\n' ':'|sed '$ s/:$//')
-export PATH=${NEW_PATH}
-source helper.sh
-eval $(dbus export ss | sed 's/export //' | sed 's/;export /\n/g;' | sed '/ssconf_.*$/d'|sed 's/^/export /' | tr '\n' ';')
+. "$KSROOT/scripts/base.sh"
+. /koolshare/scripts/ss_var.sh
+NEW_PATH=$(echo "$PATH"|tr ':' '\n'|sed '/opt/d;/mmc/d'|awk '!a[$0]++'|tr '\n' ':'|sed '$ s/:$//')
+export PATH="${NEW_PATH}"
+. helper.sh
+eval "$(dbus export ss | sed 's/export //' | sed 's/;export /\n/g;' | sed '/ssconf_.*$/d'|sed 's/^/export /' | tr '\n' ';')"
 unset usb2jffs_time_hour
 unset usb2jffs_week
 unset usb2jffs_title
@@ -63,21 +63,21 @@ base_1="name type mode server port method password ss_obfs ss_obfs_host ss_v2ray
 base_2="use_kcp v2ray_use_json v2ray_mux_enable v2ray_network_security_alpn_h2 v2ray_network_security_alpn_http xray_use_json xray_network_security_alpn_h2 xray_network_security_alpn_http trojan_ai trojan_uuid trojan_sni trojan_tfo naive_prot naive_server naive_port naive_user naive_pass hy2_server hy2_port hy2_pass hy2_up hy2_dl hy2_obfs hy2_obfs_pass hy2_sni hy2_ai hy2_tfo"
 for config in ${base_1} ${base_2}
 do
-	key_1=$(dbus get ssconf_basic_${config}_${cur_node})
+	key_1=$(dbus get "ssconf_basic_${config}_${cur_node}")
 	if [ -n "$key_1" ];then
-		key_2=ss_basic_${config}
+		key_2="ss_basic_${config}"
 		tmp="export $key_2=\"$key_1\""
-		eval ${tmp}
+		eval "${tmp}"
 	fi
 	unset key_1 key_2
 done
-ssconf_basic_node=${cur_node}
+ssconf_basic_node="${cur_node}"
 # ------------------------------------------------
 gfw_on=$(dbus list ss_acl_mode_ | cut -d "=" -f 2 | grep -E "1")
 chn_on=$(dbus list ss_acl_mode_ | cut -d "=" -f 2 | grep -E "2|3")
 all_on=$(dbus list ss_acl_mode_ | cut -d "=" -f 2 | grep -E "5")
 game_on=$(dbus list ss_acl_mode | cut -d "=" -f 2 | grep "3")
-if [ "${ss_basic_mode}" == "1" -a -z "${chn_on}" -a -z "${all_on}" -o "${ss_basic_mode}" == "6" ];then
+if [ "${ss_basic_mode}" = "1" ] && [ -z "${chn_on}" ] && [ -z "${all_on}" ] || [ "${ss_basic_mode}" = "6" ];then
 	# gfwlist模式的时候，且访问控制主机中不存在 大陆白名单模式 游戏模式 全局模式，则使用国内优先模式
 	# 回国模式下自动判断使用国内优先
 	DNS_PLAN=1
@@ -106,7 +106,7 @@ fi
 # 默认不开启udp
 mangle=0
 
-if [ "${ss_basic_mode}" == "3" ];then
+if [ "${ss_basic_mode}" = "3" ];then
 	# 游戏模式下启用udp
 	mangle=1
 fi
@@ -116,41 +116,41 @@ if [ -n "${game_on}" ];then
 	mangle=1
 fi
 
-if [ "${ss_basic_udpall}" == "1" ];then
+if [ "${ss_basic_udpall}" = "1" ];then
 	mangle=1
 fi
 
-if [ "${ss_basic_udpgpt}" == "1" ];then
+if [ "${ss_basic_udpgpt}" = "1" ];then
 	mangle=1
 fi
 
 # naive 节点不支持udp
-if [ "${ss_basic_type}" == "6" ];then
+if [ "${ss_basic_type}" = "6" ];then
 	mangle=0
 fi
 
 
-if [ "${ss_basic_type}" == "6" ];then
-	ss_basic_password=$(echo ${ss_basic_naive_pass} | base64_decode)
-	ss_basic_server=${ss_basic_naive_server}
-elif [ "${ss_basic_type}" == "8" ];then
-	ss_basic_server=${ss_basic_hy2_server}
+if [ "${ss_basic_type}" = "6" ];then
+	ss_basic_password=$(echo "${ss_basic_naive_pass}" | base64_decode)
+	ss_basic_server="${ss_basic_naive_server}"
+elif [ "${ss_basic_type}" = "8" ];then
+	ss_basic_server="${ss_basic_hy2_server}"
 else
-	ss_basic_password=$(echo ${ss_basic_password} | base64_decode)
+	ss_basic_password=$(echo "${ss_basic_password}" | base64_decode)
 fi
 
-ss_basic_server_orig=${ss_basic_server}
+ss_basic_server_orig="${ss_basic_server}"
 
 if [ ! -x "/koolshare/bin/v2ray" ];then
 	ss_basic_vcore=1
 fi
 
-if [ ! -x "/koolshare/bin/v2ray" -a ! -x "/tmp/${MODULE}/bin/sslocal" ];then
+if [ ! -x "/koolshare/bin/v2ray" ] && [ ! -x "/tmp/${MODULE}/bin/sslocal" ];then
 	ss_basic_rust=0
 fi
 
 # trojan 全局允许不安全
-if [ "${ss_basic_type}" == "5" -a "${ss_basic_tjai}" == "1" ];then
+if [ "${ss_basic_type}" = "5" ] && [ "${ss_basic_tjai}" = "1" ];then
 	ss_basic_trojan_ai=1
 	#eval ss_basic_trojan_ai_${cur_node}=1
 fi
@@ -161,23 +161,23 @@ fi
 # v2ray/xray使用自带dns
 ss_basic_dns_flag="0"
 DNSF_PORT=1055
-if [ "${ss_basic_advdns}" == "1" -a "${ss_dns_plan}" == "1" -a "${ss_basic_chng_trust_1_enable}" == "1" -a "${ss_basic_chng_trust_1_opt}" == "1" ];then
+if [ "${ss_basic_advdns}" = "1" ] && [ "${ss_dns_plan}" = "1" ] && [ "${ss_basic_chng_trust_1_enable}" = "1" ] && [ "${ss_basic_chng_trust_1_opt}" = "1" ];then
 	# 新dns方案  chinadns-ng，udp 方案
 	ss_basic_dns_flag="1"
 fi
-if [ "${ss_basic_advdns}" == "1" -a "${ss_dns_plan}" == "1" -a "${ss_basic_chng_trust_1_enable}" == "1" -a "${ss_basic_chng_trust_1_opt}" == "2" ];then
+if [ "${ss_basic_advdns}" = "1" ] && [ "${ss_dns_plan}" = "1" ] && [ "${ss_basic_chng_trust_1_enable}" = "1" ] && [ "${ss_basic_chng_trust_1_opt}" = "2" ];then
 	# 新dns方案 chinadns-ng，tcp 方案，dns2socks，socks5 23456 needed
 	ss_basic_dns_flag="2"
 fi
-if [ "${ss_basic_advdns}" != "1" -a "${ss_foreign_dns}" == "7" ]; then
+if [ "${ss_basic_advdns}" != "1" ] && [ "${ss_foreign_dns}" = "7" ]; then
 	# 旧dns方案，v2ray/xray原生dns，非socks5 + dns2socks 方案
 	ss_basic_dns_flag="1"
 	DNSF_PORT=7913
 fi
 
-if [ "${ss_basic_advdns}" != "1" -a "${ss_foreign_dns}" == "4" ]; then
+if [ "${ss_basic_advdns}" != "1" ] && [ "${ss_foreign_dns}" = "4" ]; then
 	# 旧dns方案，ss-tunnel，非socks5 + dns2socks 方案
-	if [ "${ss_basic_type}" == "3" -o "${ss_basic_type}" == "4" -o "${ss_basic_type}" == "5" -o "${ss_basic_type}" == "6" ];then
+	if [ "${ss_basic_type}" = "3" ] || [ "${ss_basic_type}" = "4" ] || [ "${ss_basic_type}" = "5" ] || [ "${ss_basic_type}" = "6" ];then
 		# v2ray xray trojan naive 不支持ss-tunnel，会自动切换到dns2socks，所以默认应该开启socks5
 		ss_basic_dns_flag="2"
 		DNSF_PORT=7913
@@ -189,10 +189,10 @@ fi
 
 #---------------------------
 # 20230609，119.29.29.29的tcp解析有问题，如果用户选这个，强制更换到119.28.28.28
-if [ "${ss_basic_chng_china_1_tcp}" == "5" ];then
+if [ "${ss_basic_chng_china_1_tcp}" = "5" ];then
 	ss_basic_chng_china_1_tcp="6"
 fi
-if [ "${ss_basic_chng_china_2_tcp}" == "5" ];then
+if [ "${ss_basic_chng_china_2_tcp}" = "5" ];then
 	ss_basic_chng_china_2_tcp="6"
 fi
 
@@ -211,64 +211,23 @@ number_test(){
 	esac
 }
 
-__valid_ip() {
-	# 验证是否为ipv4或者ipv6地址，是则正确返回，不是返回空值
-	local format_4=$(echo "$1" | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}$")
-	local format_6=$(echo "$1" | grep -Eo '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*')
-	if [ -n "${format_4}" -a -z "${format_6}" ]; then
-		echo "${format_4}"
-		return 0
-	elif [ -z "${format_4}" -a -n "${format_6}" ]; then
-		echo "$format_6"
-		return 0
-	else
-		echo ""
-		return 1
-	fi
-}
-
-__valid_ip_silent() {
-	# 验证是否为ipv4或者ipv6地址，是则正确返回，不是返回空值
-	local format_4=$(echo "$1" | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}$")
-	local format_6=$(echo "$1" | grep -Eo '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*')
-	if [ -n "${format_4}" -a -z "${format_6}" ]; then
-		return 0
-	elif [ -z "${format_4}" -a -n "${format_6}" ]; then
-		return 0
-	else
-		return 1
-	fi
-}
-
-__valid_port() {
-	local port=$1
-	if [ $(number_test ${port}) != "0" ];then
-		echo ""
-		return 1
-	fi
-
-	if [ ${port} -gt "1" -a ${port} -lt "65535" ];then
-		echo "${port}"
-		return 0
-	else
-		echo ""
-		return 1
-	fi
-}
 
 detect_running_status(){
-	[ "${ss_basic_noruncheck}" == "1" ] && return
-	local BINNAME=$1
-	local PIDFILE=$2
+	[ "${ss_basic_noruncheck}" = "1" ] && return
+	local BINNAME
+	BINNAME="$1"
+	local PIDFILE
+	PIDFILE="$2"
 	local PID1
 	local PID2
-	local i=40
+	local i
+	i=40
 	if [ -n "${PIDFILE}" ];then
-		until [ -n "${PID1}" ] && [ -n "${PID2}" ] && echo ${PID1} | grep -Eowq ${PID2} 2>/dev/null; do
+		until [ -n "${PID1}" ] && [ -n "${PID2}" ] && echo "${PID1}" | grep -Eowq "${PID2}" 2>/dev/null; do
 			usleep 250000
-			i=$(($i - 1))
-			PID1=$(pidof ${BINNAME})
-			PID2=$(cat ${PIDFILE})
+			i=$((i - 1))
+			PID1=$(pidof "${BINNAME}")
+			PID2=$(cat "${PIDFILE}")
 			if [ "$i" -lt 1 ]; then
 				echo_date "$1进程启动失败！请检查你的配置！"
 				#return 1
@@ -279,8 +238,8 @@ detect_running_status(){
 	else
 		until [ -n "${PID1}" ]; do
 			usleep 250000
-			i=$(($i - 1))
-			PID1=$(pidof ${BINNAME})
+			i=$((i - 1))
+			PID1=$(pidof "${BINNAME}")
 			if [ "$i" -lt 1 ]; then
 				echo_date "$1进程启动失败，请检查你的配置！"
 				#return 1
@@ -292,17 +251,21 @@ detect_running_status(){
 }
 
 detect_running_status2(){
-	[ "${ss_basic_noruncheck}" == "1" ] && return
+	[ "${ss_basic_noruncheck}" = "1" ] && return
 	# detect process by binary name and key word
-	local BINNAME=$1
-	local KEY=$2
-	local SLIENT=$3
-	local i=100
+	local BINNAME
+	BINNAME=$1
+	local KEY
+	KEY=$2
+	local SLIENT
+	SLIENT=$3
+	local i
+	i=100
 	local DPID
  	until [ -n "${DPID}" ]; do
  		# wait for 0.1s
 		usleep 100000
-		i=$(($i - 1))
+		i=$((i - 1))
 		DPID=$(ps -w | grep "${BINNAME}" | grep -v "grep" | grep "${KEY}" | awk '{print $1}')
 		if [ "$i" -lt 1 ]; then
 			echo_date "$1进程启动失败，请检查你的配置！"

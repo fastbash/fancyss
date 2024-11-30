@@ -2,19 +2,15 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/base.sh
-source /koolshare/scripts/ss_var.sh
-source /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/base.sh
+. /koolshare/scripts/ss_base.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 url_main="https://raw.githubusercontent.com/fastbash/fancyss/3.0/binaries/ss_rust"
 DNLD=""
 
-run(){
-	env -i PATH=${PATH} "$@"
-}
 
 # arm hnd hnd_v8 qca mtk
-pkg_arch=$(cat /koolshare/webs/Module_${MODULE}.asp | tr -d '\r' | grep -Eo "PKG_ARCH=.+" | awk -F"=" '{print $2}' |sed 's/"//g')
+pkg_arch=$(tr -d '\r' < "/koolshare/webs/Module_${MODULE}.asp" | grep -Eo "PKG_ARCH=.+" | awk -F"=" '{print $2}' |sed 's/"//g')
 case $pkg_arch in
 arm)
 	ARCH=armv5

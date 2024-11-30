@@ -2,14 +2,15 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/base.sh
-eval $(dbus export ss_basic_)
+. /koolshare/scripts/base.sh
+. /koolshare/scripts/ss_var.sh
+eval "$(dbus export ss_basic_)"
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 XRAY_CONFIG_FILE="/koolshare/ss/xray.json"
 url_main="https://raw.githubusercontent.com/fastbash/fancyss/3.0/binaries/xray"
 
 # arm hnd hnd_v8 qca mtk
-pkg_arch=$(cat /koolshare/webs/Module_${MODULE}.asp | tr -d '\r' | grep -Eo "PKG_ARCH=.+" | awk -F"=" '{print $2}' |sed 's/"//g')
+pkg_arch=$(tr -d '\r' < "/koolshare/webs/Module_${MODULE}.asp" | grep -Eo "PKG_ARCH=.+" | awk -F"=" '{print $2}' |sed 's/"//g')
 case $pkg_arch in
 arm)
 	ARCH=armv5
@@ -30,25 +31,26 @@ esac
 
 # get xray location
 _TARGET_PATH=$(readlink /koolshare/bin/xray)
-if [ -z ${_TARGET_PATH} ];then
+if [ -z "${_TARGET_PATH}" ];then
 	_TARGET_PATH=/koolshare/bin/xray
 fi
 
 get_latest_version(){
-	local VERSION_FILE=$1
+	local VERSION_FILE
+	VERSION_FILE="$1"
 	rm -rf /tmp/xray_latest_info.txt
 	echo_date "检测Xray最新版本..."
-	curl --connect-timeout 8 -s ${url_main}/${VERSION_FILE}.txt > /tmp/xray_latest_info.txt
-	if [ "$?" == "0" ];then
+	curl --connect-timeout 8 -s "${url_main}/${VERSION_FILE}.txt" > /tmp/xray_latest_info.txt
+	if [ "$?" = "0" ];then
 		if [ -z "$(cat /tmp/xray_latest_info.txt)" ];then
 			echo_date "获取Xray最新版本信息失败！使用备用服务器检测！"
 			failed_warning_xray
 		fi
-		if [ -n "$(cat /tmp/xray_latest_info.txt|grep 404)" ];then
+		if grep -q 404 /tmp/xray_latest_info.txt;then
 			echo_date "获取Xray最新版本信息失败！使用备用服务器检测！"
 			failed_warning_xray
 		fi
-		XVERSION=$(cat /tmp/xray_latest_info.txt | sed 's/v//g')
+		XVERSION=$(sed 's/v//g' /tmp/xray_latest_info.txt)
 		[ -z "${XVERSION}" ] && XVERSION="0"
 		
 		echo_date "检测到Xray最新版本：${XVERSION}"
@@ -61,12 +63,12 @@ get_latest_version(){
 			echo_date "当前已安装Xray版本：${CUR_VER}"
 		fi
 		COMP=$(versioncmp ${CUR_VER} ${XVERSION})
-		if [ "${COMP}" == "1" ];then
+		if [ "${COMP}" = "1" ];then
 			[ "${CUR_VER}" != "0" ] && echo_date "Xray已安装版本号低于更新版本，开始更新程序..."
-			update_now v${XVERSION}
-		elif [ "${COMP}" == "-1" ];then
+			update_now "v${XVERSION}"
+		elif [ "${COMP}" = "-1" ];then
 			[ "${CUR_VER}" != "0" ] && echo_date "Xray已安装版本号高于更新版本，开始降级程序..."
-			update_now v${XVERSION}
+			update_now "v${XVERSION}"
 		else
 			XRAY_LOCAL_VER=$(${_TARGET_PATH} -version 2>/dev/null | head -n 1 | cut -d " " -f2)
 			[ -n "${XRAY_LOCAL_VER}" ] && dbus set ss_basic_xray_version="${XRAY_LOCAL_VER}"
@@ -88,7 +90,7 @@ update_now(){
 	mkdir -p /tmp/xray && cd /tmp/xray
 
 	echo_date "开始下载校验文件：md5sum.txt"
-	wget -4 --no-check-certificate --timeout=20 -qO - ${url_main}/$1/md5sum.txt > /tmp/xray/md5sum.txt
+	wget -4 --no-check-certificate --timeout=20 -qO - "${url_main}/$1/md5sum.txt" > /tmp/xray/md5sum.txt
 	if [ "$?" != "0" ];then
 		echo_date "md5sum.txt下载失败！"
 		md5sum_ok=0
@@ -99,7 +101,7 @@ update_now(){
 	
 	echo_date "开始下载xray程序"
 	echo_date "下载地址：${url_main}/$1/xray_${ARCH}"
-	wget -4 --no-check-certificate --timeout=20 --tries=1 ${url_main}/$1/xray_${ARCH}
+	wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/xray_${ARCH}"
 	#curl -L -H "Cache-Control: no-cache" -o /tmp/xray/xray $url_main/$1/xray
 	if [ "$?" != "0" ];then
 		echo_date "xray下载失败！"
@@ -107,10 +109,10 @@ update_now(){
 	else
 		xray_ok=1
 		echo_date "xray程序下载成功..."
-		mv xray_${ARCH} xray
+		mv "xray_${ARCH}" xray
 	fi
 
-	if [ "${md5sum_ok}" == "1" -a "${xray_ok}" == "1" ];then
+	if [ "${md5sum_ok}" = "1" ] && [ "${xray_ok}" = "1" ];then
 		check_md5sum
 	else
 		echo_date "使用备用服务器下载..."
@@ -122,9 +124,9 @@ update_now(){
 check_md5sum(){
 	cd /tmp/xray
 	echo_date "校验下载的文件!"
-	XRAY_LOCAL_MD5=$(md5sum xray|awk '{print $1}')
-	XRAY_ONLINE_MD5=$(cat md5sum.txt|grep -w xray_${ARCH}|awk '{print $1}')
-	if [ "${XRAY_LOCAL_MD5}" == "${XRAY_ONLINE_MD5}" ];then
+	XRAY_LOCAL_MD5=$(md5sum xray | awk '{print $1}')
+	XRAY_ONLINE_MD5=$(grep -w "xray_${ARCH}" md5sum.txt | awk '{print $1}')
+	if [ "${XRAY_LOCAL_MD5}" = "${XRAY_ONLINE_MD5}" ];then
 		echo_date "文件校验通过!"
 		install_binary
 	else
@@ -155,10 +157,10 @@ install_binary(){
 
 move_binary(){
 	echo_date "开始更新xray二进制文件... "
-	mv /tmp/xray/xray ${_TARGET_PATH}
-	chmod +x ${_TARGET_PATH}
-	if [ -f ${_TARGET_PATH} -a ! -f /koolshare/bin/xray ];then
-		ln -sf ${_TARGET_PATH} /koolshare/bin/xray
+	mv /tmp/xray/xray "${_TARGET_PATH}"
+	chmod +x "${_TARGET_PATH}"
+	if [ -f "${_TARGET_PATH}" ] && [ ! -f /koolshare/bin/xray ];then
+		ln -sf "${_TARGET_PATH}" /koolshare/bin/xray
 	fi
 	XRAY_LOCAL_VER=$(/koolshare/bin/xray -version 2>/dev/null | head -n 1 | cut -d " " -f2)
 	XRAY_LOCAL_DATE=$(/koolshare/bin/xray -version 2>/dev/null | head -n 1 | cut -d " " -f5)
@@ -169,12 +171,12 @@ move_binary(){
 
 start_xray() {
 	# tfo start
-	if [ "$ss_basic_tfo" == "1" ]; then
+	if [ "$ss_basic_tfo" = "1" ]; then
 		echo_date 开启tcp fast open支持.
 		echo 3 >/proc/sys/net/ipv4/tcp_fastopen
 	fi
 	# xray start
-	if [ "${ss_basic_xguard}" == "1" ];then
+	if [ "${ss_basic_xguard}" = "1" ];then
 		echo_date "开启Xray主进程 + Xray守护..."
 		# use perp to start xray
 		mkdir -p /koolshare/perp/xray/
@@ -196,9 +198,10 @@ start_xray() {
 		xray run -c $XRAY_CONFIG_FILE >/dev/null 2>&1 &
 	fi
 	local XPID
-	local i=25
+	local i
+	i=25
 	until [ -n "$XPID" ]; do
-		i=$(($i - 1))
+		i=$((i - 1))
 		XPID=$(pidof xray)
 		if [ "$i" -lt 1 ]; then
 			echo_date "Xray进程启动失败！"
@@ -206,7 +209,7 @@ start_xray() {
 		fi
 		usleep 250000
 	done
-	echo_date Xray启动成功，pid：$XPID
+	echo_date "Xray启动成功，pid：$XPID"
 }
 
 case $2 in

@@ -2,9 +2,9 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/base.sh
-source /koolshare/scripts/ss_var.sh
-eval $(dbus export ss_failover)
+. /koolshare/scripts/base.sh
+. /koolshare/scripts/ss_var.sh
+eval "$(dbus export ss_failover)"
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 
 LOGFILE_F=/tmp/upload/ssf_status.txt
@@ -21,7 +21,7 @@ stop_status(){
 }
 
 check_status(){
-	if [ "$ss_failover_enable" == "1" ];then
+	if [ "$ss_failover_enable" = "1" ];then
 		echo "=========================================== 故障检测脚本重启 ==========================================" >> $LOGFILE_F
 		echo "=========================================== 故障检测脚本重启 ==========================================" >> $LOGFILE_C
 		start-stop-daemon -S -q -b -x /koolshare/scripts/ss_status_main.sh
@@ -32,7 +32,7 @@ check_status(){
 true > $LOGFILE
 http_response "$1"
 usleep 200000
-if [ "$ss_failover_enable" == "1" ];then
+if [ "$ss_failover_enable" = "1" ];then
 	echo_date "重启故障转移功能" >> $LOGFILE
 	stop_status
 	check_status

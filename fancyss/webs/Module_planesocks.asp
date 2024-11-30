@@ -6610,7 +6610,7 @@ function save_failover() {
 																{ suffix: 'tcp fast open:' },																	//fancyss-full
 																{ id:'ss_basic_hy2_tfo_switch', type:'select', style:'width:auto', options:option_hy2_tfo, value:'2'}, //fancyss-full
 															]},																									//fancyss-full
-															{ title: '下载订阅时走ss/ssr/v2ray/v2ray代理网络', id:'ss_basic_online_links_goss', type:'select', style:'width:auto', options:[["0", "不走代理"], ["1", "走代理"]], value:'0'},
+															{ title: '下载更新时走ss/ssr/v2ray/v2ray代理网络', id:'ss_basic_online_links_goss', type:'select', style:'width:auto', options:[["0", "不走代理"], ["1", "走代理"]], value:'0'},
 															{ title: '订阅计划任务', multi: [
 																{ id:'ss_basic_node_update', type:'select', style:'width:auto', func:'u', options:[["0", "禁用"], ["1", "开启"]], value:'0'},
 																{ id:'ss_basic_node_update_day', type:'select', style:'width:auto', options:option_noded, value:'6'},

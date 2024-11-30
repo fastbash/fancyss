@@ -2,33 +2,38 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/base.sh
-source /koolshare/scripts/ss_var.sh
+. /koolshare/scripts/base.sh
+. /koolshare/scripts/ss_var.sh
 ss_basic_enable=$(dbus get ss_basic_enable)
-LOCK_FILE=/var/lock/fancyss.lock
 
-set_lock(){
-	exec 1000>${LOCK_FILE}
-	flock -n 1000 || {
-		# bring back to original log
-		http_response "$ACTION"
-		# echo_date "$BASH $ARGS" | tee -a ${LOG_FILE}
-		exit 1
-	}
-}
+selfname="$0"
+selfname="${selfname##*/}"
+LOCK_FILE="/var/lock/${selfname}.lock"
 
-unset_lock() {
-	flock -u 1000
-	rm -rf ${LOCK_FILE}
-}
+# set_lock(){
+# 	exec 1000>${LOCK_FILE}
+# 	flock -n 1000 || {
+# 		# bring back to original log
+# 		http_response "$ACTION"
+# 		# echo_date "$BASH $ARGS" | tee -a ${LOG_FILE}
+# 		exit 1
+# 	}
+# }
+
+# unset_lock() {
+# 	flock -u 1000
+# 	rm -rf ${LOCK_FILE}
+# }
 
 pre_stop(){
-	local current_pid=$$
-	local ss_config_pids=$(ps|grep -E "ss_config\.sh"|awk '{print $1}'|grep -v ${current_pid})
+	local current_pid
+	current_pid=$$
+	local ss_config_pids
+	ss_config_pids=$(ps | grep -E "ss_config\.sh"  | awk '{print $1}' | grep -v "${current_pid}")
 	if [ -n "${ss_config_pids}" ];then
 		for ss_config_pid in ${ss_config_pids}; do
-			echo kill ${ss_config_pid}
-			kill -9 ${ss_config_pid} >/dev/null 2>&1
+			echo "kill ${ss_config_pid}"
+			kill -9 "${ss_config_pid}" >/dev/null 2>&1
 		done
 	fi
 
@@ -88,14 +93,14 @@ start_fancyss(){
 # call by ws
 case $1 in
 start)
-	set_lock
+	set_lock "$selfname"
 	true > /tmp/upload/ss_log.txt
 	pre_start
 	start_fancyss | tee -a /tmp/upload/ss_log.txt 2>&1
 	unset_lock
 	;;
 start_by_ws)
-	set_lock
+	set_lock "$selfname"
 	pre_start
 	start_fancyss
 	unset_lock
@@ -114,7 +119,7 @@ esac
 # call by httpdb
 case $2 in
 start)
-	set_lock
+	set_lock "$selfname"
 	true > /tmp/upload/ss_log.txt
 	http_response "$1"
 	pre_start
@@ -122,7 +127,7 @@ start)
 	unset_lock
 	;;
 start_by_ws)
-	set_lock
+	set_lock "$selfname"
 	pre_start
 	start_fancyss
 	unset_lock

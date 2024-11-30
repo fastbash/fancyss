@@ -11,7 +11,7 @@ check_rule(){
     if [ ! -f /jffs/.koolshare/scripts/ss_base.sh ];then echo_date 'ssr plugin is not exsit!';return 1;fi
     domain="$1"
     echo_date "domain: $domain"
-    dnsPort=$(find /jffs/configs/dnsmasq.d/ -name "*" | xargs grep -w "$domain" 2>/dev/null | grep -w 'server=' | awk -F'#' '{print $2}' | head -n1)
+    dnsPort=$(find /jffs/configs/dnsmasq.d/ -name "*" -exec grep -w "$domain" {} \; 2>/dev/null | grep -w 'server=' | awk -F'#' '{print $2}' | head -n1)
     if [ "$ss_basic_mode" = 1 ];then #gfwlist
         echo_date "plugin mode: gfwlist"
         if [ "$dnsPort" = "" ];then
@@ -33,7 +33,7 @@ check_rule(){
     fi
     # check chnroute, get domain ip
     if [ "$dnsPort" != "" ];then
-        tmp_ip=$(nslookup "$domain" 127.0.0.1:$dnsPort | grep 'Address 1:' | tail -n1 | awk '{print $3}')
+        tmp_ip=$(nslookup "$domain" "127.0.0.1:$dnsPort" | grep 'Address 1:' | tail -n1 | awk '{print $3}')
         if echo "$tmp_ip" | grep -qE '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$';then #is a ip address
             if ipset list | grep -q chnroute;then #confirm ipset chnroute is exsit
                 if ipset test chnroute "$tmp_ip";then # direct

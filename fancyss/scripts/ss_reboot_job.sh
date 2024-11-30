@@ -2,8 +2,8 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/ss_base.sh
-source /koolshare/scripts/ss_var.sh
+. /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/ss_var.sh
 ISP_DNS1=$(nvram get wan0_dns|sed 's/ /\n/g'|grep -v 0.0.0.0|grep -v 127.0.0.1|sed -n 1p)
 ISP_DNS2=$(nvram get wan0_dns|sed 's/ /\n/g'|grep -v 0.0.0.0|grep -v 127.0.0.1|sed -n 2p)
 IFIP_DNS1=$(echo $ISP_DNS1|grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}|:")
@@ -47,7 +47,7 @@ set_ss_reboot_job(){
 }
 
 remove_ss_trigger_job(){
-	if [ -n "`cru l|grep ss_tri_check`" ]; then
+	if cru l | grep -q ss_tri_check; then
 		echo_date "删除插件触发重启定时任务..."
 		sed -i '/ss_tri_check/d' /var/spool/cron/crontabs/* >/dev/null 2>&1
 	else
@@ -56,7 +56,7 @@ remove_ss_trigger_job(){
 }
 
 set_ss_trigger_job(){
-	if [ "$ss_basic_tri_reboot_time" == "0" ];then
+	if [ "$ss_basic_tri_reboot_time" = "0" ];then
 		remove_ss_trigger_job
 	else
 		echo_date "设置每隔$ss_basic_tri_reboot_time分钟检查服务器IP地址，如果IP发生变化，则重启科学上网插件..."
@@ -68,21 +68,21 @@ set_ss_trigger_job(){
 
 #-------------------
 
-__valid_ip(){
-	# 验证是否为ipv4或者ipv6地址，是则正确返回，不是返回空值
-	local format_4=`echo "$1"|grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}"`
-	local format_6=`echo "$1"|grep -Eo '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*'`
-	if [ -n "$format_4" ] && [ -z "$format_6" ];then
-		echo "$format_4"
-		return 0
-	elif [ -z "$format_4" ] && [ -n "$format_6" ];then
-		echo "$format_6"
-		return 0
-	else
-		echo ""
-		return 1
-	fi
-}
+# __valid_ip(){
+# 	# 验证是否为ipv4或者ipv6地址，是则正确返回，不是返回空值
+# 	local format_4=`echo "$1"|grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}"`
+# 	local format_6=`echo "$1"|grep -Eo '^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*'`
+# 	if [ -n "$format_4" ] && [ -z "$format_6" ];then
+# 		echo "$format_4"
+# 		return 0
+# 	elif [ -z "$format_4" ] && [ -n "$format_6" ];then
+# 		echo "$format_6"
+# 		return 0
+# 	else
+# 		echo ""
+# 		return 1
+# 	fi
+# }
 
 __get_server_resolver(){
 	local value_1="$ss_basic_server_resolver"
@@ -278,15 +278,19 @@ esac
 
 case "$2" in
 	1)
+		set_lock
 		true > /tmp/upload/ss_log.txt
 		http_response "$1"
 		set_ss_reboot_job >> /tmp/upload/ss_log.txt
 		echo XU6J03M6 >> /tmp/upload/ss_log.txt
+		unset_lock
 	;;
 	2)
+		set_lock
 		true > /tmp/upload/ss_log.txt
 		http_response "$1"
 		set_ss_trigger_job >> /tmp/upload/ss_log.txt
 		echo XU6J03M6 >> /tmp/upload/ss_log.txt
+		unset_lock
 	;;
 esac

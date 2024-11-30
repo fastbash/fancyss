@@ -2,12 +2,8 @@
 
 # fancyss script for asuswrt/merlin based router with software center
 
-source /koolshare/scripts/ss_base.sh
-source /koolshare/scripts/ss_var.sh
-
-run(){
-	env -i PATH=${PATH} "$@"
-}
+. /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/ss_var.sh
 
 GET_MODE_NAME() {
 	case "${ss_basic_mode}" in

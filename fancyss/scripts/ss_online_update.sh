@@ -1,19 +1,24 @@
 #!/bin/sh
 
 # fancyss script for asuswrt/merlin based router with software center
-source /koolshare/scripts/base.sh
-source /koolshare/scripts/ss_var.sh
-NEW_PATH=$(echo $PATH|tr ':' '\n'|sed '/opt/d;/mmc/d'|awk '!a[$0]++'|tr '\n' ':'|sed '$ s/:$//')
-export PATH=${NEW_PATH}
+. /koolshare/scripts/base.sh
+. /koolshare/scripts/ss_var.sh
+. /koolshare/scripts/ss_download.sh
+NEW_PATH=$(echo "$PATH"|tr ':' '\n'|sed '/opt/d;/mmc/d'|awk '!a[$0]++'|tr '\n' ':'|sed '$ s/:$//')
+export PATH="${NEW_PATH}"
 LC_ALL=C
 LANG=C
-LOCK_FILE=/var/lock/online_update.lock
+# LOCK_FILE=/var/lock/online_update.lock
+selfname="$0"
+selfname="${selfname##*/}"
+LOCK_FILE="/var/lock/${selfname}.lock"
+
 LOG_FILE=/tmp/upload/ss_log.txt
 DIR="/tmp/fancyss_subs"
 LOCAL_NODES_SPL="$DIR/ss_nodes_spl.txt"
 LOCAL_NODES_BAK="$DIR/ss_nodes_bak.txt"
 NODES_SEQ=$(dbus list ssconf_basic_name_ | sed -n 's/^.*_\([0-9]\+\)=.*/\1/p' | sort -n)
-NODE_INDEX=$(echo ${NODES_SEQ} | sed 's/.*[[:space:]]//')
+NODE_INDEX=$(echo "${NODES_SEQ}" | sed 's/.*[[:space:]]//')
 SUB_MODE=$(dbus get ssr_subscribe_mode)
 HY2_UP_SPEED=$(dbus get ss_basic_hy2_up_speed)
 HY2_DL_SPEED=$(dbus get ss_basic_hy2_dl_speed)
@@ -166,54 +171,31 @@ unset PWD
 # 8. 如果节点数量变少了，那么还需要掐尾去尾巴
 # 优点：删除节点，节点排序很方便！
 
-set_lock(){
-	exec 233>"${LOCK_FILE}"
-	flock -n 233 || {
-		local PID1=$$
-		local PID2=$(ps|grep -w "ss_online_update.sh"|grep -vw "grep"|grep -vw ${PID1})
-		if [ -n "${PID2}" ];then
-			echo_date "订阅脚本已经在运行，请稍候再试！"
-			exit 1			
-		else
-			rm -rf ${LOCK_FILE}
-		fi
-	}
-}
-
-unset_lock(){
-	flock -u 233
-	rm -rf "${LOCK_FILE}"
-}
-
 count_start(){
 	# opkg install coreutils-date
 	_start=$(/opt/bin/date +%s.%6N)
 	_start0=${_start}
 	counter=0
-	echo_date ------------------
-	echo_date - 0.000000
+	echo_date "------------------"
+	echo_date "- 0.000000"
 }
 
 count_time(){
 	# opkg install coreutils-date
 	_end=$(/opt/bin/date +%s.%6N)
 	runtime=$(awk "BEGIN { x = ${_end}; y = ${_start}; print (x - y) }")
-	let counter+=1
-	echo_date + $counter $runtime
-	_start=${_end}
+	counter=$((counter + 1))
+	echo_date "+ $counter $runtime"
+	_start="${_end}"
 }
 
 count_total(){
 	# opkg install coreutils-date
 	_end=$(/opt/bin/date +%s.%6N)
 	runtime=$(awk "BEGIN { x = ${_end}; y = ${_start0}; print (x - y) }")
-	let counter+=1
-	echo_date - $runtime
-	echo_date ------------------
-}
-
-run(){
-	env -i PATH=${PATH} "$@"
+	counter=$((counter + 1))
+	echo_date "- $runtime"
+	echo_date "------------------"
 }
 
 json_init(){
@@ -228,93 +210,92 @@ json_add_string(){
 }
 
 json_write_object(){
-	echo $NODE_DATA | sed '$ s/,$/}/g' >>$1
-}
-
-__valid_ip() {
-	# 验证是否为ipv4或者ipv6地址，是则正确返回，不是返回空值
-	local format_4=$(echo "$1" | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}$")
-	if [ -n "${format_4}" ]; then
-		echo "${format_4}"
-		return 0
-	else
-		echo ""
-		return 1
-	fi
+	echo "$NODE_DATA" | sed '$ s/,$/}/g' >> "$1"
 }
 
 dec64(){
-	# echo -n "${link}" | sed 's/$/====/' | grep -o "...." | sed '${/====/d}' | tr -d '\n' | base64 -d
-	echo -n "${1}===" | sed 's/-/+/g;s/_/\//g' | base64 -d 2>/dev/null
+	# echo -n "${1}===" | sed 's/-/+/g;s/_/\//g' | base64 -d 2>/dev/null
+    printf "%s" "${1}===" | sed 's/-/+/g;s/_/\//g' | base64 -d 2>/dev/null
 	return $?
 }
 
 decode_urllink(){
 	# legacy
-	read link
-	local flag=$1
-	local len=${#link}
-	local mod4=$(($len%4))
-	local var="===="
-	#[ "${mod4}" -gt "0" ] && local link=${link}${var:${mod4}}
-	local link=${link}${var:${mod4}}
-	local decode_info=$(echo -n "${link}" | sed 's/-/+/g;s/_/\//g' | base64 -d 2>/dev/null)
+	read -r link
+	local flag
+	flag=$1
+	local len
+	len=${#link}
+	local mod4
+	mod4=$((len%4))
+	local _var
+	_var="===="
+	#[ "${mod4}" -gt "0" ] && local link=${link}${_var:${mod4}}
+	local link
+	# link=${link}${_var:${mod4}}
+	link="${link}$(echo "$_var" | awk -v pos=$((mod4 + 1)) '{print substr($0, pos)}')"
+	local decode_info
+	decode_info=$(printf "%s" "${link}" | sed 's/-/+/g;s/_/\//g' | base64 -d 2>/dev/null)
 	# 如果解析出乱码，返回空值，避免skipd中写入乱码valye导致错误！
-	echo -n "${decode_info}" | isutf8 -q
-	if [ "$?" != "0" ];then
+	if ! printf "%s" "${decode_info}" | isutf8 -q;then
 		echo ""
 		return 1
 	fi
 	# 如果解析出多行结果，返回空值，避免skipd中写入多行value导致错误！
 	if [ -z "${flag}" ];then
-		local is_multi=$(echo "${decode_info}" | wc -l)
+		local is_multi
+		is_multi=$(echo "${decode_info}" | wc -l)
 		if [ "${is_multi}" -gt "1" ];then
 			echo ""
 			return 2
 		fi
 	fi
 	# 返回解析结果
-	echo -n "${decode_info}"
+	printf "%s" "${decode_info}"
 	return 0
 }
 
 json2skipd(){
-	local file_name=$1
-	cat > $DIR/${file_name}.sh <<-EOF
+	local file_name
+	file_name="$1"
+	cat > "$DIR/${file_name}.sh" <<-EOF
 		#!/bin/sh
 		source /koolshare/scripts/base.sh
 		#------------------------
 	EOF
 	NODE_INDEX=$(dbus list ssconf_basic_name_ | sed -n 's/^.*_\([0-9]\+\)=.*/\1/p' | sort -rn | sed -n '1p')
 	[ -z "${NODE_INDEX}" ] && NODE_INDEX="0"
-	local count=$(($NODE_INDEX + 1))
-	while read nodes; do
-		echo ${nodes} | sed 's/\",\"/\"\n\"/g;s/^{//;s/}$//' | sed 's/^\"/dbus set ssconf_basic_/g' | sed "s/\":/_${count}=/g" >>$DIR/${file_name}.sh
-		let count+=1
-	done < $DIR/${file_name}.txt
+	local count
+	count=$((NODE_INDEX + 1))
+	while read -r nodes; do
+		echo "${nodes}" | sed 's/\",\"/\"\n\"/g;s/^{//;s/}$//' | sed 's/^\"/dbus set ssconf_basic_/g' | sed "s/\":/_${count}=/g" >> "$DIR/${file_name}.sh"
+		count=$((count + 1))
+	done < "$DIR/${file_name}.txt"
 	#echo dbus save ssconf >>$DIR/${file_name}.sh
-	chmod +x $DIR/${file_name}.sh
-	sh $DIR/${file_name}.sh
+	chmod +x "$DIR/${file_name}.sh"
+	sh "$DIR/${file_name}.sh"
 	echo_date "🆗节点信息写入成功！"
 	sync
 }
 
 skipdb2json(){
-	if [ "${SEQ_NU}" == "0" ];then
-		return
+	if [ "${SEQ_NU}" = "0" ];then
+		return 1
 	fi
 	echo_date "➡️开始整理本地节点到文件，请稍等..."
 	# 将所有节点数据储存到文件，顺便清理掉空值的key
-	dbus list ssconf_basic_ | grep -E "_[0-9]+=" | sed '/^ssconf_basic_.\+_[0-9]\+=$/d' | sed 's/^ssconf_basic_//' >${DIR}/ssconf_keyval.txt
-	NODES_SEQ=$(cat ${DIR}/ssconf_keyval.txt | sed -n 's/name_\([0-9]\+\)=.*/\1/p'| sort -n)
+	dbus list ssconf_basic_ | grep -E "_[0-9]+=" | sed '/^ssconf_basic_.\+_[0-9]\+=$/d' | sed 's/^ssconf_basic_//' > "${DIR}/ssconf_keyval.txt"
+	NODES_SEQ=$(sed -n 's/name_\([0-9]\+\)=.*/\1/p' "${DIR}/ssconf_keyval.txt" | sort -n)
 	for nu in ${NODES_SEQ}
 	do
 		# cat ssconf_keyval.txt |grep _2=|sed "s/_2=/\":\"/"|sed 's/^/"/;s/$/\"/;s/$/,/g;1 s/^/{/;$ s/,$/}/'| tr -d '\n' |sed 's/$/\n/'
-		cat ${DIR}/ssconf_keyval.txt | grep "_${nu}=" | sed "s/_${nu}=/\":\"/" | sed 's/^/"/;s/$/\"/;s/$/,/g;1 s/^/{/;$ s/,$/}/' | tr -d '\n' | sed 's/$/\n/' >>${LOCAL_NODES_SPL}
+		grep "_${nu}=" "${DIR}/ssconf_keyval.txt" | sed "s/_${nu}=/\":\"/" | sed 's/^/"/;s/$/\"/;s/$/,/g;1 s/^/{/;$ s/,$/}/' | tr -d '\n' | sed 's/$/\n/' >> "${LOCAL_NODES_SPL}"
 	done
 	if [ -f "${LOCAL_NODES_SPL}" ];then
 		echo_date "📁所有本地节点成功整理到文件：${LOCAL_NODES_SPL}"
-		cp -rf ${LOCAL_NODES_SPL} ${LOCAL_NODES_BAK}
+		echo_date "📁核对文件中的线路数量：$(wc -l "${LOCAL_NODES_SPL}")"
+		
+		cp -rf "${LOCAL_NODES_SPL}" "${LOCAL_NODES_BAK}"
 	else
 		echo_date "⚠️节点文件处理失败！请重启路由器后重试！"
 		exit 1
@@ -322,37 +303,41 @@ skipdb2json(){
 }
 
 nodes2files(){
-	if [ "${SEQ_NU}" == "0" ];then
+	if [ "${SEQ_NU}" = "0" ];then
 		return
 	fi
-	rm -rf $DIR/local_*.txt
+	rm -rf "${DIR:?}"/local_*.txt
 	local SP_NAME
 	local SP_NUBS
-	local SP_COUN=0
-	local SP_STAT=$(cat ${LOCAL_NODES_SPL}|run jq -rc '.group'|awk -F "_" '{print $NF}'|uniq -c|sed 's/^[[:space:]]\+//g' | sed 's/[[:space:]]/|/g')
+	local SP_COUN
+	SP_COUN=0
+	local SP_STAT
+	SP_STAT=$(run jq -rc '.group' "${LOCAL_NODES_SPL}" | awk -F "_" '{print $NF}' | uniq -c | sed 's/^[[:space:]]\+//g' | sed 's/[[:space:]]/|/g')
 	for SP_LINE in ${SP_STAT}
 	do
-		SP_NAME=$(echo ${SP_LINE} | awk -F"|" '{print $2}')
-		SP_NUBS=$(echo ${SP_LINE} | awk -F"|" '{print $1}')
-		if [ "${SP_NAME}" == "null" -o -z "${SP_NAME}" ];then
+		SP_NAME=$(echo "${SP_LINE}" | awk -F"|" '{print $2}')
+		SP_NUBS=$(echo "${SP_LINE}" | awk -F"|" '{print $1}')
+		if [ "${SP_NAME}" = "null" ] || [ -z "${SP_NAME}" ];then
 			# echo_date "📂拆分：local_0_user.txt，共计${SP_NUBS}个节点！"
-			sed -n "1,${SP_NUBS}p" ${LOCAL_NODES_SPL} >>$DIR/local_0_user.txt
+			sed -n "1,${SP_NUBS}p" "${LOCAL_NODES_SPL}" >>$DIR/local_0_user.txt
 		else
-			local EXIST_FILE=$(ls -l $DIR/local_*_${SP_NAME}.txt 2>/dev/null)
+			local EXIST_FILE
+			EXIST_FILE=$(ls -l "${DIR:?}"/local_*_"${SP_NAME}".txt 2>/dev/null)
 			if [ -n "${EXIST_FILE}" ];then
-				local EXIST_NU=$(echo $EXIST_FILE|head -n1|awk -F "/" '{print $NF}'|awk -F "_" '{print $2}')
+				local EXIST_NU
+				EXIST_NU=$(echo "$EXIST_FILE" | head -n1 | awk -F "/" '{print $NF}'|awk -F "_" '{print $2}')
 				# echo_date "📂拆分：local_${EXIST_NU}_${SP_NAME}.txt，共计${SP_NUBS}个节点！"
-				sed -n "1,${SP_NUBS}p" ${LOCAL_NODES_SPL} >>$DIR/local_${EXIST_NU}_${SP_NAME}.txt
+				sed -n "1,${SP_NUBS}p" ${LOCAL_NODES_SPL} >> "$DIR/local_${EXIST_NU}_${SP_NAME}.txt"
 			else
-				let SP_COUN+=1
+				SP_COUN=$((SP_COUN + 1))
 				# echo_date "📂拆分：local_${SP_COUN}_${SP_NAME}.txt，共计${SP_NUBS}个节点！"
-				sed -n "1,${SP_NUBS}p" ${LOCAL_NODES_SPL} >>$DIR/local_${SP_COUN}_${SP_NAME}.txt
+				sed -n "1,${SP_NUBS}p" ${LOCAL_NODES_SPL} >> "$DIR/local_${SP_COUN}_${SP_NAME}.txt"
 			fi
 		fi
-		sed -i "1,${SP_NUBS}d" ${LOCAL_NODES_SPL}
+		sed -i "1,${SP_NUBS}d" "${LOCAL_NODES_SPL}"
 	done
 
-	if [ "$(ls -l ${LOCAL_NODES_SPL} |awk '{print $5}')" != "0" ];then
+	if [ "$(wc -c < "${LOCAL_NODES_SPL}")" != "0" ];then
 		echo_date "⚠节点文件处理失败！请重启路由器后重试！"
 		exit 1
 	fi
@@ -362,20 +347,22 @@ nodes_stats(){
 	echo_date "-----------------------------------"
 	local GROP
 	local NUBS
-	local TTNODE=$(cat ${LOCAL_NODES_BAK} 2>/dev/null| wc -l)
-	local NFILES=$(find $DIR -name "local_*.txt" | sort -n)
+	local TTNODE
+	TTNODE=$(wc -l < ${LOCAL_NODES_BAK} 2>/dev/null)
+	local NFILES
+	NFILES=$(find $DIR -name "local_*.txt" | sort -n)
 	if [ -n "${NFILES}" ];then
 		echo_date "📢当前节点统计信息：共有节点${TTNODE}个，其中："
 		for file in ${NFILES}
 		do
-			GROP=$(cat $file | run jq -c '.group' | sed 's/""/null/;s/^"//;s/"$//;s/_\w\+$//' | sort -u | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
-			NUBS=$(cat $file | wc -l)
-			if [ "${GROP}" == "null" ];then
+			GROP=$(run jq -c '.group' "$file" | sed 's/""/null/;s/^"//;s/"$//;s/_\w\+$//' | sort -u | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
+			NUBS=$(wc -l < "$file")
+			if [ "${GROP}" = "null" ];then
 				GROP_NAME="😛【用户自添加】节点"
 			else
 				GROP_NAME="🚀【${GROP}】机场节点"
 			fi
-			echo_date ${GROP_NAME}: ${NUBS}个
+			echo_date "${GROP_NAME}: ${NUBS}个"
 		done
 	else
 		echo_date "📢当前尚无任何节点...继续！"
@@ -384,37 +371,42 @@ nodes_stats(){
 }
 
 remove_null(){
-	if [ "${SEQ_NU}" == "0" ];then
+	if [ "${SEQ_NU}" = "0" ];then
 		# 没有节点，不进行检查
 		return
 	fi
-	if [ "$(dbus list ssconf_|grep _group|wc -l)" == "0" ];then
+	if [ "$(dbus list ssconf_ | grep -c _group)" = "0" ];then
 		# 没有订阅节点，不进行检查
 		return
 	fi
-	local online_sub_urls=$(dbus get ss_online_links | base64 -d | sed '/^$/d' | sed '/^#/d'| sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -E "^http" | sed 's/[[:space:]]/%20/g')
+	local online_sub_urls
+	online_sub_urls=$(dbus get ss_online_links | base64 -d | sed '/^$/d' | sed '/^#/d'| sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -E "^http" | sed 's/[[:space:]]/%20/g')
 	for online_sub_url in ${online_sub_urls}
 	do
-		local sublink_hash=$(echo ${online_sub_url} | sed 's/%20/ /g' | md5sum | awk '{print $1}')
-		echo ${sublink_hash:0:4} >> $DIR/sublink_hash.txt
+		local sublink_hash
+		sublink_hash=$(echo "${online_sub_url}" | sed 's/%20/ /g' | md5sum | awk '{print $1}')
+		echo "$sublink_hash" | awk '{print substr($0, 0, 4)}' >> "$DIR/sublink_hash.txt"
 	done
 
-	local local_hashs=$(find $DIR -name "local_*.txt" | sort -n | xargs cat | run jq -r '.group' | awk -F "_" '{print $NF}' | grep -v "null" | sort -u)
+	local local_hashs
+	local_hashs=$(find $DIR -name "local_*.txt" | sort -n | xargs cat | run jq -r '.group' | awk -F "_" '{print $NF}' | grep -v "null" | sort -u)
 	for local_hash in $local_hashs
 	do
-		local match_hash=$(cat $DIR/sublink_hash.txt | grep -Eo "${local_hash}")
+		local match_hash
+		match_hash=$(grep -Eo "${local_hash}" "$DIR/sublink_hash.txt")
 		if [ -z "${match_hash}" ];then
 			# remove node
-			local _local_group=$(cat $DIR/local_*_${local_hash}.txt | run jq -rc '.group' | sed 's/_.*$//' | sort -u | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
+			local _local_group
+			_local_group=$(run jq -rc '.group' "$DIR"/local_*_"${local_hash}".txt | sed 's/_.*$//' | sort -u | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
 			echo_date "⚠️检测到【${_local_group}】机场已经不再订阅！尝试删除该订阅的节点！"
-			rm -rf $DIR/local_*_${local_hash}.txt
+			rm -rf "$DIR"/local_*_"${local_hash}".txt
 		fi
 	done
 }
 
 clear_nodes(){
 	# 写入节点钱需要清空所有ssconf配置
-	if [ "${SEQ_NU}" == "0" ];then
+	if [ "${SEQ_NU}" = "0" ];then
 		return
 	fi
 	echo_date "⌛节点写入前准备..."
@@ -422,7 +414,7 @@ clear_nodes(){
 	chmod +x $DIR/ss_nodes_remove.sh
 	sh $DIR/ss_nodes_remove.sh
 	sync
-	[ -n "${CURR_NODE}" ] && dbus set ssconf_basic_node=$CURR_NODE
+	[ -n "${CURR_NODE}" ] && dbus set "ssconf_basic_node=$CURR_NODE"
 	echo_date "🆗准备完成！"
 }
 
@@ -462,18 +454,18 @@ remove_all_node(){
 	for conf in ${confs}
 	do
 		#echo_date "移除配置：${conf}"
-		dbus remove ${conf}
+		dbus remove "${conf}"
 	done
-	# remove group name
-	for conf1 in $(dbus list ss_online_group|awk -F"=" '{print $1}')
+	# remove group name 
+	for conf1 in $(dbus list ss_online_group |awk -F"=" '{print $1}')
 	do
-		dbus remove ${conf1}
+		dbus remove "${conf1}"
 	done
 
 	# remove group hash
-	for conf2 in $(dbus list ss_online_hash|awk -F"=" '{print $1}')
+	for conf2 in $(dbus list ss_online_hash | awk -F"=" '{print $1}')
 	do
-		dbus remove ${conf2}
+		dbus remove "${conf2}"
 	done
 	echo_date "删除成功！"
 }
@@ -490,10 +482,10 @@ remove_sub_node(){
 
 	for remove_nu in ${remove_nus}
 	do
-		echo_date "移除第$remove_nu节点：【$(dbus get ssconf_basic_name_${remove_nu})】"
-		dbus list ssconf_basic_|grep "_${remove_nu}="|sed -n 's/\(ssconf_basic_\w\+\)=.*/\1/p' |  while read key
+		echo_date "移除第$remove_nu节点：【$(dbus get "ssconf_basic_name_${remove_nu}")】"
+		dbus list ssconf_basic_ | grep "_${remove_nu}=" | sed -n 's/\(ssconf_basic_\w\+\)=.*/\1/p' |  while read -r key
 		do
-			dbus remove $key
+			dbus remove "$key"
 		done
 	done
 
@@ -501,40 +493,46 @@ remove_sub_node(){
 }
 
 check_nodes(){
-	if [ "${SEQ_NU}" == "0" ];then
+	if [ "${SEQ_NU}" = "0" ];then
 		return
 	fi
-	mkdir -p ${DIR}
-	local BACKUP_FILE=${DIR}/ss_conf.sh
+	mkdir -p "${DIR}"
+	local BACKUP_FILE
+	BACKUP_FILE="${DIR}/ss_conf.sh"
 	echo_date "➡️开始节点数据检查..."
-	local ADJUST=0
-	local MAX_NU=${NODE_INDEX}
-	dbus list ssconf_basic_ | grep -E "_[0-9]+=" >${DIR}/ssconf_keyval_origin.txt
-	local KEY_NU=$(cat ${DIR}/ssconf_keyval_origin.txt | wc -l)
-	local VAL_NU=$(cat ${DIR}/ssconf_keyval_origin.txt | cut -d "=" -f2 | sed '/^$/d' | wc -l)
+	local ADJUST
+	ADJUST=0
+	local MAX_NU
+	MAX_NU=${NODE_INDEX}
+	dbus list ssconf_basic_ | grep -E "_[0-9]+=" > "${DIR}/ssconf_keyval_origin.txt"
+	local KEY_NU
+	KEY_NU=$(wc -l < "${DIR}/ssconf_keyval_origin.txt")
+	local VAL_NU
+	VAL_NU=$(cut -d "=" -f2 "${DIR}/ssconf_keyval_origin.txt" | sed '/^$/d' | wc -l)
 	echo_date "ℹ️最大节点序号：${MAX_NU}"
 	echo_date "ℹ️共有节点数量：${SEQ_NU}"
 
+	local ADJUST
 	# 如果[节点数量 ${SEQ_NU}]不等于[最大节点序号 ${MAX_NU}]，说明节点排序是不正确的。
-	if [ ${SEQ_NU} -ne ${MAX_NU} ]; then
-		local ADJUST=1
+	if [ "${SEQ_NU}" -ne "${MAX_NU}" ]; then
+		ADJUST=1
 		echo_date "⚠️节点顺序不正确，需要调整！"
 	fi
 
 	# 如果key的数量不等于value的数量，说明有些key储存了空值，需要清理一下。
-	if [ ${KEY_NU} -ne ${VAL_NU} ]; then
+	if [ "${KEY_NU}" -ne "${VAL_NU}" ]; then
 		echo_date "KEY_NU $KEY_NU"
 		echo_date "VAL_NU $VAL_NU"
-		local ADJUST=1
+		ADJUST=1
 		echo_date "⚠️节点配置有残余值，需要清理！"
 	fi
 
-	if [ ${ADJUST} == "1" ]; then
+	if [ "${ADJUST}" = "1" ]; then
 		# 提取干净的节点配置，并重新排序，现在web界面里添加/删除节点后会自动排序，所以以下基本不会运行到
 		echo_date "💾备份所有节点信息并重新排序..."
 		echo_date "⌛如果节点数量过多，此处可能需要等待较长时间，请耐心等待..."
-		rm -rf ${BACKUP_FILE}
-		cat > ${BACKUP_FILE} <<-EOF
+		rm -rf "${BACKUP_FILE}"
+		cat > "${BACKUP_FILE}" <<-EOF
 			#!/bin/sh
 			source /koolshare/scripts/base.sh
 			#------------------------
@@ -551,11 +549,12 @@ check_nodes(){
 
 		# node to json file
 		sed -i '/^ssconf_basic_.\+_[0-9]\+=$/d' ${DIR}/ssconf_keyval_origin.txt
-		local count="1"
+		local count
+		count="1"
 		for nu in ${NODES_SEQ}
 		do
-			cat ${DIR}/ssconf_keyval_origin.txt | grep "_${nu}=" | sed "s/_${nu}=/_${count}=\"/g;s/^/dbus set /;s/$/\"/" >>${BACKUP_FILE}
-			let count+=1
+			grep "_${nu}=" "${DIR}/ssconf_keyval_origin.txt" | sed "s/_${nu}=/_${count}=\"/g;s/^/dbus set /;s/$/\"/" >>${BACKUP_FILE}
+			count=$((count + 1))
 		done
 		echo_date "⌛备份完毕，开始调整..."
 		# 2 应用提取的干净的节点配置
@@ -565,7 +564,7 @@ check_nodes(){
 		
 		# 重新获取节点序列
 		NODES_SEQ=$(dbus list ssconf_basic_name_ | sed -n 's/^.*_\([0-9]\+\)=.*/\1/p' | sort -n)
-		NODE_INDEX=$(echo ${NODES_SEQ} | sed 's/.*[[:space:]]//')
+		NODE_INDEX=$(echo "${NODES_SEQ}" | sed 's/.*[[:space:]]//')
 	else
 		echo_date "🆗节点顺序正确，节点配置信息OK！"
 	fi
@@ -576,45 +575,50 @@ filter_nodes(){
 	# 用[排除]和[包括]关键词去匹配，剔除掉用户不需要的节点，剩下的需要的节点：UPDATE_FLAG=0，
 	# UPDATE_FLAG=0,需要的节点；1.判断本地是否有此节点，2.如果有就添加，没有就判断是否需要更新
 	# UPDATE_FLAG=2,不需要的节点；1. 判断本地是否有此节点，2.如果有就删除，没有就不管
-	if [ -z "${KEY_WORDS_1}" -a -z "${KEY_WORDS_2}" ];then
+	if [ -z "${KEY_WORDS_1}" ] && [ -z "${KEY_WORDS_2}" ];then
 		return 0
 	fi
-	local _type=$1
-	local remarks=$2
-	local server=$3
-	[ -n "${KEY_WORDS_1}" ] && local KEY_MATCH_1=$(echo ${remarks} ${server} | grep -Eo "${KEY_WORDS_1}")
-	[ -n "${KEY_WORDS_2}" ] && local KEY_MATCH_2=$(echo ${remarks} ${server} | grep -Eo "${KEY_WORDS_2}")
-	if [ -n "${KEY_WORDS_1}" -a -z "${KEY_WORDS_2}" ]; then
+	local _type
+	_type=$1
+	local remarks
+	remarks=$2
+	local server
+	server=$3
+	local KEY_MATCH_1
+	[ -n "${KEY_WORDS_1}" ] && KEY_MATCH_1=$(echo "${remarks} ${server}" | grep -Eo "${KEY_WORDS_1}")
+	local KEY_MATCH_2
+	[ -n "${KEY_WORDS_2}" ] && KEY_MATCH_2=$(echo "${remarks} ${server}" | grep -Eo "${KEY_WORDS_2}")
+	if [ -n "${KEY_WORDS_1}" ] && [ -z "${KEY_WORDS_2}" ]; then
 		# 排除节点：yes，包括节点：no
 		if [ -n "${KEY_MATCH_1}" ]; then
 			echo_date "⚪${_type}节点：【${remarks}】，不添加，因为匹配了[排除]关键词"
-			let exclude+=1 
+			exclude=$((exclude + 1))
 			return 1
 		else
 			return 0
 		fi
-	elif [ -z "${KEY_WORDS_1}" -a -n "${KEY_WORDS_2}" ]; then
+	elif [ -z "${KEY_WORDS_1}" ] && [ -n "${KEY_WORDS_2}" ]; then
 		# 排除节点：no，包括节点：yes
 		if [ -z "${KEY_MATCH_2}" ]; then
 			echo_date "⚪${_type}节点：【${remarks}】，不添加，因为不匹配[包括]关键词"
-			let exclude+=1 
+			exclude=$((exclude + 1))
 			return 1
 		else
 			return 0
 		fi
-	elif [ -n "${KEY_WORDS_1}" -a -n "${KEY_WORDS_2}" ]; then
+	elif [ -n "${KEY_WORDS_1}" ] && [ -n "${KEY_WORDS_2}" ]; then
 		# 排除节点：yes，包括节点：yes
-		if [ -n "${KEY_MATCH_1}" -a -z "${KEY_MATCH_2}" ]; then
+		if [ -n "${KEY_MATCH_1}" ] && [ -z "${KEY_MATCH_2}" ]; then
 			echo_date "⚪${_type}节点：【${remarks}】，不添加，因为匹配了[排除+包括]关键词"
-			let exclude+=1 
+			exclude=$((exclude + 1))
 			return 1
-		elif [ -n "${KEY_MATCH_1}" -a -n "${KEY_MATCH_2}" ]; then
+		elif [ -n "${KEY_MATCH_1}" ] && [ -n "${KEY_MATCH_2}" ]; then
 			echo_date "⚪${_type}节点：【${remarks}】，不添加，因为匹配了[排除]关键词"
-			let exclude+=1 
+			exclude=$((exclude + 1))
 			return 1
-		elif  [ -z "${KEY_MATCH_1}" -a -z "${KEY_MATCH_2}" ]; then
+		elif  [ -z "${KEY_MATCH_1}" ] && [ -z "${KEY_MATCH_2}" ]; then
 			echo_date "⚪${_type}节点：【${remarks}】，不添加，因为不匹配[包括]关键词"
-			let exclude+=1 
+			exclude=$((exclude + 1))
 			return 1
 		else
 			return 0
@@ -624,9 +628,16 @@ filter_nodes(){
 	fi
 }
 
+json_query(){
+	echo "${2}" | sed 's/^{//;s/}$//;s/,"/,\n"/g;s/":"/":/g' | sed 's/,$//g;s/"$//g' | sed -n "s/^\"${1}\":\(.\+\)\$/\1/p"
+}
+
+
 add_ss_node(){
-	local urllink="$1"
-	local action="$2"
+	local urllink
+	urllink="$1"
+	local action
+	action="$2"
 	unset info_first string_nu decrypt_info server_raw encrypt_method password remarks server server_port 
 	unset plugin_support obfs_para plugin_prog ss_obfs ss_obfs_host ss_v2ray ss_v2_opts group
 	# 目前发现4种类型的节点：
@@ -636,8 +647,7 @@ add_ss_node(){
 	# 4. ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpGQU5DWVNTX1BBU1NAdGVzdC5mYW5jeXNzLmNvbTo0NDQ=#FANCYSS%20SS%E6%B5%8B%E8%AF%95%E8%8A%82%E7%82%B94%0A
 
 	info_first=$(echo "${urllink}" | sed 's/[@:/?#]/\n/g' | sed -n '1p')
-	dec64 "${info_first}" >/dev/null 2>&1
-	if [ "$?" == "0" ];then
+	if dec64 "${info_first}" >/dev/null 2>&1;then
 		# first string is base64
 		string_nu=$(echo "${urllink}" | sed 's/[@:/?#]/\n/g' | wc -l)
 		if [ "${string_nu}" -eq "2" ];then
@@ -675,32 +685,30 @@ add_ss_node(){
 
 	#remarks=$(echo "${urllink}" | sed -n 's/.*#\(.*\).*$/\1/p' | sed 's/@.*$//g' | urldecode | sed 's/^[[:space:]]//g')
 	remarks=$(echo "${urllink}" | sed -n 's/.*#\(.*\).*$/\1/p' | urldecode | sed 's/^[[:space:]]//g')
-	echo "${remarks}" | isutf8 -q
-	if [ "$?" != "0" ];then
+	if ! echo "${remarks}" | isutf8 -q;then
 		echo_date "当前节点名中存在特殊字符，节点添加后可能出现乱码！"
 		remarks=""
 	fi
 	
-	if [ "${action}" == "1" ];then
+	if [ "${action}" = "1" ];then
 		group=$(echo "${urllink}" | sed -n 's/.\+group=\(.\+\)#.\+/\1/p')
 		if [ -n "${group}" ];then
-			group=$(dec64 $group)
+			group=$(dec64 "$group")
 		else
-			group=${DOMAIN_NAME}
+			group="${DOMAIN_NAME}"
 		fi
 	fi
 
-	password=$(echo ${password} | base64_encode | sed 's/[[:space:]]//g')
-	plugin_support=$(echo "${urllink}"|grep -Eo "plugin=")
-	if [ -n "${plugin_support}" ];then
+	password=$(echo "${password}" | base64_encode | sed 's/[[:space:]]//g')
+	if echo "${urllink}"|grep -Eoq "plugin=";then
 		obfs_para=$(echo "${urllink}" | sed -n 's/.\+plugin=\(\)/\1/p'|sed 's/@/|/g;s/:/|/g;s/?/|/g;s/#/|/g' | awk -F'|' '{print $1}'| urldecode)
 		plugin_prog=$(echo "${obfs_para}" | awk -F';' '{print $1}')
-		if [ "${plugin_prog}" == "obfs-local" -o "${plugin_prog}" == "simple-obfs" ];then
+		if [ "${plugin_prog}" = "obfs-local" ] || [ "${plugin_prog}" = "simple-obfs" ];then
 			ss_obfs=$(echo "${obfs_para}" | awk -F';' '{print $2}'| awk -F'=' '{print $2}')
 			ss_obfs_host=$(echo "${obfs_para}" | awk -F';' '{print $3}'| awk -F'=' '{print $2}')
 			ss_v2ray="0"
 			ss_v2_opts=""
-		elif [ "${plugin_prog}" == "v2ray-plugin" ];then
+		elif [ "${plugin_prog}" = "v2ray-plugin" ];then
 			ss_obfs="0"
 			ss_obfs_host=""
 			ss_v2ray="1"
@@ -728,15 +736,14 @@ add_ss_node(){
 	# echo ss_v2_opts: ${ss_v2_opts}
 	# echo ------------------------
 
-	if [ -z "${server}" -o -z "${remarks}" -o -z "${server_port}" -o -z "${password}" -o -z "${encrypt_method}" ]; then
+	if [ -z "${server}" ] || [ -z "${remarks}" ] || [ -z "${server_port}" ] || [ -z "${password}" ] || [ -z "${encrypt_method}" ]; then
 		echo_date "🔴SS节点：检测到一个错误节点，跳过！"
 		return 1
 	fi
 
 	# 过滤节点
-	if [ "${action}" == "1" ]; then
-		filter_nodes "SS" "${remarks}" "${server}"
-		if [ "$?" != "0" ];then
+	if [ "${action}" = "1" ]; then
+		if ! filter_nodes "SS" "${remarks}" "${server}";then
 			return 1
 		fi
 	fi
@@ -744,7 +751,7 @@ add_ss_node(){
 	echo_date "🟢SS节点：${remarks}"
 	
 	json_init
-	json_add_string group "${group}_${SUB_LINK_HASH:0:4}"
+	json_add_string group "${group}_${SUB_LINK_HASH_STR}"
 	json_add_string method "${encrypt_method}"
 	json_add_string mode "${SUB_MODE}"
 	json_add_string name "${remarks}"
@@ -757,19 +764,22 @@ add_ss_node(){
 	json_add_string ss_v2ray_opts "${v2_plugin_opts}"
 	json_add_string type "0"
 
-	if [ "${action}" == "1" ];then
-		json_write_object ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt
-	elif [ "${action}" == "2" ]; then
-		json_write_object ${DIR}/offline_node_new.txt
+	if [ "${action}" = "1" ];then
+		json_write_object "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt"
+	elif [ "${action}" = "2" ]; then
+		json_write_object "${DIR}/offline_node_new.txt"
 	fi
 }
 
 add_ssr_node(){
-	local urllink="$1"
-	local action="$2"
+	local urllink
+	urllink="$1"
+	local action
+	action="$2"
 	unset decrypt_info server server_port protocol encrypt_method obfs password obfsparam_temp obfsparam protoparam_temp protoparam remarks_temp remarks group_temp group
 
-	local decrypt_info=$(dec64 ${urllink})
+	local decrypt_info
+	decrypt_info="$(dec64 "${urllink}")"
 
 	# mysql.accessconnect.cc:699:auth_aes128_md5:rc4-md5:tls1.2_ticket_auth:ZGkxNVBW/?obfsparam=MWRjZjMxOTg2NjEud3d3Lmdvdi5oaw&protoparam=MTk4NjYxOjMydUk5RQ&remarks=TGFyZ2Ug5Y-w54GjMDQgLSBJRVBMIHwg5YCN546HOjEuNQ&group=5rW36LGa5rm-
 	# server:port:protocol:method:obfs:password/?obfsparam=xxx&protoparam=xxx&remarks=xxx&group=xxx
@@ -781,7 +791,7 @@ add_ssr_node(){
 	protocol=$(echo "${decrypt_info}" | awk -F':' '{print $3}')
 	protoparam_temp=$(echo "${decrypt_info}" | awk -F':' '{print $6}' | grep -Eo "protoparam.+" | sed 's/protoparam=//g' | awk -F'&' '{print $1}')
 	if [ -n "${protoparam_temp}" ];then
-		protoparam=$(dec64 ${protoparam_temp} | sed 's/_compatible//g' | sed 's/[[:space:]]//g')
+		protoparam=$(dec64 "${protoparam_temp}" | sed 's/_compatible//g' | sed 's/[[:space:]]//g')
 	else
 		protoparam=""
 	fi
@@ -790,35 +800,35 @@ add_ssr_node(){
 	ssr_subscribe_obfspara=$(dbus get ssr_subscribe_obfspara)
 	obfsparam_temp=$(echo "${decrypt_info}" | awk -F':' '{print $6}' | grep -Eo "obfsparam.+" | sed 's/obfsparam=//g' | awk -F'&' '{print $1}')
 	if [ -n "${obfsparam_temp}" ];then
-		obfsparam=$(dec64 ${obfsparam_temp})
+		obfsparam=$(dec64 "${obfsparam_temp}")
 	else
 		obfsparam=""
 	fi
 	remarks_temp=$(echo "${decrypt_info}" | awk -F':' '{print $6}' | grep -Eo "remarks.+" | sed 's/remarks=//g' | awk -F'&' '{print $1}')
 	# 在线订阅必须要remarks信息
-	if [ "${action}" == "1" ]; then
+	if [ "${action}" = "1" ]; then
 		if [ -n "${remarks_temp}" ];then
-			remarks=$(dec64 ${remarks_temp})
+			remarks=$(dec64 "${remarks_temp}")
 		else
 			remarks=""
 		fi
-	elif [ "${action}" == "2" ]; then
+	elif [ "${action}" = "2" ]; then
 		if [ -n "${remarks_temp}" ];then
-			remarks=$(dec64 ${remarks_temp})
+			remarks=$(dec64 "${remarks_temp}")
 		else
 			remarks="${server}"
 		fi
 	fi
 	group_temp=$(echo "${decrypt_info}" | awk -F':' '{print $6}' | grep -Eo "group.+" | sed 's/group=//g' | awk -F'&' '{print $1}')
-	if [ "${action}" == "1" ]; then
+	if [ "${action}" = "1" ]; then
 		# 在线订阅，group从订阅链接里拿
 		if [ -n "${group_temp}" ];then
-			ssr_group=$(dec64 $group_temp)
+			ssr_group=$(dec64 "$group_temp")
 		else
 			ssr_group=${DOMAIN_NAME}
 		fi
-		ssr_group_hash="${ssr_group}_${SUB_LINK_HASH:0:4}"
-	elif [ "${action}" == "2" ]; then
+		ssr_group_hash="${ssr_group}_${SUB_LINK_HASH_STR}"
+	elif [ "${action}" = "2" ]; then
 		# 离线离线添加节点，group不需要
 		ssr_group=""
 		ssr_group_hash=""
@@ -838,17 +848,14 @@ add_ssr_node(){
 	# echo obfsparam: $obfsparam
 	# echo ------------
 
-	if [ -z "${server}" -o -z "${remarks}" -o -z "${server_port}" -o -z "${password}" -o -z "${protocol}" -o -z "${obfs}" -o -z "${encrypt_method}" ]; then
+	if [ -z "${server}" ] || [ -z "${remarks}" ] || [ -z "${server_port}" ] || [ -z "${password}" ] || [ -z "${protocol}" ] || [ -z "${obfs}" ] || [ -z "${encrypt_method}" ]; then
 		echo_date "🔴SSR节点：检测到一个错误节点，跳过！"
 		return 1
 	fi
 
 	# 过滤节点
-	if [ "${action}" == "1" ]; then
-		filter_nodes "SSR" "${remarks}" "${server}"
-		if [ "$?" != "0" ];then
-			return 1
-		fi
+	if [ "${action}" = "1" ] && ! filter_nodes "SSR" "${remarks}" "${server}"; then
+		return 1
 	fi
 
 	echo_date "🔵SSR节点：$remarks"
@@ -867,24 +874,22 @@ add_ssr_node(){
 	json_add_string server "${server}"
 	json_add_string type "1"
 
-	if [ "${action}" == "1" ];then
-		json_write_object ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt
-	elif [ "${action}" == "2" ]; then
-		json_write_object ${DIR}/offline_node_new.txt
+	if [ "${action}" = "1" ];then
+		json_write_object "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt"
+	elif [ "${action}" = "2" ]; then
+		json_write_object "${DIR}/offline_node_new.txt"
 	fi
 }
 
-json_query(){
-	echo "${2}" | sed 's/^{//;s/}$//;s/,"/,\n"/g;s/":"/":/g' | sed 's/,$//g;s/"$//g' | sed -n "s/^\"${1}\":\(.\+\)\$/\1/p"
-}
-
 add_vmess_node(){
-	local urllink="$1"
-	local action="$2"
+	local urllink
+	urllink="$1"
+	local action
+	action="$2"
 	unset decrypt_info v_remark_tmp v_ps v_add v_port v_id v_aid v_scy v_net v_type
 	unset v_headerType_tmp v_headtype_tcp v_headtype_kcp v_headtype_quic v_grpc_mode v_tls v_kcp_seed
 	unset v_ai_tmp v_ai v_alpn v_alpn_h2_tmp v_alpn_http_tmp v_alpn_h2 v_alpn_http v_sni v_v v_host v_path v_group v_group_hash
-	decrypt_info=$(dec64 ${urllink} | run jq -c '.')
+	decrypt_info="$(dec64 "${urllink}" | run jq -c '.')"
 	# node name, could be ps/remark in sub json，必须项
 	
 	v_ps=$(json_query ps "${decrypt_info}")
@@ -959,11 +964,11 @@ add_vmess_node(){
 
 	# 底层传输安全：none, tls
 	v_tls=$(json_query tls "${decrypt_info}")
-	if [ "${v_tls}" == "tls" ];then
+	if [ "${v_tls}" = "tls" ];then
 
 		# 跳过证书验证 (AllowInsecure)，此处在底层传输安全（network_security）为tls时使用
 		v_ai_tmp=$(json_query verify_cert "${decrypt_info}")
-		if [ "${v_ai_tmp}" == "true" ];then
+		if [ "${v_ai_tmp}" = "true" ];then
 			v_ai=""
 		else
 			v_ai="1"
@@ -1002,29 +1007,29 @@ add_vmess_node(){
 	v_path=$(json_query path "${decrypt_info}")
 
 	# host is not needed in kcp and grpc
-	if [ "${v_net}" == "kcp" -o "${v_net}" == "grpc" ];then
+	if [ "${v_net}" = "kcp" ] || [ "${v_net}" = "grpc" ];then
 		v_host=""
 	fi
 
-	if [ "${v_net}" == "kcp" ];then
+	if [ "${v_net}" = "kcp" ];then
 		v_kcp_seed=${v_path}
 	fi
 	
 	# 根据订阅版本不同，来设置host path
-	if [ "${v_v}" != "2" -a "${v_net}" == "ws" -a -n "${v_host}" ]; then
-		format_ws=$(echo ${v_host} | grep -E ";")
+	if [ "${v_v}" != "2" ] && [ "${v_net}" = "ws" ] && [ -n "${v_host}" ]; then
+		format_ws=$(echo "${v_host}" | grep -E ";")
 		if [ -n "${format_ws}" ]; then
-			v_host=$(echo ${v_host} | cut -d ";" -f1)
-			v_path=$(echo ${v_host} | cut -d ";" -f2)
+			v_host=$(echo "${v_host}" | cut -d ";" -f1)
+			v_path=$(echo "${v_host}" | cut -d ";" -f2)
 		else
 			v_host=""
-			v_path=${v_host}
+			v_path="${v_host}"
 		fi
 	fi
 
-	if [ "${action}" == "1" ];then
+	if [ "${action}" = "1" ];then
 		v_group=${DOMAIN_NAME}
-		v_group_hash="${v_group}_${SUB_LINK_HASH:0:4}"
+		v_group_hash="${v_group}_${SUB_LINK_HASH_STR}"
 	fi
 	
 	# for debug
@@ -1042,18 +1047,15 @@ add_vmess_node(){
 	# echo vmess_tls: ${v_tls}
 	# echo ------------------
 	
-	if [ -z "${v_ps}" -o -z "${v_add}" -o -z "${v_port}" -o -z "${v_id}" ];then
+	if [ -z "${v_ps}" ] || [ -z "${v_add}" ] || [ -z "${v_port}" ] || [ -z "${v_id}" ];then
 		# 丢弃无效节点
 		echo_date "🔴vmess节点：检测到一个错误节点，跳过！"
 		return 1
 	fi
 
 	# 过滤节点
-	if [ "${action}" == "1" ]; then
-		filter_nodes "vmess" "${v_ps}" "${v_add}"
-		if [ "$?" != "0" ];then
-			return 1
-		fi
+	if [ "${action}" = "1" ] && ! filter_nodes "vmess" "${v_ps}" "${v_add}"; then
+		return 1
 	fi
 
 	echo_date "🟠vmess节点：${v_ps}"
@@ -1084,17 +1086,20 @@ add_vmess_node(){
 	json_add_string v2ray_use_json "0"
 	json_add_string v2ray_uuid "${v_id}"
 
-	if [ "${action}" == "1" ];then
-		json_write_object ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt
-	elif [ "${action}" == "2" ]; then
-		json_write_object ${DIR}/offline_node_new.txt
+	if [ "${action}" = "1" ];then
+		json_write_object "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt"
+	elif [ "${action}" = "2" ]; then
+		json_write_object "${DIR}/offline_node_new.txt"
 	fi
 }
 
 add_vless_node(){
-	local decode_link="$1"
-	local action="$2"
-	local strtype="$3"
+	local decode_link
+	decode_link="$1"
+	local action
+	action="$2"
+	local strtype
+	strtype="$3"
 	unset x_server_raw x_server x_server_port x_remarks x_uuid x_host x_path x_encryption x_type
 	unset x_headerType x_headtype_tcp x_headtype_kcp x_headtype_quic x_grpc_modex_security_tmp x_security
 	unset x_alpn x_alpn_h2_tmp x_alpn_http_tmp x_alpn_h2 x_alpn_http x_sni x_flow x_group x_group_hash x_kcp_seed
@@ -1112,7 +1117,7 @@ add_vless_node(){
 	fi
 	
 	x_uuid=$(echo "${decode_link}" | awk -F"@" '{print $1}')
-	if [ "${strtype}" == "vmess" ];then
+	if [ "${strtype}" = "vmess" ];then
 		x_aid=$(echo "${decode_link}" | awk -F"?" '{print $2}'|sed 's/&/\n/g;s/#/\n/g' | grep "alterId" | awk -F"=" '{print $2}')
 	fi
 	x_host=$(echo "${decode_link}" | awk -F"?" '{print $2}'|sed 's/&/\n/g;s/#/\n/g' | grep "host" | awk -F"=" '{print $2}')
@@ -1189,9 +1194,12 @@ add_vless_node(){
 		x_headtype_kcp=""
 		x_headtype_quic=""
 		x_grpc_mode=${x_mode}
-		if [ -n "${x_grpc_mode}" ];then
-			x_grpc_mode="${x_grpc_mode}"
-		else
+		# if [ -n "${x_grpc_mode}" ];then
+		# 	x_grpc_mode="${x_grpc_mode}"
+		# else
+		# 	x_grpc_mode="gun"
+		# fi
+		if [ -z "$x_grpc_mode" ];then
 			x_grpc_mode="gun"
 		fi
 		if [ -n "${x_serviceName}" ];then
@@ -1201,16 +1209,16 @@ add_vless_node(){
 	esac
 
 	# host is not needed in kcp and grpc
-	if [ "${x_type}" == "kcp" -o "${x_type}" == "grpc" ];then 
+	if [ "${x_type}" = "kcp" ] || [ "${x_type}" = "grpc" ];then 
 		x_host=""
 	fi
 
-	if [ "${x_type}" == "kcp" ];then 
+	if [ "${x_type}" = "kcp" ];then 
 		x_kcp_seed=${x_path}
 	fi
 
 	# 底层传输安全：none, tls, xtls, reality
-	if [ "${x_security}" == "tls" -o "${x_security}" == "xtls" ];then
+	if [ "${x_security}" = "tls" ] || [ "${x_security}" = "xtls" ];then
 		# alpn: h2; http/1.1; h2,http/1.1，此处在底层传输安全（network_security）为tls时使用
 		x_alpn=$(echo "${decode_link}" | awk -F"?" '{print $2}'|sed 's/&/\n/g;s/#/\n/g' | grep "alpn" | awk -F"=" '{print $2}' | urldecode)
 		x_alpn_h2_tmp=$(echo "${x_alpn}" | grep "h2")
@@ -1225,7 +1233,7 @@ add_vless_node(){
 		else
 			x_alpn_http=""
 		fi
-	elif [ "${x_security}" == "reality" ];then
+	elif [ "${x_security}" = "reality" ];then
 		# fingerprint, reality must have fp
 		if [ -z "${x_fp}" ];then
 			x_fp="chrome"
@@ -1235,10 +1243,10 @@ add_vless_node(){
 		fi
 	fi
 	
-	if [ "${action}" == "1" ];then
+	if [ "${action}" = "1" ];then
 		x_group=${DOMAIN_NAME}
-		x_group_hash="${x_group}_${SUB_LINK_HASH:0:4}"
-	elif [ "${action}" == "2" ]; then
+		x_group_hash="${x_group}_${SUB_LINK_HASH_STR}"
+	elif [ "${action}" = "2" ]; then
 		# 离线离线添加节点，group不需要
 		x_group=""
 		x_group_hash=""
@@ -1271,9 +1279,9 @@ add_vless_node(){
 	# echo alpn: ${x_alpn}
 	# echo ------------
 	
-	if [ -z "${x_server}" -o -z "${x_remarks}" -o -z "${x_server_port}" -o -z "${x_uuid}" ]; then
+	if [ -z "${x_server}" ] || [ -z "${x_remarks}" ] || [ -z "${x_server_port}" ] || [ -z "${x_uuid}" ]; then
 		# 丢弃无效节点
-		if [ "${strtype}" == "vmess" ];then
+		if [ "${strtype}" = "vmess" ];then
 			echo_date "🟠vmess节点：检测到一个错误节点，跳过！"
 		else
 			echo_date "🔴vless节点：检测到一个错误节点，跳过！"
@@ -1282,14 +1290,11 @@ add_vless_node(){
 	fi
 
 	# 过滤节点
-	if [ "${action}" == "1" ]; then
-		filter_nodes "vless" "${x_remarks}" "${x_server}"
-		if [ "$?" != "0" ];then
-			return 1
-		fi
+	if [ "${action}" = "1" ] && ! filter_nodes "vless" "${x_remarks}" "${x_server}"; then
+		return 1
 	fi
 
-	if [ "${strtype}" == "vmess" ];then
+	if [ "${strtype}" = "vmess" ];then
 		echo_date "🟠vmess节点：${x_remarks}"
 	else
 		echo_date "🟣vless节点：${x_remarks}"
@@ -1327,23 +1332,25 @@ add_vless_node(){
 	#json_add_string xray_use_json
 	json_add_string xray_uuid "${x_uuid}"
 
-	if [ "${action}" == "1" ];then
-		json_write_object ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt
-	elif [ "${action}" == "2" ]; then
-		json_write_object ${DIR}/offline_node_new.txt
+	if [ "${action}" = "1" ];then
+		json_write_object "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt"
+	elif [ "${action}" = "2" ]; then
+		json_write_object "${DIR}/offline_node_new.txt"
 	fi
 }
 
 add_trojan_node(){
-	local decode_link="$1"
-	local action="$2"
+	local decode_link
+	decode_link="$1"
+	local action
+	action="$2"
 	unset t_server t_server_port t_remarks t_uuid t_ai t_tfo t_sni_tmp t_peer_tmp t_sni t_group t_group_hash
 	
 	t_server=$(echo "${decode_link}" | sed 's/@/ /g;s/:/ /g;s/?/ /g;s/#/ /g' | awk '{print $2}')
 	t_server_port=$(echo "${decode_link}" | sed 's/@/ /g;s/:/ /g;s/?/ /g;s/#/ /g' | awk '{print $3}')
 
-	echo "${decode_link}" | grep -Eqo "#"
-	if [ "$?" != "0" ];then
+	
+	if ! echo "${decode_link}" | grep -Eqo "#";then
 		t_remarks=${t_server}
 	else
 		t_remarks=$(echo "${decode_link}" | awk -F"#" '{print $NF}' | urldecode)
@@ -1362,10 +1369,10 @@ add_trojan_node(){
 		fi
 	fi
 
-	if [ "${action}" == "1" ];then
+	if [ "${action}" = "1" ];then
 		t_group=${DOMAIN_NAME}
-		t_group_hash="${t_group}_${SUB_LINK_HASH:0:4}"
-	elif [ "${action}" == "2" ]; then
+		t_group_hash="${t_group}_${SUB_LINK_HASH_STR}"
+	elif [ "${action}" = "2" ]; then
 		# 离线离线添加节点，group不需要
 		t_group=""
 		t_group_hash=""
@@ -1383,18 +1390,15 @@ add_trojan_node(){
 	# echo TFO: ${t_tfo}
 	# echo ------------	
 
-	if [ -z "${t_server}" -o -z "${t_remarks}" -o -z "${t_server_port}" -o -z "${t_uuid}" ]; then
+	if [ -z "${t_server}" ] || [ -z "${t_remarks}" ] || [ -z "${t_server_port}" ] || [ -z "${t_uuid}" ]; then
 		# 丢弃无效节点
 		echo_date "🔴trojan节点：检测到一个错误节点，跳过！"
 		return 1
 	fi
 
 	# 过滤节点
-	if [ "${action}" == "1" ]; then
-		filter_nodes "trojan" "${t_remarks}" "${t_server}"
-		if [ "$?" != "0" ];then
-			return 1
-		fi
+	if [ "${action}" = "1" ] && ! filter_nodes "trojan" "${t_remarks}" "${t_server}"; then
+		return 1
 	fi
 
 	echo_date "🟡trojan节点：${t_remarks}"
@@ -1411,16 +1415,18 @@ add_trojan_node(){
 	json_add_string trojan_uuid "${t_uuid}"
 	json_add_string type "5"
 
-	if [ "${action}" == "1" ];then
-		json_write_object ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt
-	elif [ "${action}" == "2" ]; then
-		json_write_object ${DIR}/offline_node_new.txt
+	if [ "${action}" = "1" ];then
+		json_write_object "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt"
+	elif [ "${action}" = "2" ]; then
+		json_write_object "${DIR}/offline_node_new.txt"
 	fi
 }
 
 add_hy2_node(){
-	local decode_link="$1"
-	local action="$2"
+	local decode_link
+	decode_link="$1"
+	local action
+	action="$2"
 	unset hy2_server hy2_server_port hy2_remarks hy2_uuid hy2_ai hy2_tfo hy2_sni_tmp hy2_peer_tmp hy2_sni hy2_group hy2_group_hash
 
 	if [ -z "${HY2_UP_SPEED}" ];then
@@ -1437,11 +1443,10 @@ add_hy2_node(){
 	hy2_pass=$(echo "${decode_link}" | sed 's/[@:/?#]/\n/g' | sed -n '1p')
 	hy2_port=$(echo "${decode_link}" | sed 's/[@:/?#]/\n/g' | sed -n '3p')
 
-	echo "${decode_link}" | grep -Eqo "#"
-	if [ "$?" != "0" ];then
-		hy2_remarks=${hy2_server}
-	else
+	if echo "${decode_link}" | grep -Eqo "#";then
 		hy2_remarks=$(echo "${decode_link}" | awk -F"#" '{print $NF}' | urldecode)
+	else
+		hy2_remarks=${hy2_server}
 	fi
 
 	hy2_sni=$(echo "${decode_link}" | awk -F"?" '{print $2}'|sed 's/&/\n/g;s/#/\n/g' | grep "sni" | awk -F"=" '{print $2}')
@@ -1449,7 +1454,7 @@ add_hy2_node(){
 	if [ -z "${hy2_obfs}" ];then
 		hy2_obfs="0"
 	fi
-	if [ "${hy2_obfs}" == "salamander" ];then
+	if [ "${hy2_obfs}" = "salamander" ];then
 		hy2_obfs="1"
 	fi
 	hy2_obfs_pass=$(echo "${decode_link}" | awk -F"?" '{print $2}'|sed 's/&/\n/g;s/#/\n/g' | grep "obfs-password" | awk -F"=" '{print $2}')
@@ -1460,10 +1465,10 @@ add_hy2_node(){
 		hy2_port=${hy2_mport}
 	fi
 
-	if [ "${action}" == "1" ];then
+	if [ "${action}" = "1" ];then
 		hy2_group=${DOMAIN_NAME}
-		hy2_group_hash="${hy2_group}_${SUB_LINK_HASH:0:4}"
-	elif [ "${action}" == "2" ]; then
+		hy2_group_hash="${hy2_group}_${SUB_LINK_HASH_STR}"
+	elif [ "${action}" = "2" ]; then
 		# 离线离线添加节点，group不需要
 		hy2_group=""
 		hy2_group_hash=""
@@ -1483,16 +1488,15 @@ add_hy2_node(){
 	# echo TFO: ${hy2_tfo}
 	# echo ------------	
 
-	if [ -z "${hy2_server}" -o -z "${hy2_remarks}" -o -z "${hy2_port}" -o -z "${hy2_pass}" ]; then
+	if [ -z "${hy2_server}" ] || [ -z "${hy2_remarks}" ] || [ -z "${hy2_port}" ] || [ -z "${hy2_pass}" ]; then
 		# 丢弃无效节点
 		echo_date "🔴hysteria2节点：检测到一个错误节点，跳过！"
 		return 1
 	fi
 
 	# 过滤节点
-	if [ "${action}" == "1" ]; then
-		filter_nodes "hysteria2" "${hy2_remarks}" "${hy2_server}"
-		if [ "$?" != "0" ];then
+	if [ "${action}" = "1" ]; then
+		if ! filter_nodes "hysteria2" "${hy2_remarks}" "${hy2_server}";then
 			return 1
 		fi
 	fi
@@ -1512,168 +1516,48 @@ add_hy2_node(){
 	json_add_string hy2_obfs_pass "${hy2_obfs_pass}"
 	json_add_string hy2_up "${HY2_UP_SPEED}"
 	json_add_string hy2_dl "${HY2_DL_SPEED}"
-	if [ "${HY2_TFO_SWITCH}" == "2" ];then
+	if [ "${HY2_TFO_SWITCH}" = "2" ];then
 		json_add_string hy2_tfo "${hy2_tfo}"
-	elif [ "${HY2_TFO_SWITCH}" == "1" ];then
+	elif [ "${HY2_TFO_SWITCH}" = "1" ];then
 		json_add_string hy2_tfo "1"
-	elif [ "${HY2_TFO_SWITCH}" == "0" ];then
+	elif [ "${HY2_TFO_SWITCH}" = "0" ];then
 		json_add_string hy2_tfo "0"
 	else
 		json_add_string hy2_tfo "${hy2_tfo}"
 	fi
 	json_add_string type "8"
 
-	if [ "${action}" == "1" ];then
-		json_write_object ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt
-	elif [ "${action}" == "2" ]; then
-		json_write_object ${DIR}/offline_node_new.txt
+	if [ "${action}" = "1" ];then
+		json_write_object "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt"
+	elif [ "${action}" = "2" ]; then
+		json_write_object "${DIR}/offline_node_new.txt"
 	fi
 }
 
 get_fancyss_running_status(){
-	local STATUS_1=$(dbus get ss_basic_enable 2>/dev/null)
-	local STATUS_2=$(iptables --t nat -S|grep SHADOWSOCKS|grep -w "3333" 2>/dev/null)
-	local STATUS_3=$(netstat -nlp 2>/dev/null|grep -w "3333"|grep -E "ss-redir|sslocal|v2ray|koolgame|xray|ipt2socks")
-	local STATUS_4=$(netstat -nlp 2>/dev/null|grep -w "7913")
+	local STATUS_1
+	STATUS_2=$(dbus get ss_basic_enable 2 >/dev/null)
+	local STATUS_2
+	STATUS_2=$(iptables --t nat -S | grep SHADOWSOCKS | grep -w "3333" 2>/dev/null)
+	local STATUS_3
+	STATUS_3=$(netstat -nlp 2>/dev/null | grep -w "3333" | grep -E "ss-redir|sslocal|v2ray|koolgame|xray|ipt2socks")
+	local STATUS_4
+	STATUS_4=$(netstat -nlp 2>/dev/null|grep -w "7913")
 	# 当插件状态为开启，iptables状态正常，透明端口进程正常，DNS端口正常，DNS配置文件正常
-	if [ "${STATUS_1}" == "1" -a -n "${STATUS_2}" -a -n "${STATUS_3}" -a -n "${STATUS_4}" -a -f "/jffs/configs/dnsmasq.d/wblist.conf" ];then
+	if [ "${STATUS_1}" = "1" ] && [ -n "${STATUS_2}" ] && [ -n "${STATUS_3}" ] && [ -n "${STATUS_4}" ] && [ -f "/jffs/configs/dnsmasq.d/wblist.conf" ];then
 		echo 1
 	fi
 }
 
-get_domain_name(){
-	echo "$1" | sed -e 's|^[^/]*//||' -e 's|/.*$||' | awk -F ":" '{print $1}'
-}
-
-dnsmasq_rule(){
-	# better way todo: resolve first and add ip to ipset:router mannuly
-	local ACTION="$1"
-	local DOMAIN="$2"
-	local DNSF_PORT=7913
-	local DOMAIN_FILE=/jffs/configs/dnsmasq.d/ss_domain.conf
-	if [ "${ACTION}" == "add" ];then
-		if [ ! -f ${DOMAIN_FILE} -o "$(grep -c ${DOMAIN} ${DOMAIN_FILE} 2>/dev/null)" != "2" ];then
-			echo_date "✅添加域名：${DOMAIN} 到本机走代理名单..."
-			rm -rf ${DOMAIN_FILE}
-			echo "server=/${DOMAIN}/127.0.0.1#$DNSF_PORT" >>${DOMAIN_FILE}
-			echo "ipset=/${DOMAIN}/router" >>${DOMAIN_FILE}
-			sync
-			service restart_dnsmasq >/dev/null 2>&1
-		fi
-	elif [ "${ACTION}" == "remove" ];then
-		if [ -f ${DOMAIN_FILE} ];then
-			rm -rf ${DOMAIN_FILE}
-			sync
-			service restart_dnsmasq >/dev/null 2>&1
-		fi
-	fi
-}
-
-go_proxy(){
-	# 4. subscribe go through proxy or not
-	if [ "$(dbus get ss_basic_online_links_goss)" == "1" ]; then
-		if [ "$(get_fancyss_running_status)" == "1" ];then
-			echo_date "✈️使用当前$(get_type_name $(dbus get ssconf_basic_type_${CURR_NODE}))节点：[$(dbus get ssconf_basic_name_${CURR_NODE})]提供的网络下载..."
-			dnsmasq_rule add "${DOMAIN_NAME}"
-		else
-			echo_date "⚠️当前$(get_type_name $(dbus get ssconf_basic_type_${CURR_NODE}))节点工作异常，改用常规网络下载..."
-			dnsmasq_rule remove
-		fi
-	else
-		echo_date "⬇️使用常规网络下载..."
-		dnsmasq_rule remove
-	fi
-}
-
-download_by_curl(){
-	if [ "$(dbus get ss_basic_online_links_goss)" == "1" ]; then
-		SOCKS5_OPEN=$(netstat -nlp 2>/dev/null|grep -w "23456"|grep -Eo "ss-local|sslocal|v2ray|xray|naive|tuic")
-		if [ -n "${SOCKS5_OPEN}" ];then
-			local EXT_ARG="-x socks5h://127.0.0.1:23456"
-			echo_date "✈️使用当前$(get_type_name $(dbus get ssconf_basic_type_${CURR_NODE}))节点：[$(dbus get ssconf_basic_name_${CURR_NODE})]提供的网络下载..."
-		else
-			local EXT_ARG=""
-			echo_date "⚠️当前$(get_type_name $(dbus get ssconf_basic_type_${CURR_NODE}))节点工作异常，改用常规网络下载..."
-		fi
-	else
-		echo_date "⬇️使用常规网络下载..."
-		dnsmasq_rule remove
-	fi
-
-	local url_encode=$(echo "$1" | sed 's/[[:space:]]/%20/g')
-	
-	echo_date "1️⃣使用curl下载订阅，第一次尝试下载..."
-	run curl-fancyss -4sSk ${EXT_ARG} --connect-timeout 6 "${url_encode}" 2>/dev/null >${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	if [ "$?" == "0" ]; then
-		return 0
-	fi
-	
-	echo_date "2️⃣使用curl下载订阅失败，第二次尝试下载..."
-	run curl-fancyss -4sSk ${EXT_ARG} --connect-timeout 10 "${url_encode}" 2>/dev/null >${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	if [ "$?" == "0" ]; then
-		return 0
-	fi
-
-	echo_date "3️⃣使用curl下载订阅失败，第三次尝试下载..."
-	run curl-fancyss -4sSk ${EXT_ARG} --connect-timeout 12 "${url_encode}" 2>/dev/null >${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	if [ "$?" == "0" ]; then
-		return 0
-	fi	
-
-	return 1
-}
-
-download_by_wget(){
-	# if go proxy or not
-	go_proxy
-	
-	if echo $1 | grep -Eq "^https"; then
-		local EXT_OPT="--no-check-certificate"
-	else
-		local EXT_OPT=""
-	fi
-	
-	local url_encode=$(echo "$1" | sed 's/[[:space:]]/%20/g')
-	
-	echo_date "1️⃣使用wget下载订阅，第一次尝试下载..."
-	wget -4 -t 1 -T 10 --dns-timeout=5 -q ${EXT_OPT} "${url_encode}" -O ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	if [ "$?" == "0" ]; then
-		return 0
-	fi
-
-	echo_date "2️⃣使用wget下载订阅，第二次尝试下载..."
-	wget -4 -t 1 -T 15 --dns-timeout=10 -q ${EXT_OPT} "${url_encode}" -O ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	if [ "$?" == "0" ]; then
-		return 0
-	fi	
-	
-	echo_date "3️⃣使用wget下载订阅，第三次尝试下载..."
-	wget -4 -t 1 -T 20 --dns-timeout=15 -q ${EXT_OPT} "${url_encode}" -O ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	if [ "$?" == "0" ]; then
-		return 0
-	fi
-
-	return 1
-}
-
-download_by_aria2(){
-	go_proxy
-	echo_date "⬇️使用aria2c下载订阅..."
-	rm -rf ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-	/koolshare/aria2/aria2c --check-certificate=false --quiet=true -d $DIR -o ssr_subscribe_file.txt $1
-	if [ "$?" == "0" ]; then
-		return 0
-	fi
-
-	return 1
-}
 
 get_online_rule_now(){
 	# 0. variable define
-	local SUB_LINK="$1"
+	local SUB_LINK
+	SUB_LINK="$1"
 
 	# 1. get domain name of node subscribe link
-	local DOMAIN_NAME="$(get_domain_name ${SUB_LINK})"
+	local DOMAIN_NAME
+	DOMAIN_NAME="$(get_domain_name "${SUB_LINK}")"
 	if [ -z "${DOMAIN_NAME}" ];then
 		echo_date "⚠️该订阅链接不包含任何节点信息！请检查你的服务商是否更换了订阅链接！"
 		subscribe_failed
@@ -1681,106 +1565,50 @@ get_online_rule_now(){
 	fi
 
 	# 2. detect duplitcate sub
-	local SUB_LINK_HASH=$(echo "${SUB_LINK}" | md5sum | awk '{print $1}')
-	if [ -f "/$DIR/sublink_md5.txt" ];then
-		local IS_ADD=$(cat /$DIR/sublink_md5.txt | grep -Eo ${SUB_LINK_HASH})
-		if [ -n "${IS_ADD}" ];then
+	local SUB_LINK_HASH
+	SUB_LINK_HASH=$(echo "${SUB_LINK}" | md5sum | awk '{print $1}')
+	if [ -f "$DIR/sublink_md5.txt" ];then
+		if grep -Eoq "${SUB_LINK_HASH}" "$DIR/sublink_md5.txt";then
 			echo_date "⚠️检测到重复的订阅链接！不订阅该链接！请检查你的订阅地址栏填写情况！"
 			return 1
 		fi
 	fi
-	echo ${SUB_LINK_HASH} >>/$DIR/sublink_md5.txt
+	echo "${SUB_LINK_HASH}" >> "$DIR/sublink_md5.txt"
 
 	# 3. try to delete some file left by last sublink subscribe
 	rm -rf /tmp/ssr_subscribe_file* >/dev/null 2>&1
 	
 	# 7. download sublink
 	echo_date "📁准备下载订阅链接到本地临时文件，请稍等..."
-	download_by_curl "${SUB_LINK}"
-	if [ "$?" == "0" ]; then
-		echo_date "🆗下载成功，继续检测下载内容..."
+	SUB_LINK_HASH_STR="$(echo "$SUB_LINK_HASH" | awk '{print substr($0, 1, 4)}')"
+	_subscribe_encode_file="${DIR}/sub_file_encode_${SUB_LINK_HASH_STR}.txt"
 
-		#可能有跳转
-		local jump=$(grep -Eo "Redirecting|301" ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt)
-		if [ -n "$jump" ]; then
-			echo_date "⤴️订阅链接可能有跳转，尝试更换wget进行下载..."
-			rm ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-			download_by_wget "${SUB_LINK}"
-		fi
-
-		#下载为空...
-		if [ "$(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt | wc -c)" == "0" ]; then
-			echo_date "🈳下载内容为空，尝试更换wget进行下载..."
-			rm ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-			download_by_wget "${SUB_LINK}"
-		fi
-
-		# 404
-		local wrong1=$(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt | grep -E "404")
-		if [ -n "${wrong1}" ]; then
-			echo_date "⚠️解析错误！原因：该订阅链接无法访问，错误代码：404！"
-			return 1
-		fi
-		
-		# 产品信息错误
-		local wrong=$(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt | grep -E "\{")
-		if [ -n "${wrong}" ]; then
-			echo_date "⚠️解析错误！原因：该订阅链接获取的内容并非正确的base64编码内容！"
-			echo_date "⚠️请检查你是否使用了错误的订阅链接，如clash专用订阅链接！"
-			echo_date "⚠️请尝试将用浏览器打开订阅链接，看内容是否正常！"
-			return 1
-		fi
-
-		# 非base64编码
-		dec64 $(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt) >/dev/null 2>&1
-		if [ "$?" != "0" ]; then
-			echo_date "⚠️解析错误！原因：该订阅链接获取的内容并非正确的base64编码内容！"
-			echo_date "⚠️请尝试将用浏览器打开订阅链接，看内容是否正常！"
-			return 1
-		fi
-	else
-		echo_date "⚠️使用curl下载订阅失败，尝试更换wget进行下载..."
-		rm ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt
-		download_by_wget "${SUB_LINK}"
-
-		#返回错误
-		if [ "$?" != "0" ]; then
-			if [ -x "/koolshare/aria2/aria2c" ];then
-				download_by_aria2 "${SUB_LINK}"
-				if [ "$?" != "0" ]; then
-					echo_date "⬇️使用aria2c下载订阅失败！请检查你的网络！"
-					return 1
-				fi
-			else
-				echo_date "⚠️更换wget下载订阅失败！"
-				return 1
-			fi
-		fi
-
-		#下载为空...
-		if [ "$(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt | wc -c)" == "0" ]; then
-			echo_date "⚠️下载内容为空！️该订阅链接不包含任何节点信息"
-			echo_date "⚠️请检查你的服务商是否更换了订阅链接！"
-			return 1
-		fi
-		
-		# 产品信息错误
-		local wrong2=$(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt | grep -E "\{")
-		if [ -n "${wrong2}" ]; then
-			echo_date "⚠️解析错误！原因：该订阅链接获取的内容并非正确的base64编码内容！"
-			echo_date "⚠️请检查你是否使用了错误的订阅链接，如clash专用订阅链接！"
-			echo_date "⚠️请尝试将用浏览器打开订阅链接，看内容是否正常！"
-			return 1
-		fi
-
-		# 非base64编码
-		dec64 $(cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt) >/dev/null 2>&1
-		if [ "$?" != "0" ]; then
-			echo_date "⚠️解析错误！原因：该订阅链接获取的内容并非正确的base64编码内容！"
-			echo_date "⚠️请尝试将用浏览器打开订阅链接，看内容是否正常！"
-			return 1
-		fi
+	# 使用通用的下载重试方法
+	if ! _download "${SUB_LINK}" "$_subscribe_encode_file";then
+		return 1
 	fi
+
+    #下载为空...
+    if [ "$(wc -c < "$_subscribe_encode_file")" = "0" ]; then
+        echo_date "⚠️下载内容为空！️该链接不包含任何信息"
+        echo_date "⚠️请检查你的服务商是否更换了订阅链接！"
+        return 1
+    fi
+    
+    # 产品信息错误
+    if grep -Eq "\{" "$_subscribe_encode_file"; then
+        echo_date "⚠️解析错误！原因：该订阅链接获取的内容并非正确的base64编码内容！"
+        echo_date "⚠️请检查你是否使用了错误的订阅链接，如clash专用订阅链接！"
+        echo_date "⚠️请尝试将用浏览器打开订阅链接，看内容是否正常！"
+        return 1
+    fi
+
+    # 非base64编码
+    if ! dec64 "$(cat "$_subscribe_encode_file")" >/dev/null 2>&1; then
+        echo_date "⚠️解析错误！原因：该订阅链接获取的内容并非正确的base64编码内容！"
+        echo_date "⚠️请尝试将用浏览器打开订阅链接，看内容是否正常！"
+        return 1
+    fi
 	
 	echo_date "🆗下载内容检测完成！"
 	echo_date "🔍开始解析节点信息..."
@@ -1788,40 +1616,49 @@ get_online_rule_now(){
 	# 8. 解析订阅原始文本
 	# xargs --show-limits </dev/null to get arg_max, GT-AX6000 is 131072, which means 128kb
 	# 如果订阅原始文本超过128kb，会导致echo，printf命令无法完整输出，所以直接对文件操作即可
-	cat ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt | tr -d '\n' | sed 's/-/+/g;s/_/\//g' | sed 's/$/===/' | base64 -d > ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt
+	_subscribe_decode_file="${DIR}/sub_file_decode_${SUB_LINK_HASH_STR}.txt"
+	tr -d '\n' < "$_subscribe_encode_file" | sed 's/-/+/g;s/_/\//g' | sed 's/$/===/' | base64 -d > "${DIR}/sub_file_decode_${SUB_LINK_HASH_STR}.txt"
 	if [ "$?" != "0" ]; then
 		echo_date "⚠️解析错误！原因：解析后检测到乱码！请检查你的订阅地址！"
 	fi
 
 	# 9. 一些机场使用的换行符是dos格式（\r\n\)，在路由Linux下会出问题！转换成unix格式
 	if [ -n "$(which dos2unix)" ];then
-		dos2unix -u ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt
+		dos2unix -u "$_subscribe_decode_file"
 	else
-		tr -d '\r' < ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | sponge ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt
+		tr -d '\r' < "$_subscribe_decode_file" | sponge "$_subscribe_decode_file"
 	fi
-	echo "" >> ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt
-	local NODE_NU_RAW=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -c "://")
+	echo "" >> "$_subscribe_decode_file"
+	local NODE_NU_RAW
+	NODE_NU_RAW=$(grep -c "://" "$_subscribe_decode_file")
 	echo_date "🆗初步解析成功！共获得${NODE_NU_RAW}个节点！"
 
 	# 11. 检测 ss ssr vmess
-	NODE_FORMAT1=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -E "^ss://")
-	NODE_FORMAT2=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -E "^ssr://")
-	NODE_FORMAT3=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -E "^vmess://")
-	NODE_FORMAT4=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -E "^vless://")
-	NODE_FORMAT5=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -E "^trojan://")
-	NODE_FORMAT6=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -E "^hysteria2://")
-	if [ -z "${NODE_FORMAT1}" -a -z "${NODE_FORMAT2}" -a -z "${NODE_FORMAT3}" -a -z "${NODE_FORMAT4}" -a -z "${NODE_FORMAT5}" -a -z "${NODE_FORMAT6}" ];then
+	NODE_FORMAT1=$(grep -E "^ss://" "$_subscribe_decode_file")
+	NODE_FORMAT2=$(grep -E "^ssr://" "$_subscribe_decode_file")
+	NODE_FORMAT3=$(grep -E "^vmess://" "$_subscribe_decode_file")
+	NODE_FORMAT4=$(grep -E "^vless://" "$_subscribe_decode_file")
+	NODE_FORMAT5=$(grep -E "^trojan://" "$_subscribe_decode_file")
+	NODE_FORMAT6=$(grep -E "^hysteria2://" "$_subscribe_decode_file")
+	if [ -z "${NODE_FORMAT1}" ] && [ -z "${NODE_FORMAT2}" ] && [ -z "${NODE_FORMAT3}" ] && [ -z "${NODE_FORMAT4}" ] && [ -z "${NODE_FORMAT5}" ] && [ -z "${NODE_FORMAT6}" ];then
 		echo_date "⚠️订阅中不包含任何ss/ssr/vmess/vless/trojan/hysteria2节点，退出！"
 		return 1
 	fi
 	
-	local NODE_NU_SS=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -Ec "^ss://") || "0"
-	local NODE_NU_SR=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -Ec "^ssr://") || "0"
-	local NODE_NU_VM=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -Ec "^vmess://") || "0"
-	local NODE_NU_VL=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -Ec "^vless://") || "0"
-	local NODE_NU_TJ=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -Ec "^trojan://") || "0"
-	local NODE_NU_H2=$(cat ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt | grep -Ec "^hysteria2://") || "0"
-	local NODE_NU_TT=$((${NODE_NU_SS} + ${NODE_NU_SR} + ${NODE_NU_VM} + ${NODE_NU_VL} + ${NODE_NU_TJ} + ${NODE_NU_H2}))
+	local NODE_NU_SS
+	NODE_NU_SS=$(grep -Ec "^ss://" "$_subscribe_decode_file") || "0"
+	local NODE_NU_SR
+	NODE_NU_SR=$(grep -Ec "^ssr://" "$_subscribe_decode_file") || "0"
+	local NODE_NU_VM
+	NODE_NU_VM=$(grep -Ec "^vmess://" "$_subscribe_decode_file") || "0"
+	local NODE_NU_VL
+	NODE_NU_VL=$(grep -Ec "^vless://" "$_subscribe_decode_file") || "0"
+	local NODE_NU_TJ
+	NODE_NU_TJ=$(grep -Ec "^trojan://" "$_subscribe_decode_file") || "0"
+	local NODE_NU_H2
+	NODE_NU_H2=$(grep -Ec "^hysteria2://" "$_subscribe_decode_file") || "0"
+	local NODE_NU_TT
+	NODE_NU_TT=$((NODE_NU_SS + NODE_NU_SR + NODE_NU_VM + NODE_NU_VL + NODE_NU_TJ + NODE_NU_H2))
 	if [ "${NODE_NU_TT}" -lt "${NODE_NU_RAW}" ];then
 		echo_date "ℹ️${NODE_NU_RAW}个节点中，一共检测到${NODE_NU_TT}个支持节点！"
 	fi
@@ -1835,10 +1672,12 @@ get_online_rule_now(){
 	echo_date "-------------------------------------------------------------------"
 
 	# 12. 开始解析并写入节点
-	while read node; do
-		local node_type=$(echo ${node} | sed -n 's/^\(\w\+\):\/\/.*/\1/p')
-		local node_info=$(echo ${node} | sed -n 's/.\+:\/\/\(.*\)$/\1/p')
-		case ${node_type} in
+	while read -r node; do
+		local node_type
+		node_type=$(echo "${node}" | sed -n 's/^\(\w\+\):\/\/.*/\1/p')
+		local node_info
+		node_info=$(echo "${node}" | sed -n 's/.\+:\/\/\(.*\)$/\1/p')
+		case "${node_type}" in
 		ss)
 			add_ss_node "${node_info}" 1
 			;;
@@ -1846,7 +1685,8 @@ get_online_rule_now(){
 			add_ssr_node "${node_info}" 1
 			;;
 		vmess)
-			local _match=$(echo "${node_info}" | grep -E "@|\?|type")
+			local _match
+			_match=$(echo "${node_info}" | grep -E "@|\?|type")
 			if [ -n "${_match}" ];then
 				#明文的vmess链接
 				add_vless_node "${node_info}" 1 vmess
@@ -1879,49 +1719,55 @@ get_online_rule_now(){
 			continue
 			;;
 		esac
-	done < ${DIR}/sub_file_decode_${SUB_LINK_HASH:0:4}.txt
+	done < "$_subscribe_decode_file"
 	echo_date "-------------------------------------------------------------------"
-	if [ -f "${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt" ];then
+	if [ -f "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt" ];then
 		echo_date "ℹ️在线节点解析完毕，开始将订阅节点和和本地节点进行对比！"
 	else
 		echo_date "ℹ️在线节点解析失败！跳过此订阅！"
 	fi
 
 	# 14. print INFO
-	local ONLINE_GROUP=$(cat ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt | run jq -rc '.group' | sed 's/_[^_]\+$//' | sort -u | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
+	local ONLINE_GROUP
+	ONLINE_GROUP=$(run jq -rc '.group' "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt" | sed 's/_[^_]\+$//' | sort -u | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
 	if [ -z "${ONLINE_GROUP}" ]; then
 		# 如果机场没有定义group，则用其订阅域名写入即可
-		ONLINE_GROUP=${DOMAIN_NAME}
+		ONLINE_GROUP="${DOMAIN_NAME}"
 	fi
-	local md5_new=$(md5sum ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt | awk '{print $1}')
+	local md5_new
+	md5_new=$(__md5_file "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt")
 	echo_date "🌎订阅节点信息："
 	echo_date "🔷当前订阅来源【${ONLINE_GROUP}】，共有节点${NODE_NU_TT}个。"
 	if [ "${exclude}" != "0" ];then
-		echo_date "🔷其中：因关键词匹配排除节点${exclude}个，最终获得有效节点$((${NODE_NU_TT} - ${exclude}))个"
+		echo_date "🔷其中：因关键词匹配排除节点${exclude}个，最终获得有效节点$((NODE_NU_TT - exclude))个"
 	fi
 	echo_date "🔷订阅节点校验：${md5_new}"
 	echo_date "💾本地节点信息："
-	local ISLOCALFILE=$(find ${DIR} -name "local_*_${SUB_LINK_HASH:0:4}.txt")
+	local ISLOCALFILE
+	ISLOCALFILE=$(find ${DIR} -name "local_*_${SUB_LINK_HASH_STR}.txt")
 	if [ -n "${ISLOCALFILE}" ];then
-		local md5_loc=$(md5sum ${ISLOCALFILE} | awk '{print $1}')
-		local LOCAL_GROUP=$(cat $ISLOCALFILE | run jq -rc '.group' | sort -u | sed 's/_[^_]\+$//' | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
-		local LOCAL_NODES=$(cat $ISLOCALFILE | wc -l)
+		local md5_loc
+		md5_loc=$(__md5_file "${ISLOCALFILE}")
+		local LOCAL_GROUP
+		LOCAL_GROUP=$(run jq -rc '.group' "$ISLOCALFILE" | sort -u | sed 's/_[^_]\+$//' | sed 's/$/ + /g' | sed ':a;N;$!ba;s#\n##g' | sed 's/ + $//g')
+		local LOCAL_NODES
+		LOCAL_NODES=$(wc -l < "$ISLOCALFILE")
 		echo_date "🔶当前订阅来源【${LOCAL_GROUP}】，在本地已有节点${LOCAL_NODES}个。"
 		echo_date "🔶本地节点校验：${md5_loc}"
-		if [ "${md5_loc}" == "${md5_new}" ];then
+		if [ "${md5_loc}" = "${md5_new}" ];then
 			echo_date "🆚对比结果：本地节点已经是最新，跳过！"
 		else
 			echo_date "🆚对比结果：检测到节点发生变更，生成节点更新文件！"
 		fi
 		# 将订阅后的文件，覆盖为本地的相同link hash的文件
-		rm -rf ${ISLOCALFILE}
-		cp -rf ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt ${DIR}/local_${sub_count}_${SUB_LINK_HASH:0:4}.txt
+		rm -rf "${ISLOCALFILE}"
+		cp -rf "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt" "${DIR}/local_${sub_count}_${SUB_LINK_HASH_STR}.txt"
 		return 0
 	else
 		echo_date "🔶当前订阅链来源【${ONLINE_GROUP}】在本地尚无节点！"
 		echo_date "🆚对比结果：检测到新的订阅节点，生成节点添加文件！"
 		# 将订阅后的文件，覆盖为本地的相同link hash的文件
-		cp -rf ${DIR}/online_${sub_count}_${SUB_LINK_HASH:0:4}.txt ${DIR}/local_${sub_count}_${SUB_LINK_HASH:0:4}.txt
+		cp -rf "${DIR}/online_${sub_count}_${SUB_LINK_HASH_STR}.txt" "${DIR}/local_${sub_count}_${SUB_LINK_HASH_STR}.txt"
 		return 0
 	fi
 }
@@ -1941,17 +1787,17 @@ start_online_update(){
 	
 	# 0. var define
 	NODES_SEQ=$(dbus list ssconf_basic_name_ | grep -E "_[0-9]+=" | sed -n 's/^.*_\([0-9]\+\)=.*/\1/p' | sort -n)
-	SEQ_NU=$(echo ${NODES_SEQ} | tr ' ' '\n' | sed '/^$/d' | wc -l)
+	SEQ_NU=$(echo "${NODES_SEQ}" | tr ' ' '\n' | sed '/^$/d' | wc -l)
 
 	# 1. 如果本地没有订阅的节点，同时没有订阅链接，则退出订阅
-	local online_sub_nu=$(dbus list ssconf_basic_group_ | sed '/^ssconf_basic_group_[0-9]\+=$/d' | wc -l)
-	if [ "${online_sub_nu}" == "0" ];then
+	_online_sub_nu=$(dbus list ssconf_basic_group_ | sed '/^ssconf_basic_group_[0-9]\+=$/d' | wc -l)
+	if [ "${_online_sub_nu}" = "0" ];then
 		if [ -z "$(dbus get ss_online_links)" ];then
 			echo_date "🈳订阅地址输入框为空，请输入订阅链接后重试！"
 			exit_sub
 		fi
-		local online_url_nu=$(dbus get ss_online_links | base64 -d | sed 's/$/\n/' | sed '/^$/d' | sed '/^#/d' | sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -E "^http" | wc -l)
-		if [ "${online_url_nu}" == "0" ];then
+		_online_url_nu=$(dbus get ss_online_links | base64 -d | sed 's/$/\n/' | sed '/^$/d' | sed '/^#/d' | sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -Ec "^http")
+		if [ "${_online_url_nu}" = "0" ];then
 			echo_date "🈳未发现任何有效的订阅地址，请检查你的订阅链接！"
 			exit_sub
 		fi
@@ -1959,8 +1805,8 @@ start_online_update(){
 	echo_date "✈️开始订阅！"
 
 	# 2. 创建临时文件夹，用于存放订阅过程中的临时文件
-	mkdir -p $DIR
-	rm -rf $DIR/*
+	mkdir -p "$DIR" 
+	if [ -d "$DIR" ];then rm -rf "${DIR:?}"/*;fi
 
 	# 3.订阅前检查节点是否储存正常，不需要了
 	# check_nodes
@@ -1979,14 +1825,14 @@ start_online_update(){
 	
 	# 7. 下载/解析订阅节点
 	sub_count=0
-	online_url_nu=$(dbus get ss_online_links | base64 -d | sed 's/$/\n/' | sed '/^$/d' | sed '/^#/d' | sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -E "^http" | wc -l)
-	until [ "${sub_count}" == "${online_url_nu}" ]; do
-		let sub_count+=1
+	_online_url_nu=$(dbus get ss_online_links | base64 -d | sed 's/$/\n/' | sed '/^$/d' | sed '/^#/d' | sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -Ec "^http")
+	until [ "${sub_count}" = "${_online_url_nu}" ]; do
+		sub_count=$((sub_count + 1))
 		url=$(dbus get ss_online_links | base64 -d | sed '/^$/d' | sed '/^#/d' | sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -E "^http" | sed -n "$sub_count p")
 		[ -z "${url}" ] && continue
 		echo_date "➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
-		[ "${online_url_nu}" -gt "1" ] && echo_date "📢开始第【${sub_count}】个订阅！订阅链接如下："
-		[ "${online_url_nu}" -eq "1" ] && echo_date "📢开始订阅！订阅链接如下："
+		[ "${_online_url_nu}" -gt "1" ] && echo_date "📢开始第【${sub_count}】个订阅！订阅链接如下："
+		[ "${_online_url_nu}" -eq "1" ] && echo_date "📢开始订阅！订阅链接如下："
 		echo_date "🌎${url}"
 		exclude=0
 		get_online_rule_now "${url}"
@@ -2002,12 +1848,12 @@ start_online_update(){
 	echo_date "➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖"
 
 	# 5. 写入所有节点
-	local ISNEW=$(find $DIR -name "local_*_*.txt")
-	if [ -n "${ISNEW}" ];then
-		find $DIR -name "local_*.txt" | sort -n | xargs cat >$DIR/ss_nodes_new.txt
-		local md5sum_old=$(md5sum ${LOCAL_NODES_BAK} 2>/dev/null | awk '{print $1}')
-		local md5sum_new=$(md5sum $DIR/ss_nodes_new.txt 2>/dev/null | awk '{print $1}')
-		if [ "${md5sum_new}" != "${md5sum_old}" ];then
+	# local ISNEW
+	# ISNEW=$(find $DIR -name "local_*_*.txt")
+	# if [ -n "${ISNEW}" ];then
+	if find "$DIR" -name "local_*_*.txt" >/dev/null 2>&1;then
+		find "$DIR" -name "local_*.txt" | sort -n | xargs cat > "$DIR/ss_nodes_new.txt"
+		if [ "$(__md5_file "${LOCAL_NODES_BAK}")" != "$(__md5_file "$DIR/ss_nodes_new.txt")" ];then
 			clear_nodes
 			echo_date "ℹ️开始写入节点..."
 			json2skipd "ss_nodes_new"
@@ -2015,7 +1861,7 @@ start_online_update(){
 			echo_date "ℹ️本次订阅没有任何节点发生变化，不进行写入，继续！"
 		fi
 		# 订阅完成，再次统计
-		SEQ_NU=$(dbus list ssconf_basic_name_|wc -l)
+		SEQ_NU=$(dbus list ssconf_basic_name_ | wc -l)
 		skipdb2json
 		nodes2files
 		nodes_stats
@@ -2030,22 +1876,25 @@ start_online_update(){
 
 subscribe_failed(){
 	# 当订阅失败后，在这里进行一些处理...
-	rm -rf ${DIR}/sub_file_encode_${SUB_LINK_HASH:0:4}.txt >/dev/null 2>&1
-	#echo ""
+	# rm -rf "${DIR}/sub_file_encode_${SUB_LINK_HASH_STR}.txt" >/dev/null 2>&1
+	echo "" > /dev/null
 }
 
 # 添加ss:// ssr:// vmess:// vless://离线节点
 start_offline_update() {
 	echo_date "==================================================================="
 	echo_date "ℹ️通过ss/ssr/vmess/vless链接添加节点..."
-	mkdir -p $DIR
-	rm -rf $DIR/*
-	local nodes=$(dbus get ss_base64_links | base64 -d | urldecode)
+	mkdir -p "$DIR"
+	if [ -d "$DIR" ];then rm -rf "${DIR:?}"/*;fi
+	local nodes
+	nodes=$(dbus get ss_base64_links | base64 -d | urldecode)
 	for node in $nodes
 	do
-		local node_type=$(echo ${node} | sed -n 's/^\(\w\+\):\/\/.*/\1/p')
-		local node_info=$(echo ${node} | sed -n 's/.\+:\/\/\(.*\)$/\1/p')
-		case $node_type in
+		local node_type
+		node_type=$(echo "${node}" | sed -n 's/^\(\w\+\):\/\/.*/\1/p')
+		local node_info
+		node_info=$(echo "${node}" | sed -n 's/.\+:\/\/\(.*\)$/\1/p')
+		case "$node_type" in
 		ss)
 			add_ss_node "${node_info}" 2
 			;;
@@ -2053,7 +1902,8 @@ start_offline_update() {
 			add_ssr_node "${node_info}" 2
 			;;
 		vmess)
-			local _match=$(echo "${node_info}" | grep -E "@|\?|type")
+			local _match
+			_match=$(echo "${node_info}" | grep -E "@|\?|type")
 			if [ -n "${_match}" ];then
 				#明文的vmess链接
 				add_vless_node "${node_info}" 2 vmess
@@ -2090,10 +1940,10 @@ start_offline_update() {
 	echo_date "==================================================================="
 }
 
-if [ -z "$2" -a -n "$1" ];then
+if [ -z "$2" ] && [ -n "$1" ];then
 	SH_ARG=$1
 	WEB_ACTION=0
-elif [ -n "$2" -a -n "$1" ];then
+elif [ -n "$2" ] && [ -n "$1" ];then
 	SH_ARG=$2
 	WEB_ACTION=1
 fi
@@ -2101,27 +1951,27 @@ fi
 case $SH_ARG in
 0)
 	# 删除所有节点
-	set_lock
+	set_lock "$selfname"
 	true > $LOG_FILE
-	[ "${WEB_ACTION}" == "1" ] && http_response "$1"
+	[ "${WEB_ACTION}" = "1" ] && http_response "$1"
 	remove_all_node | tee -a $LOG_FILE
 	echo XU6J03M6 | tee -a $LOG_FILE
 	unset_lock
 	;;
 1)
 	# 删除所有订阅节点
-	set_lock
+	set_lock "$selfname"
 	true > $LOG_FILE
-	[ "${WEB_ACTION}" == "1" ] && http_response "$1"
+	[ "${WEB_ACTION}" = "1" ] && http_response "$1"
 	remove_sub_node | tee -a $LOG_FILE
 	echo XU6J03M6 | tee -a $LOG_FILE
 	unset_lock
 	;;
 2)
 	# 保存订阅设置但是不订阅
-	set_lock
+	set_lock "$selfname"
 	true > $LOG_FILE
-	[ "${WEB_ACTION}" == "1" ] && http_response "$1"
+	[ "${WEB_ACTION}" = "1" ] && http_response "$1"
 	local_groups=$(dbus list ssconf_basic_group_ | cut -d "=" -f2 | sort -u | wc -l)
 	online_group=$(dbus get ss_online_links | base64 -d | awk '{print $1}' | sed '/^$/d' | sed '/^#/d' | sed 's/^[[:space:]]//g' | sed 's/[[:space:]]&//g' | grep -Ec "^http")
 	echo_date "保存订阅节点成功！" | tee -a $LOG_FILE
@@ -2145,18 +1995,18 @@ case $SH_ARG in
 	;;
 3)
 	# 使用订阅链接订阅ss/ssr/V2ray节点
-	set_lock
+	set_lock "$selfname"
 	true > $LOG_FILE
-	[ "${WEB_ACTION}" == "1" ] && http_response "$1"
+	[ "${WEB_ACTION}" = "1" ] && http_response "$1"
 	start_online_update | tee -a $LOG_FILE
 	echo XU6J03M6 | tee -a $LOG_FILE
 	unset_lock
 	;;
 4)
 	# 添加ss:// ssr:// vmess://离线节点
-	set_lock
+	set_lock "$selfname"
 	true > $LOG_FILE
-	[ "${WEB_ACTION}" == "1" ] && http_response "$1"
+	[ "${WEB_ACTION}" = "1" ] && http_response "$1"
 	start_offline_update | tee -a $LOG_FILE
 	echo XU6J03M6 | tee -a $LOG_FILE
 	unset_lock
