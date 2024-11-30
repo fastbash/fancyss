@@ -57,35 +57,37 @@ _get_interval() {
 failover_action(){
 	FLAG=$1
 	PING=$2
-	if [ "$ss_failover_s4_1" == "0" ];then
-		[ "$FLAG" == "1" ] && LOGM "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，关闭插件！"
-		[ "$FLAG" == "2" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，故障次数超过$ss_failover_s2_2个，关闭插件！"
-		[ "$FLAG" == "3" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s3_1个状态平均延迟:$PING超过$ss_failover_s3_2 ms，关闭插件！"
+	if [ "$ss_failover_s4_1" = "0" ];then
+		[ "$FLAG" = "1" ] && LOGM "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，关闭插件！"
+		[ "$FLAG" = "2" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，故障次数超过$ss_failover_s2_2个，关闭插件！"
+		[ "$FLAG" = "3" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s3_1个状态平均延迟:$PING超过$ss_failover_s3_2 ms，关闭插件！"
 		dbus set ss_basic_enable="0"
 		# 关闭
 		dbus set ss_heart_beat="1"
 		start-stop-daemon -S -q -b -x /koolshare/ss/ssconfig.sh -- stop
-	elif [ "$ss_failover_s4_1" == "1" ];then
-		[ "$FLAG" == "1" ] && LOGM "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，重启插件！"
-		[ "$FLAG" == "2" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，故障次数超过$ss_failover_s2_2个，重启插件！"
-		[ "$FLAG" == "3" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s3_1个状态平均延迟:$PING超过$ss_failover_s3_2 ms，重启插件！"
+	elif [ "$ss_failover_s4_1" = "1" ];then
+		[ "$FLAG" = "1" ] && LOGM "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，重启插件！"
+		[ "$FLAG" = "2" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，故障次数超过$ss_failover_s2_2个，重启插件！"
+		[ "$FLAG" = "3" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s3_1个状态平均延迟:$PING超过$ss_failover_s3_2 ms，重启插件！"
 		# 重启
 		start-stop-daemon -S -q -b -x /koolshare/ss/ssconfig.sh -- restart
-	elif [ "$ss_failover_s4_1" == "2" ];then
-		if [ "$ss_failover_s4_2" == "3" ];then
+	elif [ "$ss_failover_s4_1" = "2" ];then
+		if [ "$ss_failover_s4_2" = "3" ];then
 			if [ ! -f "/tmp/upload/webtest_bakcup.txt" ];then
 				LOGM "$LOGTIME1 fancyss：没有找到web延迟测试结果，采取切换到下个节点的策略..."
 				ss_failover_s4_1="2"
 			fi
-			local CURR_NODE=${ssconf_basic_node}
-			local FAST_NODE=$(cat /tmp/upload/webtest_bakcup.txt|sed '/failed/d;/stop/d;/ns/d' | sort -t">" -nk2 | sed "/^${CURR_NODE}>/d" | head -n1 | awk -F ">" '{print $1}')
+			local CURR_NODE
+			CURR_NODE="${ssconf_basic_node}"
+			local FAST_NODE
+			FAST_NODE=$(sed '/failed/d;/stop/d;/ns/d' /tmp/upload/webtest_bakcup.txt | sort -t">" -nk2 | sed "/^${CURR_NODE}>/d" | head -n1 | awk -F ">" '{print $1}')
 			if [ -z "${FAST_NODE}" ];then
 				LOGM "$LOGTIME1 fancyss：没有找到web延迟测试最低的节点，采取切换到下个节点的策略..."
 				ss_failover_s4_1="2"
 			fi
 		fi
 	
-		if [ "$ss_failover_s4_2" == "1" ];then
+		if [ "$ss_failover_s4_2" = "1" ];then
 			[ "$FLAG" == "1" ] && LOGM "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，切换到备用节点：[$(dbus get ssconf_basic_name_$ss_failover_s4_3)]！同时把主节点降级为备用节点！"
 			[ "$FLAG" == "2" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，故障次数超过$ss_failover_s2_2个，切换到备用节点：[$(dbus get ssconf_basic_name_$ss_failover_s4_3)]！同时把主节点降级为备用节点！"
 			[ "$FLAG" == "3" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s3_1个状态平均延迟:$PING超过$ss_failover_s3_2 ms，切换到备用节点：[$(dbus get ssconf_basic_name_$ss_failover_s4_3)]！同时把主节点降级为备用节点！"
@@ -96,8 +98,8 @@ failover_action(){
 			# 重启
 			start-stop-daemon -S -q -b -x /koolshare/ss/ssconfig.sh -- restart
 			dbus set ss_heart_beat="1"
-		elif [ "$ss_failover_s4_2" == "2" ];then
-			NEXT_NODE=$(($CURRENT + 1))
+		elif [ "$ss_failover_s4_2" = "2" ];then
+			NEXT_NODE=$((CURRENT + 1))
 			MAXT_NODE=$(dbus list ssconf_basic_|grep _name_ | cut -d "=" -f1|cut -d "_" -f4|sort -rn|head -n1)
 			[ "$FLAG" == "1" ] && LOGM "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，切换到节点列表的下个节点：[$(dbus get ssconf_basic_name_$NEXT_NODE)]！"
 			[ "$FLAG" == "2" ] && LOGM "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，故障次数超过$ss_failover_s2_2个，切换到节点列表的下个节点：[$(dbus get ssconf_basic_name_$NEXT_NODE)]！"
@@ -120,8 +122,8 @@ failover_action(){
 			start-stop-daemon -S -q -x /koolshare/ss/ssconfig.sh -- restart >>/tmp/upload/ss_log.txt
 			
 			dbus set ss_heart_beat="1"
-		elif [ "$ss_failover_s4_2" == "3" ];then
-			LOGM "$LOGTIME1 fancyss：切换到web延迟最低节点：[$(dbus get ssconf_basic_name_${FAST_NODE})]..."
+		elif [ "$ss_failover_s4_2" = "3" ];then
+			LOGM "$LOGTIME1 fancyss：切换到web延迟最低节点：[$(dbus get "ssconf_basic_name_${FAST_NODE}")]..."
 			dbus set ssconf_basic_node=$FAST_NODE
 			start-stop-daemon -S -q -b -x /koolshare/ss/ssconfig.sh -- restart
 			dbus set ss_heart_beat="1"
@@ -130,42 +132,51 @@ failover_action(){
 }
 
 failover_check_1(){
-	local LINES=$(($ss_failover_s1 + 3))
-	local START_MARK=$(cat "$LOGFILE_F" | sed '/fancyss/d' | tail -n "$LINES" | grep "===")
+	local LINES
+	LINES=$((ss_failover_s1 + 3))
+	local START_MARK
+	START_MARK=$(sed '/fancyss/d' "$LOGFILE_F" | tail -n "$LINES" | grep "===")
 	if [ -n "$START_MARK" ];then
 		#echo "$LOGTIME1 fancyss：1-检测到前$LINES行刚提交，先不检测！"
 		return
 	fi
 	
-	local OK_MARK=$(cat "$LOGFILE_F" | sed '/fancyss/d' | tail -n "$ss_failover_s1" | grep -Ec "200 OK|204 OK")
-	if [ "$OK_MARK" == "0" ];then
+	local OK_MARK
+	OK_MARK=$(sed '/fancyss/d' "$LOGFILE_F" | tail -n "$ss_failover_s1" | grep -Ec "200 OK|204 OK")
+	if [ "$OK_MARK" = "0" ];then
 		failover_action 1
 	fi
 }
 
 failover_check_2(){
-	local LINES=$(($ss_failover_s2_1 + 3))
-	local START_MARK=$(cat "$LOGFILE_F" | sed '/fancyss/d' | tail -n "$LINES" | grep "===")
+	local LINES
+	LINES=$((ss_failover_s2_1 + 3))
+	local START_MARK
+	START_MARK=$(sed '/fancyss/d' "$LOGFILE_F" | tail -n "$LINES" | grep "===")
 	if [ -n "$START_MARK" ];then
 		#echo "$LOGTIME1 fancyss：2-检测到前$LINES行刚提交，先不检测！"
 		return
 	fi
 
-	local OK_MARK=$(cat "$LOGFILE_F" | sed '/fancyss/d' | tail -n "$ss_failover_s2_1" | grep -Evc "200 OK|204 OK")
+	local OK_MARK
+	OK_MARK=$(sed '/fancyss/d' "$LOGFILE_F" | tail -n "$ss_failover_s2_1" | grep -Evc "200 OK|204 OK")
 	if [ "$OK_MARK" -gt "$ss_failover_s2_2" ];then
 		failover_action 2
 	fi
 }
 
 failover_check_3(){
-	local LINES=$(($ss_failover_s3_1 + 3))
-	local START_MARK=$(cat "$LOGFILE_F" | sed '/fancyss/d' | tail -n "$LINES" | grep "===")
+	local LINES
+	LINES=$((ss_failover_s3_1 + 3))
+	local START_MARK
+	START_MARK=$(sed '/fancyss/d' "$LOGFILE_F" | tail -n "$LINES" | grep "===")
 	if [ -n "$START_MARK" ];then
 		#echo "$LOGTIME1 fancyss：3-检测到前$LINES行刚提交，先不检测！"
 		return
 	fi
 
-	local OK_MARK=$(cat "$LOGFILE_F" | sed '/fancyss/d' | tail -n "$ss_failover_s3_1" | grep -E "200 OK|204 OK" | grep -oe "⏱ [0-9].* ms" | sed 's/⏱ //g'| sed 's/ ms//g' | awk '{sum+=$1} END {print sum/NR}' | awk '{printf "%.0f\n",$1}')
+	local OK_MARK
+	OK_MARK=$(sed '/fancyss/d' "$LOGFILE_F" | tail -n "$ss_failover_s3_1" | grep -E "200 OK|204 OK" | grep -oe "⏱ [0-9].* ms" | sed 's/⏱ //g'| sed 's/ ms//g' | awk '{sum+=$1} END {print sum/NR}' | awk '{printf "%.0f\n",$1}')
 	#echo "$LOGTIME1 fancyss：前15次状态平均延迟：$OK_MARK ！"
 	if [ "$OK_MARK" -gt "$ss_failover_s3_2" ];then
 		failover_action 3 "$OK_MARK"
@@ -180,12 +191,13 @@ heath_check(){
 	[ "${COUNT}" -eq "2" ] && echo "${LOGTIME1} fancyss：跳过刚提交后的2个状态，从此处开始的状态用于故障检测"
 	[ "${COUNT}" -le "2" ] && return
 
-	[ "${ss_failover_c1}" == "1" ] && failover_check_1
-	[ "${ss_failover_c2}" == "1" ] && failover_check_2
-	[ "${ss_failover_c3}" == "1" ] && failover_check_3
+	[ "${ss_failover_c1}" = "1" ] && failover_check_1
+	[ "${ss_failover_c2}" = "1" ] && failover_check_2
+	[ "${ss_failover_c3}" = "1" ] && failover_check_3
 }
 
 main(){
+	COUNT=0
 	while : ; do
 		# sleep 2s first in case of to early detection
 		usleep 2000000
@@ -204,15 +216,15 @@ main(){
 		# exit loop when fancyss not enabled
 		[ "$(dbus get ss_basic_enable)" != "1" ] && exit
 		
-		if [ "$(ps|grep ssconfig.sh|grep -v grep)" -o "$(ps|grep ss_v2ray.sh|grep -v grep)" ];then
+		if ps | grep -v grep | grep -q ssconfig.sh || ps | grep -v grep | grep -q ss_v2ray.sh;then
 			# wait until ssconfig.sh or ss_v2ray.sh finished running
 			continue
 		else
 			# kill the last status script if exist
 			killall curl >/dev/null 2>&1
 			if [ -n "$(pidof ss_status.sh)" ];then
-				kill -9 $(pidof ss_status.sh) >/dev/null 2>&1
-				echo ${LOGTIME1} script run time out "[$(dbus get ssconf_basic_name_${CURRENT})]" >> $LOGFILE_F
+				kill -9 "$(pidof ss_status.sh)" >/dev/null 2>&1
+				echo "${LOGTIME1} script run time out [$(dbus get "ssconf_basic_name_${CURRENT}")]" >> $LOGFILE_F
 			fi
 			# call ss_status.sh to get status, start-stop-daemon consume more cpu, use sh instead.
 			# start-stop-daemon -S -q -b -x /koolshare/scripts/ss_status.sh
@@ -220,14 +232,16 @@ main(){
 		fi
 
 		# do health check after result obtain
-		heath_check >> ${LOGFILE_F}
+		heath_check >> "${LOGFILE_F}"
 
 		# conter
-		let COUNT++
+		# let COUNT++
+		COUNT=$((COUNT + 1))
 		
 		# random sleep $(_get_interval) time
-		local INTER=$(shuf -i $(_get_interval) -n 1)
-		INTER=$((${INTER} * 1000))
+		local INTER
+		INTER=$(shuf -i $(_get_interval) -n 1)
+		INTER=$((INTER * 1000))
 		#echo $LOGTIME1 $INTER >> /tmp/inter.txt
 		usleep ${INTER}
 	done

@@ -227,6 +227,7 @@ start_v2ray() {
 
 case $2 in
 1)
+	set_lock
 	true > /tmp/upload/ss_log.txt
 	http_response "$1"
 	echo_date "===================================================================" | tee -a /tmp/upload/ss_log.txt
@@ -235,5 +236,6 @@ case $2 in
 	get_latest_version | tee -a /tmp/upload/ss_log.txt 2>&1
 	echo_date "===================================================================" | tee -a /tmp/upload/ss_log.txt
 	echo XU6J03M6 | tee -a /tmp/upload/ss_log.txt
+	unset_lock
 	;;
 esac

@@ -92,9 +92,11 @@ update_ss(){
 
 case $2 in
 update)
+	set_lock
 	true > /tmp/upload/ss_log.txt
 	http_response "$1"
 	update_ss >> /tmp/upload/ss_log.txt 2>&1
 	echo XU6J03M6 >> /tmp/upload/ss_log.txt
+	unset_lock
 	;;
 esac

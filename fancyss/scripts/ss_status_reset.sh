@@ -28,7 +28,7 @@ check_status(){
 	fi
 }
 
-
+set_lock
 true > $LOGFILE
 http_response "$1"
 usleep 200000
@@ -43,3 +43,4 @@ else
 	echo_date "完成！" >> $LOGFILE
 fi
 echo XU6J03M6 >> $LOGFILE
+unset_lock
