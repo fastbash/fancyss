@@ -1075,6 +1075,9 @@ resolv_server_ip() {
 			0)
 				echo_date "$(__get_type_abbr_name)服务器【${ss_basic_server}】的ip地址解析成功：${SERVER_IP}"
 				ss_basic_server="$SERVER_IP"
+				# # 将ip解析结果写入ss_host.conf文件
+				# echo "address=/${ss_basic_server}/${SERVER_IP}" >/tmp/ss_host.conf
+				# echo_date "$(__get_type_abbr_name)服务器【${ss_basic_server}】的ip地址解析成功：${SERVER_IP}"
 				ss_basic_server_ip="$SERVER_IP"
 				dbus set ss_basic_server_ip="$SERVER_IP"
 				;;
@@ -4481,9 +4484,8 @@ start_hysteria2(){
 	if [ "${LINUX_VER}" = "419" ] || [ "${LINUX_VER}" = "54" ];then
 		run_bg hysteria2 -c /koolshare/ss/hysteria2.yaml
 	else
-		env -i PATH=${PATH} QUIC_GO_DISABLE_ECN=true hysteria2 -c /koolshare/ss/hysteria2.yaml >/dev/null 2>&1 &
+		env -i PATH="${PATH}" QUIC_GO_DISABLE_ECN=true hysteria2 -c /koolshare/ss/hysteria2.yaml >/dev/null 2>&1 &
 	fi
-	run_bg hysteria2 -c /koolshare/ss/hysteria2.yaml
 	detect_running_status hysteria2
 }
 

@@ -90,7 +90,7 @@ input[type=radio]{
 	z-index: 200;
 	top: 250px;
 	width:750px;
-	return height:auto;
+	height:auto;
 	box-shadow: 3px 3px 10px #000;
 	line-height:1.8;
 	padding-bottom: 10px;
@@ -106,7 +106,7 @@ input[type=radio]{
 	margin-left: 10px;
 	top: 250px;
 	width:730px;
-	return height:auto;
+	height:auto;
 	box-shadow: 3px 3px 10px #000;
 	line-height:1.8;
 	padding-bottom: 10px;
@@ -121,7 +121,7 @@ input[type=radio]{
 	margin-left: -215px;
 	top: 240px;
 	width:980px;
-	return height:auto;
+	height:auto;
 	box-shadow: 3px 3px 10px #000;
 	background: rgba(0,0,0,0.85);
 	display:none;
@@ -135,7 +135,7 @@ input[type=radio]{
 	margin-left: -215px;
 	top: 240px;
 	width:980px;
-	return height:auto;
+	height:auto;
 	box-shadow: 3px 3px 10px #000;
 	background: rgba(0,0,0,0.85);
 	visibility:hidden;
@@ -349,7 +349,7 @@ body .layui-layer-lan .layui-layer-btn2 {border-color:#FF6600; background-color:
 	margin-left: 10px;
 	top: 250px;
 	width:730px;
-	return height:auto;
+	height:auto;
 	box-shadow: 3px 3px 10px #000;
 	/*display:none;*/
 	line-height:1.8;
@@ -923,10 +923,10 @@ body .layui-layer-lan .layui-layer-btn2 {border-color:#FF6600; background-color:
     border: 1px solid #2ed9c3;
 }
 
-body .layui-layer-lan .layui-layer-btn0 {border-color:#22ab39; background-color:#22ab39;color:#fff; background:#22ab39}
+body .layui-layer-lan .layui-layer-btn .layui-layer-btn0 {border-color:#22ab39; background-color:#22ab39;color:#fff; background:#22ab39}
 body .layui-layer-lan .layui-layer-btn .layui-layer-btn1 {border-color:#9933CC; background-color:#9933CC;color:#fff;}
-body .layui-layer-lan .layui-layer-btn2 {border-color:#FF6600; background-color:#FF6600;color:#fff;}
-body .layui-layer-lan .layui-layer-btn3 {border-color:#1678ff; background-color:#1678ff;color:#fff;}
+body .layui-layer-lan .layui-layer-btn .layui-layer-btn2 {border-color:#FF6600; background-color:#FF6600;color:#fff;}
+body .layui-layer-lan .layui-layer-btn .layui-layer-btn3 {border-color:#1678ff; background-color:#1678ff;color:#fff;}
 body .layui-layer-lan .layui-layer-title {background: #1678ff;}
 body .layui-layer-lan .layui-layer-btn a{margin:8px 8px 0;padding:5px 18px;}
 body .layui-layer-lan .layui-layer-btn {text-align:center}

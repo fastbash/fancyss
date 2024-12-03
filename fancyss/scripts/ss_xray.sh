@@ -30,9 +30,9 @@ mtk)
 esac
 
 # get xray location
-_TARGET_PATH=$(readlink /koolshare/bin/xray)
-if [ -z "${_TARGET_PATH}" ];then
-	_TARGET_PATH=/koolshare/bin/xray
+_TARGET_FILE=$(readlink -f /koolshare/bin/xray)
+if [ -z "${_TARGET_FILE}" ];then
+	_TARGET_FILE=/koolshare/bin/xray
 fi
 
 get_latest_version(){
@@ -54,7 +54,7 @@ get_latest_version(){
 		[ -z "${XVERSION}" ] && XVERSION="0"
 		
 		echo_date "检测到Xray最新版本：${XVERSION}"
-		if [ ! -f "${_TARGET_PATH}" ];then
+		if [ ! -f "${_TARGET_FILE}" ];then
 			echo_date "xray安装文件丢失！重新下载！"
 			CUR_VER="0"
 		else
@@ -70,7 +70,7 @@ get_latest_version(){
 			[ "${CUR_VER}" != "0" ] && echo_date "Xray已安装版本号高于更新版本，开始降级程序..."
 			update_now "v${XVERSION}"
 		else
-			XRAY_LOCAL_VER=$(${_TARGET_PATH} -version 2>/dev/null | head -n 1 | cut -d " " -f2)
+			XRAY_LOCAL_VER=$("${_TARGET_FILE}" -version 2>/dev/null | head -n 1 | cut -d " " -f2)
 			[ -n "${XRAY_LOCAL_VER}" ] && dbus set ss_basic_xray_version="${XRAY_LOCAL_VER}"
 			echo_date "Xray已安装版本号等于更新版本，退出更新程序!"
 		fi
@@ -157,10 +157,10 @@ install_binary(){
 
 move_binary(){
 	echo_date "开始更新xray二进制文件... "
-	mv /tmp/xray/xray "${_TARGET_PATH}"
-	chmod +x "${_TARGET_PATH}"
-	if [ -f "${_TARGET_PATH}" ] && [ ! -f /koolshare/bin/xray ];then
-		ln -sf "${_TARGET_PATH}" /koolshare/bin/xray
+	mv /tmp/xray/xray "${_TARGET_FILE}"
+	chmod +x "${_TARGET_FILE}"
+	if [ -f "${_TARGET_FILE}" ] && [ ! -f /koolshare/bin/xray ];then
+		ln -sf "${_TARGET_FILE}" /koolshare/bin/xray
 	fi
 	XRAY_LOCAL_VER=$(/koolshare/bin/xray -version 2>/dev/null | head -n 1 | cut -d " " -f2)
 	XRAY_LOCAL_DATE=$(/koolshare/bin/xray -version 2>/dev/null | head -n 1 | cut -d " " -f5)
