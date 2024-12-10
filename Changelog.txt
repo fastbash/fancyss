@@ -2,10 +2,12 @@ fancyss Changelog
 ===========================================
 4.3.5
    - update 上游的一些更新
+
 4.3.4
    - update 单独定义下载函数，为插件升级、规则更新等处启用
    - fix    生成白名单时的检测，detect_domain优化效率
    - fix    其他错误和运行效率修正
+
 4.3.3
    - fix    修复部分错误代码，简化了部分冗余代码
    - update 关闭了延时测试减少资源占用
@@ -13,17 +15,22 @@ fancyss Changelog
    - remove 去除广告
    - add    规则测试
 
-3.3.5 (todo)
-   - todo 	更新hysteria2二进制
-   - todo 	更新xray二进制
-   - todo 	更新v2ray二进制
+3.3.6 (20241209)
    - todo	因上游不再更新，移除shadowsocks-libev二进制及相关功能，现在full版ss协议默认由shadowsocks-rust运行，lite版ss协议由xray运行
    - todo	ss协议运行程序切换，可切换成xray运行ss协议
    - todo	xray运行ss协议情况下支持simple obfs（可以进一步移除lite版本的ss-libev）
    - todo 	更新chiandns-ng最新版
 
+3.3.5 (20241209)
+   - fix	修复hysteria2节点下，无法检测国外出口的问题
+   - update 更新hysteria2二进制: v2.6.0
+   - update 更新xray二进制: v24.11.30
+   - update 更新v2ray二进制: v5.22.0
+   - update 更新shadowsocks-rust二进制: v1.21.2
+   - update 更新naiveparoxy二进制: v131.0.6778.86-1
+
 3.3.4 (20241203)
-   - note	此次主要更新各个协议的二进制，同时进一步优化jffs空间占用，另外修复了国内外出口检测的一些bug。
+   - note	此次主要更新各个协议的二进制，同时进一步优化jffs空间占用，另外修复了国内外出口检测的一些bug及其它问题。
    - update	shadowsocks-rust二进制更新到v1.21.0，且安装包内置
    - update	v2ray二进制更新到v5.21.0
    - update	xray二进制更新到v24.9.30

@@ -4,7 +4,7 @@ MODULE=planesocks
 VERSION=$(sed -n 1p ./fancyss/ss/version)
 TITLE="科学上网"
 DESCRIPTION="科学上网"
-HOME_URL=Module_planesocks.asp
+HOME_URL=Module_${MODULE}.asp
 CURR_PATH="$(cd "$(dirname "$0")"; pwd)"
 
 cp_rules(){
@@ -29,7 +29,7 @@ sync_binary(){
 		rm -rf "${CURR_PATH}/fancyss/bin-arm/${BIN_REMOVE}"
 	done
 	
-	BINS_COPY="v2ray xray naive ss_rust"
+	BINS_COPY="v2ray xray naive ss_rust hysteria2"
 	for BIN in $BINS_COPY;
 	do
 		local VERSION_FLAG="latest.txt"
@@ -74,7 +74,10 @@ gen_folder(){
 		rm -rf ./planesocks/bin-mtk
 		mv ./planesocks/bin-hnd ./planesocks/bin
 		rm -rf ./planesocks/bin/uredir
-		rm -rf ./planesocks/bin/websocketd
+		rm -rf ./planesocks/ss/websocket_arm
+		rm -rf ./planesocks/ss/websocket_mtk
+		rm -rf ./planesocks/ss/websocket_qca
+		mv ./planesocks/ss/websocket_hnd ./planesocks/ss/websocket
 		echo hnd > ./planesocks/.valid
 		sed -i 's/PKG_ARCH=\"unknown\"/PKG_ARCH=\"hnd\"/g' ./planesocks/webs/Module_planesocks.asp
 	fi
@@ -85,6 +88,10 @@ gen_folder(){
 		rm -rf ./planesocks/bin-mtk
 		mv ./planesocks/bin-hnd_v8 ./planesocks/bin
 		rm -rf ./planesocks/bin/uredir
+		rm -rf ./planesocks/ss/websocket_arm
+		rm -rf ./planesocks/ss/websocket_mtk
+		rm -rf ./planesocks/ss/websocket_qca
+		mv ./planesocks/ss/websocket_hnd ./planesocks/ss/websocket
 		echo hnd_v8 > ./planesocks/.valid
 		sed -i 's/PKG_ARCH=\"unknown\"/PKG_ARCH=\"hnd_v8\"/g' ./planesocks/webs/Module_planesocks.asp
 	fi
@@ -95,6 +102,10 @@ gen_folder(){
 		rm -rf ./planesocks/bin-mtk
 		mv ./planesocks/bin-qca ./planesocks/bin
 		rm -rf ./planesocks/bin/uredir
+		rm -rf ./planesocks/ss/websocket_arm
+		rm -rf ./planesocks/ss/websocket_mtk
+		rm -rf ./planesocks/ss/websocket_hnd
+		mv ./planesocks/ss/websocket_qca ./planesocks/ss/websocket
 		echo qca > ./planesocks/.valid
 		sed -i 's/PKG_ARCH=\"unknown\"/PKG_ARCH=\"qca\"/g' ./planesocks/webs/Module_planesocks.asp
 	fi
@@ -103,8 +114,11 @@ gen_folder(){
 		rm -rf ./planesocks/bin-hnd_v8
 		rm -rf ./planesocks/bin-qca
 		rm -rf ./planesocks/bin-mtk
-		rm -rf ./planesocks/bin/websocketd
 		mv ./planesocks/bin-arm ./planesocks/bin
+		rm -rf ./planesocks/ss/websocket_qca
+		rm -rf ./planesocks/ss/websocket_mtk
+		rm -rf ./planesocks/ss/websocket_hnd
+		mv ./planesocks/ss/websocket_arm ./planesocks/ss/websocket
 		echo arm > ./planesocks/.valid
 		sed -i '/fancyss-hnd/d' ./planesocks/webs/Module_planesocks.asp
 		sed -i 's/\,\s\"ss_basic_mcore\"//g' ./planesocks/webs/Module_planesocks.asp
@@ -118,6 +132,10 @@ gen_folder(){
 		rm -rf ./planesocks/bin-qca
 		mv ./planesocks/bin-mtk ./planesocks/bin
 		rm -rf ./planesocks/bin/uredir
+		rm -rf ./planesocks/ss/websocket_arm
+		rm -rf ./planesocks/ss/websocket_qca
+		rm -rf ./planesocks/ss/websocket_hnd
+		mv ./planesocks/ss/websocket_mtk ./planesocks/ss/websocket
 		rm -rf ./planesocks/bin/README.md
 		echo mtk > ./planesocks/.valid
 		sed -i 's/PKG_ARCH=\"unknown\"/PKG_ARCH=\"mtk\"/g' ./planesocks/webs/Module_planesocks.asp
@@ -148,7 +166,7 @@ gen_folder(){
 		# rm -rf ./planesocks/bin/sslocal
 		sed -i 's/#@//g' ./planesocks/scripts/ss_proc_status.sh
 		sed -i 's/#@//g' ./planesocks/scripts/ss_conf.sh
-		echo ".show-btn5, .show-btn6{display: inline; !important}" >> ./planesocks/res/shadowsocks.css
+		echo ".show-btn5, .show-btn6{display: inline; !important}" >> ./planesocks/res/fancyss.css
 	elif [ "${pkgtype}" == "lite" ];then
 		# remove binaries
 		rm -rf ./planesocks/bin/sslocal
@@ -162,7 +180,7 @@ gen_folder(){
 		rm -rf ./planesocks/bin/haveged
 		rm -rf ./planesocks/bin/hysteria2
 
-		if [ "${platform}" == "hnd_v8" ];then
+		if [ "${platform}" == "hnd" ];then
 			rm -rf ./planesocks/bin/websocketd
 		fi
 		# remove scripts
@@ -360,7 +378,7 @@ do_backup(){
 }
 
 papare(){
-	rm -f "${CURR_PATH}/packages/*"
+	rm -f "${CURR_PATH}"/packages/*
 	cp_rules
 	sync_binary
 	cat > "${CURR_PATH}/packages/version_tmp.json.js" <<-EOF
@@ -372,7 +390,7 @@ papare(){
 
 finish(){
 	echo "}" >> "${CURR_PATH}/packages/version_tmp.json.js"
-	jq '.' "${CURR_PATH}/packages/version_tmp.json.js" >${CURR_PATH}/packages/version.json.js
+	jq '.' "${CURR_PATH}/packages/version_tmp.json.js" > "${CURR_PATH}/packages/version.json.js"
 	rm -rf "${CURR_PATH}/packages/version_tmp.json.js"
 	echo "完成！生成的离线安装包在：${CURR_PATH}/packages"
 }

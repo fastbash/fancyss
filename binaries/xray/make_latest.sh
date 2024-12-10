@@ -5,9 +5,9 @@ DIR="$( cd "$( dirname "$BASH_SOURCE[0]" )" && pwd )"
 mkdir -p $DIR/.build_xray
 base_dir=$DIR/.build_xray
 cd ${base_dir}
-GO_VERSION="1.23.2"
+GO_VERSION="1.23.4"
 UPX_VERSION="4.2.4"
-CODENAME="fastbash@fancyss"
+CODENAME="hq450@fancyss"
 
 echo "-----------------------------------------------------------------"
 

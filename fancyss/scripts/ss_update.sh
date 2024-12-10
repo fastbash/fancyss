@@ -33,7 +33,7 @@ install_fancyss(){
 	chmod a+x "/tmp/${MODULE}/install.sh"
 	echo_date "开始安装更新文件..."
 	sh "/tmp/${MODULE}/install.sh"
-	rm -rf "/tmp/${MODULE}*"
+	rm -rf /tmp/"${MODULE}"*
 }
 
 update_ss(){
@@ -78,7 +78,7 @@ update_ss(){
 		echo_date "安装包在线md5：${fancyss_md5_online}"
 		if [ "${fancyss_md5_download}" != "${fancyss_md5_online}" ]; then
 			echo_date "更新包md5校验不一致！估计是下载的时候出了什么状况，请等待一会儿再试..."
-			rm -rf "/tmp/${MODULE}*" >/dev/null 2>&1
+			rm -rf /tmp/"${MODULE}"* >/dev/null 2>&1
 		else
 			echo_date "更新包md5校验一致！ 开始安装！..."
 			install_fancyss

@@ -6,7 +6,7 @@ mkdir -p $DIR/.build_v2ray-plugin
 base_dir=$DIR/.build_v2ray-plugin
 cd ${base_dir}
 GO_VERSION="1.22.2"
-CODENAME="fastbash@fancyss"
+CODENAME="hq450@fancyss"
 
 echo "-----------------------------------------------------------------"
 

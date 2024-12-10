@@ -307,23 +307,23 @@ check_internet(){
 	local PING_RET
 	if [ -z "${PING_RET}" ];then
 		PING_SRC="223.5.5.5"
-		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC}|tail -n1|awk -F '/' '{print $4}')
+		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC} 2>/dev/null|tail -n1|awk -F '/' '{print $4}')
 	fi
 	if [ -z "${PING_RET}" ];then
 		PING_SRC="114.114.114.114"
-		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC}|tail -n1|awk -F '/' '{print $4}')
+		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC} 2>/dev/null|tail -n1|awk -F '/' '{print $4}')
 	fi
 	if [ -z "${PING_RET}" ];then
 		PING_SRC="119.29.29.29"
-		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC}|tail -n1|awk -F '/' '{print $4}')
+		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC} 2>/dev/null|tail -n1|awk -F '/' '{print $4}')
 	fi
 	if [ -z "${PING_RET}" ];then
 		PING_SRC="1.2.4.8"
-		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC}|tail -n1|awk -F '/' '{print $4}')
+		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC} 2>/dev/null|tail -n1|awk -F '/' '{print $4}')
 	fi
 	if [ -z "${PING_RET}" ];then
 		PING_SRC="8.8.8.8"
-		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC}|tail -n1|awk -F '/' '{print $4}')
+		PING_RET=$(ping -4 -c 1 -w 1 ${PING_SRC} 2>/dev/null|tail -n1|awk -F '/' '{print $4}')
 	fi
 	if [ -n "${PING_RET}" ];then
 		echo_date "检测到路由器可以正常访问公网，检测源：${PING_SRC}，延迟：${PING_RET}s，继续！"
@@ -3049,10 +3049,10 @@ creat_v2ray_json() {
 
 		# 如果sni空，host不空，用host代替
 		if [ -z "${ss_basic_v2ray_network_security_sni}" ];then
+			local ss_basic_v2ray_network_security_sni
+			ss_basic_v2ray_network_security_sni=""
 			if [ -n "${ss_basic_v2ray_network_host}" ];then
-				local ss_basic_v2ray_network_security_sni="${ss_basic_v2ray_network_host}"
-			else
-				local ss_basic_v2ray_network_security_sni=""
+				ss_basic_v2ray_network_security_sni="${ss_basic_v2ray_network_host}"
 			fi
 		fi
 
@@ -3072,13 +3072,15 @@ creat_v2ray_json() {
 		fi
 
 		if [ "${ss_basic_v2ray_network_security}" = "tls" ];then
-			local tls="{
+			local tls
+			tls="{
 					\"allowInsecure\": $(get_function_switch $ss_basic_v2ray_network_security_ai)
 					,\"alpn\": ${apln}
 					,\"serverName\": $(get_value_null $ss_basic_v2ray_network_security_sni)
 					}"
 		else
-			local tls="null"
+			local tls
+			tls="null"
 		fi
 
 		# incase multi-domain input
@@ -3636,9 +3638,11 @@ creat_xray_json() {
 		# 如果sni空，host不空，用host代替
 		if [ -z "${ss_basic_xray_network_security_sni}" ];then
 			if [ -n "${ss_basic_xray_network_host}" ];then
-				local ss_basic_xray_network_security_sni="${ss_basic_xray_network_host}"
+				local ss_basic_xray_network_security_sni
+				ss_basic_xray_network_security_sni="${ss_basic_xray_network_host}"
 			else
-				local ss_basic_xray_network_security_sni=""
+				local ss_basic_xray_network_security_sni
+				ss_basic_xray_network_security_sni=""
 			fi
 		fi
 
@@ -4635,8 +4639,10 @@ add_white_black_ip() {
 	[ -n "${ss_basic_server_ip}" ] && SBSI="${ss_basic_server_ip}" || SBSI=""
 	[ -n "${ISP_DNS1}" ] && ISP_DNS_a="${ISP_DNS1}" || ISP_DNS_a=""
 	[ -n "${IFIP_DNS2}" ] && ISP_DNS_b="${ISP_DNS2}" || ISP_DNS_b=""
-	local ip_lan="0.0.0.0/8 10.0.0.0/8 100.64.0.0/10 127.0.0.0/8 169.254.0.0/16 172.16.0.0/12 192.168.0.0/16 192.18.0.0/15 224.0.0.0/4 240.0.0.0/4 223.5.5.5 223.6.6.6 114.114.114.114 114.114.115.115 1.2.4.8 210.2.4.8 117.50.11.11 117.50.22.22 180.76.76.76 119.29.29.29 ${ISP_DNS_a} ${ISP_DNS_b} ${SBSI} $(get_wan0_cidr)"
-	local ALL_NODE_DOMAINS=$(dbus list ssconf|grep _server_|awk -F"=" '{print $NF}'|sort -u|grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}")
+	local ip_lan
+	ip_lan="0.0.0.0/8 10.0.0.0/8 100.64.0.0/10 127.0.0.0/8 169.254.0.0/16 172.16.0.0/12 192.168.0.0/16 192.18.0.0/15 224.0.0.0/4 240.0.0.0/4 223.5.5.5 223.6.6.6 114.114.114.114 114.114.115.115 1.2.4.8 210.2.4.8 117.50.11.11 117.50.22.22 180.76.76.76 119.29.29.29 ${ISP_DNS_a} ${ISP_DNS_b} ${SBSI} $(get_wan0_cidr)"
+	local ALL_NODE_DOMAINS
+	ALL_NODE_DOMAINS=$(dbus list ssconf|grep _server_|awk -F"=" '{print $NF}'|sort -u|grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}")
 	ss_wan_white_ip=$(echo ${ss_wan_white_ip} | base64_decode | sed '/\#/d')
 	echo_date "应用IP/CIDR白名单"
 	for ip in ${ss_wan_white_ip} ${ALL_NODE_DOMAINS} ${ip_lan}
@@ -4722,9 +4728,9 @@ lan_acess_control() {
 			proxy_name=$(eval echo \$ss_acl_name_$acl)
 			if [ "$ports" = "all" ]; then
 				ports=""
-				echo_date 加载ACL规则：【$ipaddr】【全部端口】模式为：$(get_mode_name $proxy_mode)
+				echo_date "加载ACL规则：【$ipaddr】【全部端口】模式为：$(get_mode_name $proxy_mode)"
 			else
-				echo_date 加载ACL规则：【$ipaddr】【$ports】模式为：$(get_mode_name $proxy_mode)
+				echo_date "加载ACL规则：【$ipaddr】【$ports】模式为：$(get_mode_name $proxy_mode)"
 			fi
 			# 1 acl in SHADOWSOCKS for nat
 			iptables -t nat -A SHADOWSOCKS $(factor $ipaddr "-s") -p tcp $(factor $ports "-m multiport --dport") -$(get_jump_mode $proxy_mode) $(get_action_chain $proxy_mode)
@@ -4751,17 +4757,17 @@ lan_acess_control() {
 		if [ "$ss_acl_default_port" = "all" ]; then
 			ss_acl_default_port=""
 			[ -z "$ss_acl_default_mode" ] && dbus set ss_acl_default_mode="$ss_basic_mode" && ss_acl_default_mode="$ss_basic_mode"
-			echo_date 加载ACL规则：【剩余主机】【全部端口】模式为：$(get_mode_name $ss_acl_default_mode)
+			echo_date "加载ACL规则：【剩余主机】【全部端口】模式为：$(get_mode_name $ss_acl_default_mode)"
 		else
-			echo_date 加载ACL规则：【剩余主机】【$ss_acl_default_port】模式为：$(get_mode_name $ss_acl_default_mode)
+			echo_date "加载ACL规则：【剩余主机】【$ss_acl_default_port】模式为：$(get_mode_name $ss_acl_default_mode)"
 		fi
 	else
 		ss_acl_default_mode="$ss_basic_mode"
 		if [ "$ss_acl_default_port" = "all" ]; then
 			ss_acl_default_port=""
-			echo_date 加载ACL规则：【全部主机】【全部端口】模式为：$(get_mode_name $ss_acl_default_mode)
+			echo_date "加载ACL规则：【全部主机】【全部端口】模式为：$(get_mode_name $ss_acl_default_mode)"
 		else
-			echo_date 加载ACL规则：【全部主机】【$ss_acl_default_port】模式为：$(get_mode_name $ss_acl_default_mode)
+			echo_date "加载ACL规则：【全部主机】【$ss_acl_default_port】模式为：$(get_mode_name $ss_acl_default_mode)"
 		fi
 	fi
 	dbus remove ss_acl_ip
@@ -4956,14 +4962,12 @@ restart_dnsmasq() {
 	
 	# 如果是梅林固件，需要将 【Tool - Other Settings  - Advanced Tweaks and Hacks - Wan: Use local caching DNS server as system resolver (default: No)】此处设置为【是】
 	# 这将确保固件自身的DNS解析使用127.0.0.1，而不是上游的DNS。否则插件的状态检测将无法解析谷歌，导致状态检测失败。
-	local DLC=$(nvram get dns_local_cache)
-	if [ "$DLC" = "0" ]; then
+	if [ "$(nvram get dns_local_cache)" = "0" ]; then
 		nvram set dns_local_cache=1
 		nvram commit
 	fi
 	# 从梅林刷到官改固件，如果不重置固件，则dns_local_cache将会保留，会导致误判，所以需要改写一次以确保OK
-	local LOCAL_DNS=$(cat /etc/resolv.conf|grep "127.0.0.1")
-	if [ -z "$LOCAL_DNS" ]; then
+	if ! grep -q "127.0.0.1" /etc/resolv.conf; then
 		cat >/etc/resolv.conf <<-EOF
 			nameserver 127.0.0.1
 		EOF
@@ -4977,62 +4981,62 @@ restart_dnsmasq() {
 load_module() {
 	xt=$(lsmod | grep xt_set)
 	OS=$(uname -r)
-	if [ -f /lib/modules/${OS}/kernel/net/netfilter/xt_set.ko ] && [ -z "$xt" ]; then
+	if [ -f "/lib/modules/${OS}/kernel/net/netfilter/xt_set.ko" ] && [ -z "$xt" ]; then
 		echo_date "加载xt_set.ko内核模块！"
-		insmod /lib/modules/${OS}/kernel/net/netfilter/xt_set.ko
+		insmod "/lib/modules/${OS}/kernel/net/netfilter/xt_set.ko"
 	fi
 }
 
 # write number into nvram with no commit
 write_numbers() {
-	nvram set update_ipset="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.gfwlist.date')"
-	nvram set update_chnroute="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.chnroute.date')"
-	nvram set update_cdn="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.cdn_china.date')"
-	nvram set ipset_numbers="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.gfwlist.count')"
-	nvram set chnroute_numbers="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.chnroute.count')"
-	nvram set chnroute_ips="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.chnroute.count_ip')"
-	nvram set cdn_numbers="$(cat /koolshare/ss/rules/rules.json.js | run /koolshare/bin/jq -r '.cdn_china.count')"
+	nvram set update_ipset="$(run /koolshare/bin/jq -r '.gfwlist.date' /koolshare/ss/rules/rules.json.js)"
+	nvram set update_chnroute="$(run /koolshare/bin/jq -r '.chnroute.date' /koolshare/ss/rules/rules.json.js)"
+	nvram set update_cdn="$(run /koolshare/bin/jq -r '.cdn_china.date' /koolshare/ss/rules/rules.json.js)"
+	nvram set ipset_numbers="$(run /koolshare/bin/jq -r '.gfwlist.count' /koolshare/ss/rules/rules.json.js)"
+	nvram set chnroute_numbers="$(run /koolshare/bin/jq -r '.chnroute.count' /koolshare/ss/rules/rules.json.js)"
+	nvram set chnroute_ips="$(run /koolshare/bin/jq -r '.chnroute.count_ip' /koolshare/ss/rules/rules.json.js)"
+	nvram set cdn_numbers="$(run /koolshare/bin/jq -r '.cdn_china.count' /koolshare/ss/rules/rules.json.js)"
 }
 
 remove_ss_reboot_job() {
-	if [ -n "$(cru l | grep ss_reboot)" ]; then
+	if cru l | grep -q ss_reboot; then
 		echo_date "【科学上网】：删除插件自动重启定时任务..."
 		sed -i '/ss_reboot/d' /var/spool/cron/crontabs/* >/dev/null 2>&1
 	fi
 }
 
 set_ss_reboot_job() {
-	if [[ "${ss_reboot_check}" = "0" ]]; then
+	if [ "${ss_reboot_check}" = "0" ]; then
 		remove_ss_reboot_job
-	elif [[ "${ss_reboot_check}" = "1" ]]; then
+	elif [ "${ss_reboot_check}" = "1" ]; then
 		echo_date "【科学上网】：设置每天${ss_basic_time_hour}时${ss_basic_time_min}分重启插件..."
-		cru a ss_reboot ${ss_basic_time_min} ${ss_basic_time_hour}" * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
-	elif [[ "${ss_reboot_check}" = "2" ]]; then
+		cru a ss_reboot "${ss_basic_time_min} ${ss_basic_time_hour} * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
+	elif [ "${ss_reboot_check}" = "2" ]; then
 		echo_date "【科学上网】：设置每周${ss_basic_week}的${ss_basic_time_hour}时${ss_basic_time_min}分重启插件..."
-		cru a ss_reboot ${ss_basic_time_min} ${ss_basic_time_hour}" * * "${ss_basic_week}" /bin/sh /koolshare/ss/ssconfig.sh restart"
-	elif [[ "${ss_reboot_check}" = "3" ]]; then
+		cru a ss_reboot "${ss_basic_time_min} ${ss_basic_time_hour} * * ${ss_basic_week} /bin/sh /koolshare/ss/ssconfig.sh restart"
+	elif [ "${ss_reboot_check}" = "3" ]; then
 		echo_date "【科学上网】：设置每月${ss_basic_day}日${ss_basic_time_hour}时${ss_basic_time_min}分重启插件..."
-		cru a ss_reboot ${ss_basic_time_min} ${ss_basic_time_hour} ${ss_basic_day}" * * /bin/sh /koolshare/ss/ssconfig.sh restart"
-	elif [[ "${ss_reboot_check}" = "4" ]]; then
-		if [[ "${ss_basic_inter_pre}" = "1" ]]; then
+		cru a ss_reboot "${ss_basic_time_min} ${ss_basic_time_hour} ${ss_basic_day} * * /bin/sh /koolshare/ss/ssconfig.sh restart"
+	elif [ "${ss_reboot_check}" = "4" ]; then
+		if [ "${ss_basic_inter_pre}" = "1" ]; then
 			echo_date "【科学上网】：设置每隔${ss_basic_inter_min}分钟重启插件..."
-			cru a ss_reboot "*/"${ss_basic_inter_min}" * * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
-		elif [[ "${ss_basic_inter_pre}" = "2" ]]; then
+			cru a ss_reboot "*/${ss_basic_inter_min} * * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
+		elif [ "${ss_basic_inter_pre}" = "2" ]; then
 			echo_date "【科学上网】：设置每隔${ss_basic_inter_hour}小时重启插件..."
-			cru a ss_reboot "0 */"${ss_basic_inter_hour}" * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
-		elif [[ "${ss_basic_inter_pre}" = "3" ]]; then
+			cru a ss_reboot "0 */${ss_basic_inter_hour} * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
+		elif [ "${ss_basic_inter_pre}" = "3" ]; then
 			echo_date "【科学上网】：设置每隔${ss_basic_inter_day}天${ss_basic_inter_hour}小时${ss_basic_time_min}分钟重启插件..."
-			cru a ss_reboot ${ss_basic_time_min} ${ss_basic_time_hour}" */"${ss_basic_inter_day} " * * /bin/sh /koolshare/ss/ssconfig.sh restart"
+			cru a ss_reboot "${ss_basic_time_min} ${ss_basic_time_hour} */${ss_basic_inter_day} * * /bin/sh /koolshare/ss/ssconfig.sh restart"
 		fi
-	elif [[ "${ss_reboot_check}" = "5" ]]; then
+	elif [ "${ss_reboot_check}" = "5" ]; then
 		check_custom_time=$(echo ss_basic_custom | base64_decode)
 		echo_date "【科学上网】：设置每天${check_custom_time}时的${ss_basic_time_min}分重启插件..."
-		cru a ss_reboot ${ss_basic_time_min} ${check_custom_time}" * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
+		cru a ss_reboot "${ss_basic_time_min} ${check_custom_time} * * * /bin/sh /koolshare/ss/ssconfig.sh restart"
 	fi
 }
 
 remove_ss_trigger_job() {
-	if [ -n "$(cru l | grep ss_tri_check)" ]; then
+	if cru l | grep -q ss_tri_check; then
 		echo_date "删除插件触发重启定时任务..."
 		sed -i '/ss_tri_check/d' /var/spool/cron/crontabs/* >/dev/null 2>&1
 	fi
@@ -5054,16 +5058,17 @@ set_ss_trigger_job() {
 }
 
 load_nat() {
-	local nat_ready=$(iptables -t nat -L PREROUTING -v -n --line-numbers | grep -v PREROUTING | grep -v destination)
+	local nat_ready
+	nat_ready=$(iptables -t nat -L PREROUTING -v -n --line-numbers | grep -v PREROUTING | grep -v destination)
 	i=300
 	until [ -n "$nat_ready" ]; do
-		i=$(($i - 1))
+		i=$((i - 1))
 		if [ "$i" -lt 1 ]; then
 			echo_date "错误：不能正确加载nat规则!"
 			close_in_five
 		fi
 		usleep 100000
-		local nat_ready=$(iptables -t nat -L PREROUTING -v -n --line-numbers | grep -v PREROUTING | grep -v destination)
+		nat_ready=$(iptables -t nat -L PREROUTING -v -n --line-numbers | grep -v PREROUTING | grep -v destination)
 	done
 	#creat_ipset
 	add_white_black_ip
@@ -5072,7 +5077,6 @@ load_nat() {
 
 ss_post_start() {
 	# 在SS插件启动成功后触发脚本
-	local i
 	mkdir -p /koolshare/ss/postscripts && cd /koolshare/ss/postscripts
 	for i in $(find ./ -name 'P*' | sort); do
 		trap "" INT QUIT TSTP EXIT
@@ -5086,7 +5090,6 @@ ss_post_start() {
 
 ss_pre_stop() {
 	# 在SS插件关闭前触发脚本
-	local i
 	mkdir -p /koolshare/ss/postscripts && cd /koolshare/ss/postscripts
 	for i in $(find ./ -name 'P*' | sort -r); do
 		trap "" INT QUIT TSTP EXIT
@@ -5099,8 +5102,7 @@ ss_pre_stop() {
 }
 
 stop_status() {
-	local flag=$1
-	if [ -z "${flag}" ];then
+	if [ -z "$1" ];then
 		kill -9 $(pidof ss_status_main.sh) >/dev/null 2>&1
 		kill -9 $(pidof ss_status.sh) >/dev/null 2>&1
 		killall curl >/dev/null 2>&1
@@ -5111,23 +5113,30 @@ stop_status() {
 }
 
 detect_ip(){
-	local SUBJECT=$1
-	local TIMEOUT=$2
-	local METHOD=$3
+	local SUBJECT
+	SUBJECT=$1
+	local TIMEOUT
+	TIMEOUT=$2
+	local METHOD
+	METHOD=$3
 	[ -z "${TIMEOUT}" ] && TIMEOUT="3"
 
 	if [ "${METHOD}" = "0" ];then
 		# 检测国内ip
 		#echo_date "检测国内ip地址，检测地址：${SUBJECT}"
-		local IP=$(run curl-fancyss -4s --connect-timeout ${TIMEOUT} ${SUBJECT} 2>&1 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | grep -v "Terminated")
+		local IP
+		IP=$(run curl-fancyss -4s --connect-timeout ${TIMEOUT} ${SUBJECT} 2>&1 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | grep -v "Terminated")
 	elif [ "${METHOD}" = "1" ];then
 		# 检测代理ip
 		#echo_date "检测国外ip地址，检测地址：${SUBJECT}"
-		local SOCKS5_OPEN=$(netstat -nlp 2>/dev/null|grep -w "23456"|grep -Eo "ss-local|sslocal|v2ray|xray|naive|tuic")
+		local SOCKS5_OPEN
+		SOCKS5_OPEN=$(netstat -nlp 2>/dev/null|grep -w "23456"|grep -Eo "ss-local|sslocal|v2ray|xray|naive|tuic|hysteria2")
 		if [ -n "${SOCKS5_OPEN}" ];then
-			local IP=$(run curl-fancyss -4s -x socks5h://127.0.0.1:23456 --connect-timeout ${TIMEOUT} ${SUBJECT} 2>&1 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | grep -v "Terminated")
+			local IP
+			IP=$(run curl-fancyss -4s -x socks5h://127.0.0.1:23456 --connect-timeout ${TIMEOUT} ${SUBJECT} 2>&1 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | grep -v "Terminated")
 		else
-			local IP=$(run curl-fancyss -4s --connect-timeout ${TIMEOUT} ${SUBJECT} 2>&1 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | grep -v "Terminated")
+			local IP
+			IP=$(run curl-fancyss -4s --connect-timeout ${TIMEOUT} ${SUBJECT} 2>&1 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | grep -v "Terminated")
 		fi
 	fi
 
@@ -5139,20 +5148,23 @@ detect_ip(){
 }
 
 check_chng_fdns(){
-	local FDNS_OK_FLAG_1=0
+	local FDNS_OK_FLAG_1
+	FDNS_OK_FLAG_1=0
 	if [ "${ss_basic_chng_trust_1_enable}" = "1" ];then
+		local TPORT
 		if [ "${ss_basic_chng_trust_1_ecs}" = "1" ];then
-			local TPORT=2055
+			TPORT=2055
 		else
-			local TPORT=1055
+			TPORT=1055
 		fi
 		echo_date "检测进阶chinadns-ng方案可信DNS-1（端口：${TPORT}）是否正常工作..."
 		# 国外dns检测，超时时间设置久一点
-		local DETECT_SERVER_IP_1=$(run dnsclient -p ${TPORT} -t 5 -i 2 @127.0.0.1 dns.msftncsi.com 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
-		local DETECT_SERVER_IP_1=$(__valid_ip ${DETECT_SERVER_IP_1})
+		local DETECT_SERVER_IP_1
+		DETECT_SERVER_IP_1=$(run dnsclient -p ${TPORT} -t 5 -i 2 @127.0.0.1 dns.msftncsi.com 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		DETECT_SERVER_IP_1=$(__valid_ip ${DETECT_SERVER_IP_1})
 		if [ -n "${DETECT_SERVER_IP_1}" ]; then
 			echo_date "可信DNS-1 ${TPORT}端口DNS服务工作正常！"
-			local FDNS_OK_FLAG_1=1
+			FDNS_OK_FLAG_1=1
 		else
 			echo_date "可信DNS-1 ${TPORT}端口DNS服务工作异常，无法解析域名！可能是以下原因："
 			echo_date "---------------------------------------------------------"
@@ -5166,21 +5178,24 @@ check_chng_fdns(){
 		fi
 	fi
 
-	local FDNS_OK_FLAG_2=0
+	local FDNS_OK_FLAG_2
+	FDNS_OK_FLAG_2=0
 	if [ "${ss_basic_chng_trust_2_enable}" = "1" ];then
+		local TPORT
 		if [ "${ss_basic_chng_trust_2_ecs}" = "1" ];then
-			local TPORT=2056
+			TPORT=2056
 		else
-			local TPORT=1056
+			TPORT=1056
 		fi
 
 		echo_date "检测进阶chinadns-ng方案可信DNS-2（端口：${TPORT}）是否正常工作..."
 		# 国外dns检测，超时时间设置久一点
-		local DETECT_SERVER_IP_2=$(run dnsclient -p ${TPORT} -t 5 -i 2 @127.0.0.1 dns.msftncsi.com 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
-		local DETECT_SERVER_IP_2=$(__valid_ip ${DETECT_SERVER_IP_2})
+		local DETECT_SERVER_IP_2
+		DETECT_SERVER_IP_2=$(run dnsclient -p ${TPORT} -t 5 -i 2 @127.0.0.1 dns.msftncsi.com 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		DETECT_SERVER_IP_2=$(__valid_ip ${DETECT_SERVER_IP_2})
 		if [ -n "${DETECT_SERVER_IP_2}" ]; then
 			echo_date "可信DNS-2 ${TPORT}端口DNS服务工作正常！"
-			local FDNS_OK_FLAG_2=1
+			FDNS_OK_FLAG_2=1
 		else
 			echo_date "可信DNS-2 ${TPORT}端口DNS服务工作异常，无法解析域名！"
 			echo_date "如果插件启动完毕后国外不通，请检查可信DNS-2的配置！继续！"
@@ -5198,29 +5213,31 @@ check_chn_dns(){
 	echo_date "检测中国域名是否正常解析..."
 	
 	# 1. 检测5个国内域名的DNS解析
+	local CHN_RESOLV_DOMAIN
+	local CHN_RESOLV_IPADDR
 	if [ -z "${CHN_RESOLV_IPADDR}" ]; then
-		local CHN_RESOLV_DOMAIN="www.baidu.com"
-		local CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		CHN_RESOLV_DOMAIN="www.baidu.com"
+		CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
 	fi
 
 	if [ -z "${CHN_RESOLV_IPADDR}" ]; then
-		local CHN_RESOLV_DOMAIN="www.taobao.com"
-		local CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		CHN_RESOLV_DOMAIN="www.taobao.com"
+		CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
 	fi
 
 	if [ -z "${CHN_RESOLV_IPADDR}" ]; then
-		local CHN_RESOLV_DOMAIN="www.sina.com"
-		local CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		CHN_RESOLV_DOMAIN="www.sina.com"
+		CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
 	fi
 
 	if [ -z "${CHN_RESOLV_IPADDR}" ]; then
-		local CHN_RESOLV_DOMAIN="www.jd.com"
-		local CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		CHN_RESOLV_DOMAIN="www.jd.com"
+		CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
 	fi
 
 	if [ -z "${CHN_RESOLV_IPADDR}" ]; then
-		local CHN_RESOLV_DOMAIN="www.qq.com"
-		local CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
+		CHN_RESOLV_DOMAIN="www.qq.com"
+		CHN_RESOLV_IPADDR=$(run dnsclient -p 7913 -t 3 -i 1 @127.0.0.1 ${CHN_RESOLV_DOMAIN} 2>/dev/null|grep -E "^IP"|head -n1|awk '{print $2}')
 	fi
 	
 	if [ -z "${CHN_RESOLV_IPADDR}" ]; then
@@ -5330,11 +5347,13 @@ finish_start(){
 				if [ "${ss_real_server_ip}" != "${REMOTE_IP_FRN}" ];then
 					ipset test chnroute ${REMOTE_IP_FRN} >/dev/null 2>&1
 					if [ "$?" != "0" ]; then
-						local TMP_PID=$(ps | grep -E "socat|uredir" | grep 2055 | awk '{print $1}')
+						local TMP_PID
+						TMP_PID=$(ps | grep -E "socat|uredir" | grep 2055 | awk '{print $1}')
 						if [ -n "${TMP_PID}" ];then
 							kill -9 ${TMP_PID}
 						fi
-						local DEF_PID=$(ps | grep dns-ecs-forcer | grep 2055 | awk '{print $1}')
+						local DEF_PID
+						DEF_PID=$(ps | grep dns-ecs-forcer | grep 2055 | awk '{print $1}')
 						if [ -n "${DEF_PID}" ];then
 							kill -9 ${DEF_PID}
 						fi
@@ -5377,7 +5396,8 @@ finish_start(){
 			if [ -n "${REMOTE_IP_FRN}" ];then
 				if [ "${ss_real_server_ip}" != "${REMOTE_IP_FRN}" ] && [ -n "${UDP_TARGET}" ];then
 					echo_date "启动dns-ecs-forcer，填入ECS标签：${REMOTE_IP_FRN%.*}.0"
-					local TMP_PID=$(ps | grep -E "socat|uredir" | grep 2056 | awk '{print $1}')
+					local TMP_PID
+					TMP_PID=$(ps | grep -E "socat|uredir" | grep 2056 | awk '{print $1}')
 					if [ -n "${TMP_PID}" ];then
 						kill -9 ${TMP_PID}
 					fi		
@@ -5398,7 +5418,8 @@ finish_start(){
 			if [ -n "${REMOTE_IP_FRN}" ];then
 				if [ "${ss_real_server_ip}" != "${REMOTE_IP_FRN}" ] && [ -n "${TCP_TARGET}" ];then
 					echo_date "启动dns-ecs-forcer，填入ECS标签：${REMOTE_IP_FRN%.*}.0"
-					local TMP_PID=$(ps | grep -E "socat|uredir" | grep 2056 | awk '{print $1}')
+					local TMP_PID
+					TMP_PID=$(ps | grep -E "socat|uredir" | grep 2056 | awk '{print $1}')
 					if [ -n "${TMP_PID}" ];then
 						kill -9 ${TMP_PID}
 					fi		
@@ -5536,9 +5557,10 @@ get_status() {
 }
 
 start_ws(){
-	if [ -x "/koolshare/bin/websocketd" ] && [ -f "/koolshare/ss/websocket.sh" ];then
+	websocket_bin=/koolshare/ss/websocket
+	if [ -x "/koolshare/bin/websocketd" ] && [ -f "$websocket_bin" ];then
 		if [ -z "$(pidof websocketd)" ];then
-			run_bg websocketd --port=803 /bin/sh /koolshare/ss/websocket.sh
+			run_bg websocketd --port=803 $websocket_bin
 		fi
 	fi
 }

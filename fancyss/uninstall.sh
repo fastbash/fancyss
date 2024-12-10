@@ -50,9 +50,9 @@ rm -rf /koolshare/bin/dns2tcp
 rm -rf /koolshare/bin/dns-ecs-forcer
 rm -rf /koolshare/bin/uredir
 # 如果系统里有jq，删掉/koolshare/bin/jq
-if [ -f /usr/bin/jq ];then
-	rm -rf /koolshare/bin/jq >/dev/null 2>&1
-fi
+# if [ -f /usr/bin/jq ];then
+# 	rm -rf /koolshare/bin/jq >/dev/null 2>&1
+# fi
 
 rm -rf /koolshare/res/icon-shadowsocks.png
 rm -rf /koolshare/res/arrow-down.gif

@@ -1172,7 +1172,7 @@ test_12_tc(){
 				new_port=$((base_port + nu))
 				local new_addr
 				new_addr="127.0.0.1:${new_port}"
-				dbus get “” | base64_decode | run jq --arg addr "$new_addr" '.local.server = $addr' > "${TMP2}/conf/tuic-${new_port}.json"
+				dbus get "ssconf_basic_tuic_json_${nu}" | base64_decode | run jq --arg addr "$new_addr" '.local.server = $addr' > "${TMP2}/conf/tuic-${new_port}.json"
 
 				# 2. start tuic
 				run ${TMP2}/wt-tuic -c ${TMP2}/conf/tuic-${new_port}.json >/dev/null 2>&1 &

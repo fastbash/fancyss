@@ -491,7 +491,7 @@ install_now(){
 	# stop first
 	local ENABLE
 	ENABLE=$(dbus get ss_basic_enable)
-	if [ "${ENABLE}" == "1" -a -f "/koolshare/ss/ssconfig.sh" ];then
+	if [ "${ENABLE}" = "1" ] && [ -f "/koolshare/ss/ssconfig.sh" ];then
 		echo_date "安装前先关闭${TITLE_OLD}插件，保证文件更新成功！"
 		sh /koolshare/ss/ssconfig.sh stop >/dev/null 2>&1
 	fi
@@ -749,11 +749,18 @@ install_now(){
 	chmod 755 /koolshare/ss/* >/dev/null 2>&1
 	chmod 755 /koolshare/scripts/ss* >/dev/null 2>&1
 	chmod 755 /koolshare/bin/* >/dev/null 2>&1
+	
+	# kill some process before fancyss start
+	if ps | grep "websocketd" | grep -q "/bin/sh";then
+		killall websocketd >/dev/null 2>&1
+		sleep 1
+		sync
+	fi
 
 	# start some process before fancyss start
 	if [ -x "/koolshare/bin/websocketd" ] && [ -f "/koolshare/ss/websocket.sh" ];then
 		if [ -z "$(pidof websocketd)" ];then
-			run_bg websocketd --port=803 /bin/sh /koolshare/ss/websocket.sh
+			run_bg websocketd --port=803 /koolshare/ss/websocket
 		fi
 	fi
 	
@@ -833,6 +840,7 @@ install_now(){
 	[ -z "${ss_basic_notimecheck}" ] && dbus set ss_basic_notimecheck=1
 	[ -z "${ss_basic_nocdnscheck}" ] && dbus set ss_basic_nocdnscheck=1
 	[ -z "${ss_basic_nofdnscheck}" ] && dbus set ss_basic_nofdnscheck=1
+	[ -z "${ss_basic_noruncheck}" ] && dbus set ss_basic_noruncheck=1
 	
 	[ "${ss_disable_aaaa}" != "1" ] && dbus set ss_basic_chng_no_ipv6=1
 	[ -z "${ss_basic_chng_xact}" ] && dbus set ss_basic_chng_xact=0
