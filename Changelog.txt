@@ -1,5 +1,8 @@
 fancyss Changelog
 ===========================================
+4.3.6
+   - fixed  kill_process function in apply_ss
+
 4.3.5
    - update 上游的一些更新
 
@@ -15,7 +18,7 @@ fancyss Changelog
    - remove 去除广告
    - add    规则测试
 
-3.3.6 (20241209)
+3.3.6 (todo, not released yet)
    - todo	因上游不再更新，移除shadowsocks-libev二进制及相关功能，现在full版ss协议默认由shadowsocks-rust运行，lite版ss协议由xray运行
    - todo	ss协议运行程序切换，可切换成xray运行ss协议
    - todo	xray运行ss协议情况下支持simple obfs（可以进一步移除lite版本的ss-libev）

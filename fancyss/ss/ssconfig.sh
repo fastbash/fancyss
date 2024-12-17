@@ -983,69 +983,49 @@ restore_conf() {
 }
 
 kill_process() {
-	local v2ray_process
-	v2ray_process=$(pidof v2ray)
-	if [ -n "$v2ray_process" ]; then
-		echo_date "关闭V2Ray进程..."
-		# 有时候killall杀不了v2ray进程，所以用不同方式杀两次
-		killall v2ray >/dev/null 2>&1
-		kill -9 "$v2ray_process" >/dev/null 2>&1
-	fi
+	for _process_name in v2ray xray ss-redir rss-redir sslocal ss-tunnel rss-tunnel chinadns-ng dns2socks kcptun haproxy speederv1 speederv2 udp2raw dns2tcp dns-ecs-forcer uredir ipt2socks naive tuic-client hysteria2;do
+		_process_pid=$(pidof "$_process_name")
+		if [ -n "$_process_pid" ]; then
+			echo_date "关闭 $_process_name 进程..."
+			# 有时候killall杀不了进程，所以用不同方式杀两次
+			killall "$_process_name" >/dev/null 2>&1
+			kill -9 "$_process_pid" >/dev/null 2>&1
+		fi
+	done
 
-	local xray_process
-	xray_process=$(pidof xray)
-	if [ -n "$xray_process" ]; then
-		echo_date "关闭xray进程..."
-		killall xray >/dev/null 2>&1
-		kill -9 "$xray_process" >/dev/null 2>&1
-	fi
+	for _process_name in ss-local ssr-local;do
+		_process_pid=$(ps | grep -w "$_process_name" | grep -v "grep" | grep -w "23456" | awk '{print $1}')
+		if [ -n "$_sslocal" ]; then
+			echo_date "关闭 $_process_name 进程:23456端口..."
+			killall "$_process_name" >/dev/null 2>&1
+			kill -9 "$_process_pid" >/dev/null 2>&1
+		fi
+	done
 
 	if [ -d "/koolshare/perp/xray" ];then
 		perpctl d xray >/dev/null 2>&1
 		rm -rf /koolshare/perp/xray
 	fi
 
-	local sslocal
-	sslocal=$(ps | grep -w ss-local | grep -v "grep" | grep -w "23456" | awk '{print $1}')
-	if [ -n "$sslocal" ]; then
-		echo_date "关闭ss-local进程:23456端口..."
-		kill $sslocal >/dev/null 2>&1
-	fi
-
-	local ssrlocal
-	ssrlocal=$(ps | grep -w rss-local | grep -v "grep" | grep -w "23456" | awk '{print $1}')
-	if [ -n "$ssrlocal" ]; then
-		echo_date "关闭ssr-local进程:23456端口..."
-		kill $ssrlocal >/dev/null 2>&1
-	fi
-
 	# only close haveged form fancyss, not haveged from system
-	local haveged_pid
-	haveged_pid=$(ps |grep "/koolshare/bin/haveged" | grep -v grep | awk '{print $1}')
-	if [ -n "${haveged_pid}" ]; then
+	local _haveged_pid
+	_haveged_pid=$(ps |grep "/koolshare/bin/haveged" | grep -v grep | awk '{print $1}')
+	if [ -n "${_haveged_pid}" ]; then
 		echo_date "关闭haveged进程..."
-		killall -9 ${haveged_pid} >/dev/null 2>&1
+		killall -9 "${_haveged_pid}" >/dev/null 2>&1
 	fi
 
-	local SOCAT_PID
-	SOCAT_PID=$(ps | grep -E "socat" | grep -E "2055|2056" | awk '{print $1}')
-	if [ -n "${SOCAT_PID}" ];then
+	local _socat_pid
+	_socat_pid=$(ps | grep -E "socat" | grep -E "2055|2056" | awk '{print $1}')
+	if [ -n "${_socat_pid}" ];then
 		echo_date "关闭socat进程..."
-		kill -9 ${SOCAT_PID}
+		kill -9 "${_socat_pid}"
 	fi
 
 	# close tcp_fastopen
 	if [ "${LINUX_VER}" != "26" ]; then
 		echo 1 >/proc/sys/net/ipv4/tcp_fastopen
 	fi
-
-	# 常规杀除进程
-	for process in ssredir rssredir sslocal ss-tunnel rss-tunnel chinadns-ng dns2socks kcptun haproxy speederv1 speederv2 udp2raw hysteria2 tuic-client naive ipt2socks uredir dns-ecs-forcer dns2tcp;do
-		if pidof $process >/dev/null;then
-			echo_date "关闭 $process 进程..."
-			killall "$process" >/dev/null 2>&1
-		fi
-	done
 }
 # ================================= ss start ==============================
 
