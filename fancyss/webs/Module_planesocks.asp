@@ -1250,7 +1250,7 @@ function update_visibility() {
 	var a = E("ss_basic_rule_update").value == "1";
 	var b = E("ss_basic_node_update").value == "1";
 	var d = E("ss_basic_udp_upstream_mtu").value == "1";			//fancyss-full
-	var e = E("ss_china_dns").value == "12";
+	var e = E("ss_china_dns").value == "99";
 	var f = E("ss_foreign_dns").value;
 	var g = E("ss_basic_tri_reboot_time").value;
 	var h_0 = E("ss_basic_server_resolv").value;

@@ -1,5 +1,8 @@
 fancyss Changelog
 ===========================================
+4.3.7
+   - fixed  修复自定义DNS输入在ss_china_dns
+
 4.3.6
    - fixed  kill_process function in apply_ss
 
