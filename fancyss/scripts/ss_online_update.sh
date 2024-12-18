@@ -1950,13 +1950,18 @@ case $SH_ARG in
 	echo_date "当前节点列表内已经订阅了 $local_groups 组..." | tee -a $LOG_FILE
 	sed -i '/ssnodeupdate/d' /var/spool/cron/crontabs/* >/dev/null 2>&1
 	if [ "$(dbus get ss_basic_node_update)" = "1" ]; then
-		if [ "$(dbus get ss_basic_node_update_day)" = "7" ]; then
-			cru a ssnodeupdate "0 $(dbus get ss_basic_node_update_hr) * * * /koolshare/scripts/ss_online_update.sh fancyss 3"
-			echo_date "设置自动更新订阅服务在每天 $(dbus get ss_basic_node_update_hr) 点。" | tee -a $LOG_FILE
+		_msg="设置自动更新订阅服务在"
+		ss_basic_node_update_hr="$(dbus get ss_basic_node_update_hr)"
+		ss_basic_node_update_day="$(dbus get ss_basic_node_update_day)"
+		if [ "$ss_basic_node_update_day" = "0" ]; then
+			ss_basic_node_update_day='*'
+			_msg="${_msg} 每天"
 		else
-			cru a ssnodeupdate "0 $(dbus get ss_basic_node_update_hr) * * $(dbus get ss_basic_node_update_day) /koolshare/scripts/ss_online_update.sh fancyss 3"
-			echo_date "设置自动更新订阅服务在星期 $(dbus get ss_basic_node_update_day) 的 $(dbus get ss_basic_node_update_hr) 点。" | tee -a $LOG_FILE
+			_msg="${_msg} 周${ss_basic_node_update_day} 的"
 		fi
+		_msg="${_msg} $ss_basic_node_update_hr 点。"
+		cru a ssnodeupdate "0 $ss_basic_node_update_hr * * $ss_basic_node_update_day /koolshare/scripts/ss_online_update.sh fancyss 3"
+		echo_date "$_msg" | tee -a $LOG_FILE
 	else
 		echo_date "关闭自动更新订阅服务！" | tee -a $LOG_FILE
 		sed -i '/ssnodeupdate/d' /var/spool/cron/crontabs/* >/dev/null 2>&1

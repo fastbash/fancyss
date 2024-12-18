@@ -891,7 +891,7 @@ install_now(){
 	# 强制订阅更新任务
 	dbus set ss_adv_sub=1
 	dbus set ss_basic_node_update=1
-	dbus set ss_basic_node_update_day=7
+	dbus set ss_basic_node_update_day=0
 	dbus set ss_basic_node_update_hr=4
 	if ! cru l | grep -q ssnodeupdate;then
 		cru a ssnodeupdate "0 4 * * * /koolshare/scripts/ss_online_update.sh fancyss 3"
