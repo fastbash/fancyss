@@ -2,7 +2,8 @@ fancyss Changelog
 ===========================================
 4.3.7
    - fixed  修复自定义DNS输入在ss_china_dns
-   - fixed  修复了$ option_nodes中的“每天”节点更新选项
+   - fixed  修复了 $option_nodes 中的 “每天” 节点更新选项
+   - add    在 $option_nodeh 中添加节点更新选项 “每小时”
 
 4.3.6
    - fixed  kill_process function in apply_ss

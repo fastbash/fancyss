@@ -1952,6 +1952,9 @@ case $SH_ARG in
 	if [ "$(dbus get ss_basic_node_update)" = "1" ]; then
 		_msg="设置自动更新订阅服务在"
 		ss_basic_node_update_hr="$(dbus get ss_basic_node_update_hr)"
+		if [ "$ss_basic_node_update_hr" = "25" ];then
+			ss_basic_node_update_hr='*'
+		fi
 		ss_basic_node_update_day="$(dbus get ss_basic_node_update_day)"
 		if [ "$ss_basic_node_update_day" = "0" ]; then
 			ss_basic_node_update_day='*'
