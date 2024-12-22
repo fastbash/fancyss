@@ -880,19 +880,23 @@ install_now(){
 	# 延时测试关闭
 	dbus set ss_basic_latency_opt=0
 	# 强制规则更新任务
-	dbus set ss_basic_rule_update=1
-	dbus set ss_basic_rule_update_time=3
-	dbus set ss_basic_gfwlist_update=1
-	dbus set ss_basic_chnroute_update=1
-	dbus set ss_basic_cdn_update=1
+	if [ "$(dbus get ss_basic_rule_update)" != "1" ];then
+		dbus set ss_basic_rule_update=1
+		dbus set ss_basic_rule_update_time=3
+		dbus set ss_basic_gfwlist_update=1
+		dbus set ss_basic_chnroute_update=1
+		dbus set ss_basic_cdn_update=1
+	fi
 	if ! cru l | grep -q ssupdate;then
 		cru a ssupdate "0 3 * * * /bin/sh /koolshare/scripts/ss_rule_update.sh"
 	fi
 	# 强制订阅更新任务
 	dbus set ss_adv_sub=1
-	dbus set ss_basic_node_update=1
-	dbus set ss_basic_node_update_day=0
-	dbus set ss_basic_node_update_hr=4
+	if [ "$(dbus get ss_basic_node_update)" != "1" ];then
+		dbus set ss_basic_node_update=1
+		dbus set ss_basic_node_update_day=0
+		dbus set ss_basic_node_update_hr=4
+	fi
 	if ! cru l | grep -q ssnodeupdate;then
 		cru a ssnodeupdate "0 4 * * * /koolshare/scripts/ss_online_update.sh fancyss 3"
 	fi
