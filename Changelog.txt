@@ -1,6 +1,8 @@
 fancyss Changelog
 ===========================================
 4.3.7
+   - fixed  安装保留计划任务
+   - fixed  初始显示：订阅优先
    - fixed  修复自定义DNS输入在ss_china_dns
    - fixed  修复了 $option_nodes 中的 “每天” 节点更新选项
    - add    在 $option_nodeh 中添加节点更新选项 “每小时”

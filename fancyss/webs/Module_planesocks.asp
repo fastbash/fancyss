@@ -4039,7 +4039,7 @@ function version_show() {
 function message_show() {
 	if (db_ss["ss_close_mesg"] == "0") return
 	$.ajax({
-		url: 'https://gist.githubusercontent.com/fastbash/001dd0617a64e11a9492dcf9205a0e03/raw/fancyss_msg.json?_=' + new Date().getTime(),
+		url: 'https://raw.githubusercontent.com/fastbash/fancyss/refs/heads/3.0/rules/fancyss_msg.json?_=' + new Date().getTime(),
 		type: 'GET',
 		dataType: 'json',
 		cache: false,

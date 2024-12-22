@@ -32,19 +32,21 @@ sync_binary(){
 	BINS_COPY="v2ray xray naive ss_rust hysteria2"
 	for BIN in $BINS_COPY;
 	do
-		local VERSION_FLAG="latest.txt"
+		local VERSION_FLAG
+		VERSION_FLAG="latest.txt"
 		if [ "${BIN}" == "v2ray" ];then
-			local VERSION_FLAG="latest_v5.txt"
+			VERSION_FLAG="latest_v5.txt"
 		fi
 
 		if [ "${BIN}" == "xray" ];then
-			local VERSION_FLAG="latest_2.txt"
+			VERSION_FLAG="latest_2.txt"
 		fi
-
+		
+		local REAL_BIN
 		if [ "${BIN}" == "ss_rust" ];then
-			local REAL_BIN="sslocal"
+			REAL_BIN="sslocal"
 		else
-			local REAL_BIN="${BIN}"
+			REAL_BIN="${BIN}"
 		fi
 	
 		local version
