@@ -205,7 +205,7 @@ function pop_help() {
 }
 function pop_node_add() {
 	note = "<li>检测到你尚未添加任何代理节点！你至少需要一个节点，才能让插件正常工作！</li><br /> ";
-	note += "<li>如果你已经有节点，请从【手动添加】【节点订阅】【恢复配置】中选择一种添加。</li><br />";
+	note += "<li>如果你已经有节点，请从【节点订阅】【手动添加】【恢复配置】中选择一种添加。</li><br />";
 	layer.open({
 		type: 0,
 		skin: 'layui-layer-lan',
@@ -216,16 +216,18 @@ function pop_node_add() {
 		btnAlign: 'c',
 		maxmin: true,
 		content: note,
-		btn: ['手动添加', '订阅节点', '恢复配置'],
+		btn: ['订阅节点', '手动添加', '恢复配置'],
 		btn1: function() {
-			$("#add_ss_node").trigger("click");
+			$("#show_btn7").trigger("click");
 			layer.closeAll();
 		},
 		btn2: function() {
-			$("#show_btn7").trigger("click");
+			$("#add_ss_node").trigger("click");
+			layer.closeAll();
 		},
 		btn3: function() {
 			$("#show_btn9").trigger("click");
+			layer.closeAll();
 		},
 		success: function(layero, index){
 			console.log(index);
