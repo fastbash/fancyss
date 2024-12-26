@@ -1,5 +1,9 @@
 #!/bin/sh
 
+model=$(nvram get model | tr -d '\r')
+fancyss=$(dbus get ss_basic_version_local | tr -d '\r')
+softcenter=$(dbus get softcenter_version | tr -d '\r')
+
 if [ -z "$CURR_NODE" ];then
     CURR_NODE=$(dbus get ssconf_basic_node)
 fi
@@ -61,23 +65,12 @@ dnsmasq_rule(){
 	fi
 }
 
-go_proxy(){
-	# 4. subscribe go through proxy or not
-	if [ "$(dbus get ss_basic_online_links_goss)" = "1" ]; then
-		if [ "$(get_fancyss_running_status)" = "1" ];then
-			echo_date "✈️使用当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点：[$(dbus get "ssconf_basic_name_${CURR_NODE}")]提供的网络下载..."
-			dnsmasq_rule add "${DOMAIN_NAME}"
-		else
-			echo_date "⚠️当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点工作异常，改用常规网络下载..."
-			dnsmasq_rule remove
-		fi
-	else
-		echo_date "⬇️使用常规网络下载..."
-		dnsmasq_rule remove
-	fi
-}
-
 download_by_curl(){
+	CURL_BIN="curl-fancyss"
+	BIN_VER="$CURL_BIN/$($CURL_BIN --version | head -n1 | awk '{print $2}')"
+
+	UA_STRING="User-Agent: ${BIN_VER} (${model}) fancyss/${fancyss} softcenter/${softcenter}"
+
     local _curl_arg
     _curl_arg="-4sSkL"
 
@@ -104,13 +97,13 @@ download_by_curl(){
     fi
 	
 	echo_date "1️⃣使用curl下载订阅，第一次尝试下载..."
-	run curl-fancyss ${_curl_arg} ${EXT_ARG} --connect-timeout 6 "${url_encode}" 2>/dev/null > "$_download_by_curl_output"
+	run $CURL_BIN ${_curl_arg} -H "$UA_STRING" ${EXT_ARG} --connect-timeout 6 "${url_encode}" 2>/dev/null > "$_download_by_curl_output"
 	if [ "$?" = "0" ]; then
 		return 0
 	fi
 	
 	echo_date "2️⃣使用curl下载订阅失败，第二次尝试下载..."
-	run curl-fancyss ${_curl_arg} ${EXT_ARG} --connect-timeout 10 "${url_encode}" 2>/dev/null > "$_download_by_curl_output"
+	run $CURL_BIN ${_curl_arg} -H "$UA_STRING" ${EXT_ARG} --connect-timeout 10 "${url_encode}" 2>/dev/null > "$_download_by_curl_output"
 	if [ "$?" = "0" ]; then
 		return 0
 	fi
@@ -120,7 +113,7 @@ download_by_curl(){
 	    echo_date "3️⃣使用curl下载订阅失败，第三次尝试下载..."
         EXT_ARG="-x socks5h://127.0.0.1:23456"
         echo_date "✈️使用当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点：[$(dbus get "ssconf_basic_name_${CURR_NODE}")]提供的网络下载..."
-        run curl-fancyss ${_curl_arg} ${EXT_ARG} --connect-timeout 12 "${url_encode}" 2>/dev/null > "$_download_by_curl_output"
+        run $CURL_BIN ${_curl_arg} ${EXT_ARG} -H "$UA_STRING" --connect-timeout 12 "${url_encode}" 2>/dev/null > "$_download_by_curl_output"
         if [ "$?" = "0" ]; then
             return 0
         fi	
@@ -129,10 +122,30 @@ download_by_curl(){
 	return 1
 }
 
+go_proxy(){
+	# 4. subscribe go through proxy or not
+	if [ "$(dbus get ss_basic_online_links_goss)" = "1" ]; then
+		if [ "$(get_fancyss_running_status)" = "1" ];then
+			echo_date "✈️使用当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点：[$(dbus get "ssconf_basic_name_${CURR_NODE}")]提供的网络下载..."
+			dnsmasq_rule add "${DOMAIN_NAME}"
+		else
+			echo_date "⚠️当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点工作异常，改用常规网络下载..."
+			dnsmasq_rule remove
+		fi
+	else
+		echo_date "⬇️使用常规网络下载..."
+		dnsmasq_rule remove
+	fi
+}
 
 download_by_wget(){
 	# if go proxy or not
 	go_proxy
+
+	WGET_BIN="wget"
+	BIN_VER="$WGET_BIN/$($WGET_BIN --version | head -n1 | awk '{print $3}')"
+
+	UA_STRING="${BIN_VER} (${model}) fancyss/${fancyss} softcenter/${softcenter}"
 	
     local EXT_OPT
     EXT_OPT=""
@@ -148,17 +161,30 @@ download_by_wget(){
     fi
 	
 	echo_date "1️⃣使用wget下载订阅，第一次尝试下载..."
-	if wget -4 -t 1 -T 10 --dns-timeout=5 -q ${EXT_OPT} "${url_encode}" -O "$_download_by_wget_output"; then
+	if wget -4 -t 1 -T 10 --dns-timeout=5 -q ${EXT_OPT} -U "$UA_STRING" "${url_encode}" -O "$_download_by_wget_output"; then
 		return 0
 	fi
 
 	echo_date "2️⃣使用wget下载订阅，第二次尝试下载..."
-	if wget -4 -t 1 -T 15 --dns-timeout=10 -q ${EXT_OPT} "${url_encode}" -O "$_download_by_wget_output"; then
+	if wget -4 -t 1 -T 15 --dns-timeout=10 -q ${EXT_OPT} -U "$UA_STRING" "${url_encode}" -O "$_download_by_wget_output"; then
 		return 0
-	fi	
+	fi
+	
+	if [ "$(dbus get ss_basic_online_links_goss)" = "1" ]; then
+		echo_date "⬇️使用常规网络下载..."
+		dnsmasq_rule remove
+	else
+		if [ "$(get_fancyss_running_status)" = "1" ];then
+			echo_date "✈️使用当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点：[$(dbus get "ssconf_basic_name_${CURR_NODE}")]提供的网络下载..."
+			dnsmasq_rule add "${DOMAIN_NAME}"
+		else
+			echo_date "⚠️当前$(get_type_name "$(dbus get "ssconf_basic_type_${CURR_NODE}")")节点工作异常，改用常规网络下载..."
+			dnsmasq_rule remove
+		fi
+	fi
 	
 	echo_date "3️⃣使用wget下载订阅，第三次尝试下载..."
-	if wget -4 -t 1 -T 20 --dns-timeout=15 -q ${EXT_OPT} "${url_encode}" -O "$_download_by_wget_output"; then
+	if wget -4 -t 1 -T 20 --dns-timeout=15 -q ${EXT_OPT} -U "$UA_STRING" "${url_encode}" -O "$_download_by_wget_output"; then
 		return 0
 	fi
 
@@ -179,6 +205,8 @@ download_by_aria2(){
 
 	return 1
 }
+
+
 
 _download(){
     _download_url="$1"
