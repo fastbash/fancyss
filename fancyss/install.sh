@@ -837,7 +837,8 @@ install_now(){
 	[ -z "${ss_basic_udpall}" ] && dbus set ss_basic_udpall=0
 	[ -z "${ss_basic_udpgpt}" ] && dbus set ss_basic_udpgpt=1
 	[ -z "${ss_basic_nonetcheck}" ] && dbus set ss_basic_nonetcheck=1
-	[ -z "${ss_basic_notimecheck}" ] && dbus set ss_basic_notimecheck=1
+	# [ -z "${ss_basic_notimecheck}" ] && dbus set ss_basic_notimecheck=1
+	dbus set ss_basic_notimecheck=0
 	[ -z "${ss_basic_nocdnscheck}" ] && dbus set ss_basic_nocdnscheck=1
 	[ -z "${ss_basic_nofdnscheck}" ] && dbus set ss_basic_nofdnscheck=1
 	[ -z "${ss_basic_noruncheck}" ] && dbus set ss_basic_noruncheck=1
@@ -858,8 +859,8 @@ install_now(){
 	# 因版本变化导致一些值没有了，更改一下
 	if [ "${ss_basic_chng_china_2_tcp}" = "5" ];then
 		dbus set ss_basic_chng_china_2_tcp="6"
-		dbus set ss_basic_olddns=1
-		dbus set ss_basic_advdns=0
+		# dbus set ss_basic_olddns=1
+		# dbus set ss_basic_advdns=0
 	fi
 	
 	# lite
@@ -871,10 +872,10 @@ install_now(){
 
 	echo_date "启用一些默认设置..."
 	#dns设定改为简单
-	[ -z "$(dbus get ss_basic_rule_update)" ] && { 
-		dbus set ss_basic_olddns=1
-		dbus set ss_basic_advdns=0
-	}
+	# [ -z "$(dbus get ss_basic_rule_update)" ] && { 
+	# 	dbus set ss_basic_olddns=1
+	# 	dbus set ss_basic_advdns=0
+	# }
 	# 不显示线路地址
 	dbus set ss_basic_noserver=1
 	# 延时测试关闭

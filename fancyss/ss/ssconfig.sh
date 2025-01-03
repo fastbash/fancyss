@@ -469,7 +469,7 @@ prepare_system() {
 	
 	# 2. 检测jffs2_script是否开启，如果没有开启，将会影响插件的自启和DNS部分（dnsmasq.postconf）
 	# 判断为非官改固件的，即merlin固件，需要开启jffs2_scripts，官改固件不需要开启
-	if [ -z "$(nvram get extendno | grep koolshare)" ]; then
+	if ! nvram get extendno | grep -q koolshare; then
 		if [ "$(nvram get jffs2_scripts)" != "1" ]; then
 			echo_date "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 			echo_date "+     发现你未开启Enable JFFS custom scripts and configs选项！     +"
@@ -504,7 +504,7 @@ prepare_system() {
 	ulimit -n 16384
 
 	# 7. clean mem
-	echo 1 >/proc/sys/vm/overcommit_memory
+	echo 1 > /proc/sys/vm/overcommit_memory
 
 	# 8. more entropy
 	# use command `cat /proc/sys/kernel/random/entropy_avail` to check current entropy

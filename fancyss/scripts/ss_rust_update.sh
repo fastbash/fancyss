@@ -4,6 +4,7 @@
 
 . /koolshare/scripts/base.sh
 . /koolshare/scripts/ss_base.sh
+. /koolshare/scripts/ss_download.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 url_main="https://raw.githubusercontent.com/fastbash/fancyss/3.0/binaries/ss_rust"
 DNLD=""
@@ -37,7 +38,8 @@ get_latest_version(){
 	# flag=$1
 	rm -rf /tmp/ssrust_latest_info.txt
 	echo_date "检测shadowsocks-rust最新版本..."
-	curl --connect-timeout 8 -s "${url_main}/latest.txt" > /tmp/ssrust_latest_info.txt
+	# curl --connect-timeout 8 -s "${url_main}/latest.txt" > /tmp/ssrust_latest_info.txt
+	_download "${url_main}/latest.txt" /tmp/ssrust_latest_info.txt
 	if [ "$?" = "0" ];then
 		if [ -z "$(cat /tmp/ssrust_latest_info.txt)" ];then
 			echo_date "获取shadowsocks-rust最新版本信息失败！使用备用服务器检测！"
@@ -90,7 +92,8 @@ update_now(){
 	cd /tmp/sslocal_bin
 
 	echo_date "开始下载校验文件：md5sum.txt"
-	wget -4 --no-check-certificate --timeout=20 -qO - ${url_main}/$1/md5sum.txt > /tmp/sslocal_bin/md5sum.txt
+	# wget -4 --no-check-certificate --timeout=20 -qO - ${url_main}/$1/md5sum.txt > /tmp/sslocal_bin/md5sum.txt
+	_download "${url_main}/$1/md5sum.txt" "/tmp/sslocal_bin/md5sum.txt"
 	if [ "$?" != "0" ];then
 		echo_date "md5sum.txt下载失败！"
 		md5sum_ok=0
@@ -101,7 +104,8 @@ update_now(){
 	
 	echo_date "开始下载shadowsocks-rust sslocal程序"
 	echo_date "下载地址：${url_main}/$1/sslocal_${ARCH}"
-	wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/sslocal_${ARCH}"
+	# wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/sslocal_${ARCH}"
+	_download "${url_main}/$1/sslocal_${ARCH}" "/tmp/sslocal_bin/sslocal_${ARCH}"
 	if [ "$?" != "0" ];then
 		echo_date "sslocal下载失败！"
 		sslocal_ok=0

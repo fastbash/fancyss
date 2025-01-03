@@ -40,7 +40,8 @@ get_latest_version(){
 	VERSION_FILE="$1"
 	rm -rf /tmp/xray_latest_info.txt
 	echo_date "检测Xray最新版本..."
-	curl --connect-timeout 8 -s "${url_main}/${VERSION_FILE}.txt" > /tmp/xray_latest_info.txt
+	# curl --connect-timeout 8 -s "${url_main}/${VERSION_FILE}.txt" > /tmp/xray_latest_info.txt
+	_download "${url_main}/${VERSION_FILE}.txt" "/tmp/xray_latest_info.txt"
 	if [ "$?" = "0" ];then
 		if [ -z "$(cat /tmp/xray_latest_info.txt)" ];then
 			echo_date "获取Xray最新版本信息失败！使用备用服务器检测！"
@@ -101,8 +102,9 @@ update_now(){
 	
 	echo_date "开始下载xray程序"
 	echo_date "下载地址：${url_main}/$1/xray_${ARCH}"
-	wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/xray_${ARCH}"
 	#curl -L -H "Cache-Control: no-cache" -o /tmp/xray/xray $url_main/$1/xray
+	# wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/xray_${ARCH}"
+	_download "${url_main}/$1/xray_${ARCH}" "tmp/xray/xray_${ARCH}"
 	if [ "$?" != "0" ];then
 		echo_date "xray下载失败！"
 		xray_ok=0

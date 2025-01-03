@@ -4,6 +4,7 @@
 
 . /koolshare/scripts/base.sh
 . /koolshare/scripts/ss_var.sh
+. /koolshare/scripts/ss_download.sh
 eval "$(dbus export ss_basic_)"
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 V2RAY_CONFIG_FILE="/koolshare/ss/v2ray.json"
@@ -37,7 +38,8 @@ esac
 get_latest_version(){
 	rm -rf /tmp/v2ray_latest_info.txt
 	echo_date "检测V2ray最新版本..."
-	curl --connect-timeout 8 -s $url_main/latest_v5.txt > /tmp/v2ray_latest_info.txt
+	# curl --connect-timeout 8 -s $url_main/latest_v5.txt > /tmp/v2ray_latest_info.txt
+	_download "$url_main/latest_v5.txt" "/tmp/v2ray_latest_info.txt"
 	if [ "$?" = "0" ];then
 		if [ -z "$(cat /tmp/v2ray_latest_info.txt)" ];then
 			echo_date "获取V2ray最新版本信息失败！使用备用服务器检测！"
@@ -97,8 +99,9 @@ update_now(){
 	
 	echo_date "开始下载v2ray程序"
 	echo_date "下载地址：${url_main}/$1/v2ray_${ARCH}"
-	wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/v2ray_${ARCH}"
 	#curl -L -H "Cache-Control: no-cache" -o /tmp/v2ray/v2ray $url_main/$1/v2ray
+	# wget -4 --no-check-certificate --timeout=20 --tries=1 "${url_main}/$1/v2ray_${ARCH}"
+	_download "${url_main}/$1/v2ray_${ARCH}" "/tmp/v2ray/v2ray_${ARCH}"
 	if [ "$?" != "0" ];then
 		echo_date "v2ray下载失败！"
 		v2ray_ok=0

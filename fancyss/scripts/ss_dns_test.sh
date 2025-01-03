@@ -2,6 +2,7 @@
 
 . /koolshare/scripts/base.sh
 . /koolshare/scripts/ss_var.sh
+. /koolshare/scripts/ss_download.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 rm -rf /tmp/upload/dns*.txt
 # LOCK_FILE=/var/lock/koolss_dns.lock
@@ -201,7 +202,8 @@ download_dig(){
 	cd /tmp/dig_download
 
 	echo_date "开始下载校验文件：md5sum.txt"
-	wget -4 --no-check-certificate --timeout=20 -qO - https://fw.koolcenter.com/binary/dig/md5sum.txt > /tmp/dig_download/md5sum.txt
+	# wget -4 --no-check-certificate --timeout=20 -qO - https://fw.koolcenter.com/binary/dig/md5sum.txt > /tmp/dig_download/md5sum.txt
+	_download "https://fw.koolcenter.com/binary/dig/md5sum.txt" "/tmp/dig_download/md5sum.txt"
 	if [ "$?" != "0" ];then
 		echo_date "md5sum.txt下载失败！"
 		md5sum_ok=0
@@ -211,7 +213,9 @@ download_dig(){
 	fi
 
 	echo_date "开始下载dig程序"
-	wget -4 --no-check-certificate --timeout=20 --tries=1 https://fw.koolcenter.com/binary/dig/dig
+	# wget -4 --no-check-certificate --timeout=20 --tries=1 https://fw.koolcenter.com/binary/dig/dig
+	_download "https://fw.koolcenter.com/binary/dig/dig" "/tmp/dig_download/dig"
+
 	if [ "$?" != "0" ];then
 		echo_date "dig下载失败！"
 		dig_ok=0

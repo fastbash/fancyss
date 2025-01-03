@@ -5,6 +5,7 @@ fancyss Changelog
    - add    在第三次使用wget下载时强制打开/关闭代理
    - add    增加了下载过程中的发送代理信息
    - fixed  出于安全考虑，Ss-local socks5应该监听127.0.0.1
+   - fixed  部分下载操作使用下载功能；安装插件时强制启用时间验证。
    
 4.3.7
    - fixed  安装保留计划任务
