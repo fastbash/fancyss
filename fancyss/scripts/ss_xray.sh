@@ -7,7 +7,7 @@
 eval "$(dbus export ss_basic_)"
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 XRAY_CONFIG_FILE="/koolshare/ss/xray.json"
-url_main="https://raw.githubusercontent.com/fastbash/fancyss/3.0/binaries/xray"
+url_main="https://raw.githubusercontent.com/fastbash/fancyss_bak/3.0/binaries/xray"
 
 # arm hnd hnd_v8 qca mtk
 pkg_arch=$(tr -d '\r' < "/koolshare/webs/Module_${MODULE}.asp" | grep -Eo "PKG_ARCH=.+" | awk -F"=" '{print $2}' |sed 's/"//g')

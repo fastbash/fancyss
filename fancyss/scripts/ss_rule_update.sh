@@ -8,7 +8,7 @@
 eval "$(dbus export ss_basic_)"
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 RULE_FILE=/koolshare/ss/rules/rules.json.js
-URL_MAIN="https://raw.githubusercontent.com/fastbash/fancyss/3.0/rules"
+URL_MAIN="https://raw.githubusercontent.com/fastbash/fancyss_bak/3.0/rules"
 
 
 start_update(){

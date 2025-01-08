@@ -4024,7 +4024,7 @@ function version_show() {
 	if(!db_ss["ss_basic_version_local"]) db_ss["ss_basic_version_local"] = "0.0.0"
 	$("#ss_version_show").html("<a class='hintstyle' href='javascript:void(0);'><i>当前版本：" + db_ss['ss_basic_version_local'] + "</i></a>");
 	$.ajax({
-		url: 'https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages/version.json.js',
+		url: 'https://raw.githubusercontent.com/fastbash/fancyss_bak/3.0/packages/version.json.js',
 		type: 'GET',
 		dataType: 'json',
 		success: function(res) {
@@ -4039,7 +4039,7 @@ function version_show() {
 function message_show() {
 	if (db_ss["ss_close_mesg"] == "0") return
 	$.ajax({
-		url: 'https://raw.githubusercontent.com/fastbash/fancyss/refs/heads/3.0/rules/fancyss_msg.json?_=' + new Date().getTime(),
+		url: 'https://raw.githubusercontent.com/fastbash/fancyss_bak/refs/heads/3.0/rules/fancyss_msg.json?_=' + new Date().getTime(),
 		type: 'GET',
 		dataType: 'json',
 		cache: false,
@@ -4604,7 +4604,7 @@ function dns_test(s) {
 		$("#log_dig").show();
 		$("#log_resv").hide();
 		dns_log["ss_basic_logname"] = "dns_gfwlist";
-		var note1 = '1. gfwlist的域名清单来自：<a href="https://github.com/fastbash/fancyss/blob/3.0/rules/gfwlist.conf" target="_blank"><em><u>https://github.com/fastbash/fancyss/blob/3.0/rules/gfwlist.conf</u></em></a>，收录了常见的被gfw屏蔽的域名。';
+		var note1 = '1. gfwlist的域名清单来自：<a href="https://github.com/fastbash/fancyss_bak/blob/3.0/rules/gfwlist.conf" target="_blank"><em><u>https://github.com/fastbash/fancyss_bak/blob/3.0/rules/gfwlist.conf</u></em></a>，收录了常见的被gfw屏蔽的域名。';
 		var note2 = '2. 由于gfwlist清单较长，将每次随机选取100个域名进行测试！理想情况下，解析结果应该全部是海外IP地址，没有大陆IP地址！';
 		var note3 = '3. 解析结果和速度可能受节点、DNS方案、上游DNS缓存等因素影响，本测试也无法判断解析结果正确性！所以测试结果仅供参考！';
 	}
@@ -5640,7 +5640,7 @@ function save_failover() {
 																<a><i>当前版本：</i></a>
 															</div>
 															<div style="display:table-cell;float: left;margin-left:270px;position: absolute;padding: 5.5px 0px;">
-																<a type="button" class="ss_btn" target="_blank" href="https://github.com/fastbash/fancyss/blob/3.0/Changelog.txt">更新日志</a>
+																<a type="button" class="ss_btn" target="_blank" href="https://github.com/fastbash/fancyss_bak/blob/3.0/Changelog.txt">更新日志</a>
 															</div>
 															<div style="display:table-cell;float: left;margin-left:350px;position: absolute;padding: 5.5px 0px;">
 																<a type="button" class="ss_btn" href="javascript:void(0);" onclick="pop_help()">插件帮助</a>
@@ -6545,17 +6545,17 @@ function save_failover() {
 														$('#table_rules').forms([
 															{ title: 'gfwlist域名数量', multi: [
 																{ suffix: '<em>'+ gfwl +'</em>&nbsp;条，版本：' },
-																{ suffix: '<a href="https://github.com/fastbash/fancyss/blob/3.0/rules/gfwlist.conf" target="_blank">' },
+																{ suffix: '<a href="https://github.com/fastbash/fancyss_bak/blob/3.0/rules/gfwlist.conf" target="_blank">' },
 																{ suffix: '<i><% nvram_get("update_ipset"); %></i></a>' },
 															]},
 															{ title: '大陆白名单IP段数量', multi: [
 																{ suffix: '<em>'+ chnl +'</em>&nbsp;行，包含 <em>' + chnn + '</em>&nbsp;个ip地址，版本：' },
-																{ suffix: '<a href="https://github.com/fastbash/fancyss/blob/3.0/rules/chnroute.txt" target="_blank">' },
+																{ suffix: '<a href="https://github.com/fastbash/fancyss_bak/blob/3.0/rules/chnroute.txt" target="_blank">' },
 																{ suffix: '<i><% nvram_get("update_chnroute"); %></i></a>' },
 															]},
 															{ title: '国内域名数量（cdn名单）', multi: [
 																{ suffix: '<em>'+ cdnn +'</em>&nbsp;条，版本：' },
-																{ suffix: '<a href="https://github.com/fastbash/fancyss/blob/3.0/rules/cdn.txt" target="_blank">' },
+																{ suffix: '<a href="https://github.com/fastbash/fancyss_bak/blob/3.0/rules/cdn.txt" target="_blank">' },
 																{ suffix: '<i><% nvram_get("update_cdn"); %></i></a>' },
 															]},
 															{ title: '规则定时更新任务', hint:'44', multi: [

@@ -455,7 +455,7 @@ gen_chnroute_fancyss(){
 	local SOURCE
 	SOURCE="fancyss"
 	local URL
-	URL="https://github.com/fastbash/fancyss/tree/3.0/rules"
+	URL="https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
 	local CURR_DATE
 	CURR_DATE=$(TZ=CST-8 date +%Y-%m-%d\ %H:%M)
 	local MD5_VALUE

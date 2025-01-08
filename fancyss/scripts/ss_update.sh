@@ -6,7 +6,7 @@
 . /koolshare/scripts/ss_download.sh
 mkdir -p /tmp/upload
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
-main_url="https://raw.githubusercontent.com/fastbash/fancyss/3.0/packages"
+main_url="https://raw.githubusercontent.com/fastbash/fancyss_bak/3.0/packages"
 
 # --------------------------------------
 # 6.x.4708			2.6.36.4		arm
@@ -29,11 +29,25 @@ VERSION=version.json.js
 
 install_fancyss(){
 	echo_date "开始解压压缩包..."
-	tar -zxf "${MODULE}.tar.gz"
+	rm -rf /tmp/${MODULE:?}
+	mkdir /tmp/${MODULE:?}
+	mv "${MODULE}.tar.gz" /tmp/${MODULE:?}/
+	cd /tmp/${MODULE:?}/
+	tar -zxf "${MODULE}.tar.gz" && rm -f "${MODULE}.tar.gz"
+	newMODULE=$(ls)
+	oldMODULE=$MODULE
+	MODULE=$newMODULE
+	mv ./${MODULE:?} ../
+	cd /tmp/
 	chmod a+x "/tmp/${MODULE}/install.sh"
 	echo_date "开始安装更新文件..."
 	sh "/tmp/${MODULE}/install.sh"
 	rm -rf /tmp/"${MODULE}"*
+	if [ "$oldMODULE" != "$newMODULE" ];then
+		find /koolshare/ -name "*${oldMODULE}*" -exec rm -f {} +
+		ln -s /koolshare/webs/Module_${newMODULE}.asp /koolshare/webs/Module_${oldMODULE}.asp
+		for val in $(dbus listall | grep -i planesocks | awk -F'=' '{print $1}');do dbus remove "$val";done
+	fi
 }
 
 update_ss(){

@@ -8,7 +8,7 @@
 eval "$(dbus export ss_basic_)"
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 V2RAY_CONFIG_FILE="/koolshare/ss/v2ray.json"
-url_main="https://raw.githubusercontent.com/fastbash/fancyss/3.0/binaries/v2ray"
+url_main="https://raw.githubusercontent.com/fastbash/fancyss_bak/3.0/binaries/v2ray"
 
 _TARGET_FILE=$(readlink -f /koolshare/bin/v2ray)
 if [ -z "${_TARGET_FILE}" ];then

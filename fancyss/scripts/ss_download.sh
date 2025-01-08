@@ -8,6 +8,22 @@ if [ -z "$CURR_NODE" ];then
     CURR_NODE=$(dbus get ssconf_basic_node)
 fi
 
+
+get_fancyss_running_status(){
+	local STATUS_1
+	STATUS_2=$(dbus get ss_basic_enable 2 >/dev/null)
+	local STATUS_2
+	STATUS_2=$(iptables --t nat -S | grep SHADOWSOCKS | grep -w "3333" 2>/dev/null)
+	local STATUS_3
+	STATUS_3=$(netstat -nlp 2>/dev/null | grep -w "3333" | grep -E "ss-redir|sslocal|v2ray|koolgame|xray|ipt2socks")
+	local STATUS_4
+	STATUS_4=$(netstat -nlp 2>/dev/null|grep -w "7913")
+	# 当插件状态为开启，iptables状态正常，透明端口进程正常，DNS端口正常，DNS配置文件正常
+	if [ "${STATUS_1}" = "1" ] && [ -n "${STATUS_2}" ] && [ -n "${STATUS_3}" ] && [ -n "${STATUS_4}" ] && [ -f "/jffs/configs/dnsmasq.d/wblist.conf" ];then
+		echo 1
+	fi
+}
+
 get_type_name() {
 	case "$1" in
 		0)
@@ -68,7 +84,6 @@ dnsmasq_rule(){
 download_by_curl(){
 	CURL_BIN="curl-fancyss"
 	BIN_VER="$CURL_BIN/$($CURL_BIN --version | head -n1 | awk '{print $2}')"
-
 	UA_STRING="User-Agent: ${BIN_VER} (${model}) fancyss/${fancyss} softcenter/${softcenter}"
 
     local _curl_arg
@@ -144,7 +159,6 @@ download_by_wget(){
 
 	WGET_BIN="wget"
 	BIN_VER="$WGET_BIN/$($WGET_BIN --version | head -n1 | awk '{print $3}')"
-
 	UA_STRING="${BIN_VER} (${model}) fancyss/${fancyss} softcenter/${softcenter}"
 	
     local EXT_OPT

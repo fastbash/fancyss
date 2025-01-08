@@ -6,7 +6,7 @@
 . /koolshare/scripts/ss_base.sh
 . /koolshare/scripts/ss_download.sh
 alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
-url_main="https://raw.githubusercontent.com/fastbash/fancyss/3.0/binaries/ss_rust"
+url_main="https://raw.githubusercontent.com/fastbash/fancyss_bak/3.0/binaries/ss_rust"
 DNLD=""
 
 _TARGET_FILE=$(readlink -f /koolshare/bin/sslocal)

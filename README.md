@@ -1,3 +1,8 @@
+## 关于本项目
+
+本项目已转移至 https://github.com/fastbash/fancyss_bak
+
+
 # [fancyss - 科学上网](https://fastbash.github.io/fancyss/)
 
 - Fancyss is a project providing tools to across the GFW on asuswrt/merlin based router with software center. 
