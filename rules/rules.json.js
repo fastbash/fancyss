@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-03-04 02:11",
-    "md5": "b58d1941f345f15bbe97768d9c7b2186",
-    "count": "7259"
+    "date": "2025-03-05 02:11",
+    "md5": "ad53e175b58a5d4d3140bf763e7654fb",
+    "count": "7256"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -25,46 +25,46 @@
   },
   "chnroute_17mon": {
     "name": "chnroute_17mon.txt",
-    "date": "2024-11-19 16:05",
-    "md5": "4e37080ae9dddb3349e5491cf6d137b0",
-    "count": "6885",
-    "count_ip": "354433392",
+    "date": "2025-03-05 02:11",
+    "md5": "132a308ee9cd2631071c3754b0342ec5",
+    "count": "7456",
+    "count_ip": "354070947",
     "source": "17mon",
     "url": "https://github.com/17mon/china_ip_list"
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-03-04 02:11",
-    "md5": "c0fbc22d897c056c2f559fcf1ba1e41d",
-    "count": "4178",
-    "count_ip": "282330880",
+    "date": "2025-03-05 02:11",
+    "md5": "053e294224841d9fc094b044df25cd46",
+    "count": "4174",
+    "count_ip": "282329088",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
   "chnroute_cnisp": {
     "name": "chnroute_cnisp.txt",
-    "date": "2024-11-19 16:04",
-    "md5": "4e37080ae9dddb3349e5491cf6d137b0",
-    "count": "6885",
-    "count_ip": "354433392",
+    "date": "2025-03-05 02:11",
+    "md5": "132a308ee9cd2631071c3754b0342ec5",
+    "count": "7456",
+    "count_ip": "354070947",
     "source": "cnisp",
     "url": "https://github.com/gaoyifan/china-operator-ip"
   },
   "chnroute_apnic": {
     "name": "chnroute_apnic.txt",
-    "date": "2025-03-03 02:11",
-    "md5": "d41d8cd98f00b204e9800998ecf8427e",
-    "count": "0",
-    "count_ip": "",
+    "date": "2025-03-05 02:11",
+    "md5": "0a3c2b069e43e59b30f65d69fafb3e27",
+    "count": "8670",
+    "count_ip": "343142144",
     "source": "apnic",
     "url": "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-03-04 02:11",
-    "md5": "203b75dcc2e0ca6e8fe6c6a35fa5b033",
-    "count": "8398",
-    "count_ip": "376058963",
+    "date": "2025-03-05 02:11",
+    "md5": "fd7ebd7ccc4312dad985585b95f9eecc",
+    "count": "8331",
+    "count_ip": "375779689",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
