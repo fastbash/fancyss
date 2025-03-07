@@ -199,14 +199,15 @@ get_chnroute_cnisp(){
 	# 详情：依据中国网络运营商分类的IP地址库
 
 	curl -4sk https://raw.githubusercontent.com/17mon/china_ip_list/refs/heads/master/china_ip_list.txt > "${CURR_PATH}/chnroute_cnisp_tmp.txt"
+	curl -4sk https://github.com/Loyalsoldier/geoip/raw/refs/heads/release/text/cn.txt >> "${CURR_PATH}/chnroute_cnisp_tmp.txt"
 
-	if [ ! -f "chnroute_cnisp_tmp.txt" ]; then
+	if [ -z "$(cat chnroute_cnisp_tmp.txt)" ]; then
 		echo "chnroute_cnisp download faild!"
 		exit 1
 	fi
 
 	# 2. process
-	sed -i '/^#/d' chnroute_cnisp_tmp.txt
+	sed '/^#/d' chnroute_cnisp_tmp.txt | sort -u | tee chnroute_cnisp_tmp.txt >/dev/null
 
 	# 3. compare
 	local md5sum1
@@ -491,6 +492,7 @@ get_cdn(){
 	# 2.merge
 	cat "${CURR_PATH}"/{accelerated-domains.china.conf,apple.china.conf,google.china.conf} "${CURR_PATH}/../../../no_proxy_list.txt" | sed 's#^full:##g' | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
 	cat "${CURR_PATH}"/{cdn_koolcenter.txt,cdn_download.txt} | sort -u > "${CURR_PATH}/cdn_tmp.txt"
+	cat "${CURR_PATH}/../../../ACL4SSR/Clash/{Apple.list,ChinaCompanyIp.list,ChinaIp.list,ChinaMedia.list,LocalAreaNetwork.list,Microsoft.list,ChinaDomain.list}" "${CURR_PATH}/cdn_tmp.txt" | sed '/#/d' | sort -u | tee "${CURR_PATH}/cdn_tmp.txt" >/dev/null
 
 	# 3. compare
 	local md5sum1
