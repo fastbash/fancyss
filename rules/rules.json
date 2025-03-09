@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-03-09 02:11",
-    "md5": "4bae8699db40ff72870ccaba984caa8b",
-    "count": "7361"
+    "date": "2025-03-10 02:11",
+    "md5": "3879304f1c801a051e5420f41b22a461",
+    "count": "7362"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -34,8 +34,8 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-03-09 02:11",
-    "md5": "c9f09967e754c7ed8bce5c405a4a3810",
+    "date": "2025-03-10 02:11",
+    "md5": "6436bfa97ea2bbcc689349144db430ef",
     "count": "4175",
     "count_ip": "282334208",
     "source": "misakaio",
@@ -61,8 +61,8 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-03-09 02:11",
-    "md5": "40646884619491fe922bca71b7f6336f",
+    "date": "2025-03-10 02:11",
+    "md5": "d61df5d5942aea73dccbfe318f346b43",
     "count": "8337",
     "count_ip": "375612246",
     "source": "fancyss",
@@ -70,9 +70,9 @@
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2025-03-09 02:11",
-    "md5": "97b29a9d1f612040a341bd7f33576e6b",
-    "count": "11576"
+    "date": "2025-03-10 02:11",
+    "md5": "9f16b5b39480fffa2a22b28d47085a34",
+    "count": "11547"
   },
   "apple_china": {
     "name": "apple_china.txt",
