@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-03-25 02:11",
-    "md5": "7caceb7df226ef513fa8ddd86b367e8a",
-    "count": "4185",
-    "count_ip": "282398464",
+    "date": "2025-03-26 02:11",
+    "md5": "17fda8abe46fad7b4f688c79aa2334b8",
+    "count": "4181",
+    "count_ip": "282365184",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -52,27 +52,27 @@
   },
   "chnroute_apnic": {
     "name": "chnroute_apnic.txt",
-    "date": "2025-03-23 02:11",
-    "md5": "8891c340852f48c8fcf902721974d7e7",
-    "count": "8675",
-    "count_ip": "343143680",
+    "date": "2025-03-26 02:11",
+    "md5": "d41d8cd98f00b204e9800998ecf8427e",
+    "count": "0",
+    "count_ip": "",
     "source": "apnic",
     "url": "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-03-25 02:11",
-    "md5": "0bdbd8f3ea43892faddf80a1977cbed0",
-    "count": "8339",
-    "count_ip": "375783273",
+    "date": "2025-03-26 02:11",
+    "md5": "cc4a206dafc405370c8f05c08db7c8cb",
+    "count": "8341",
+    "count_ip": "375612758",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2025-03-24 02:11",
-    "md5": "405096f7348b94380e39536ba3ff0390",
-    "count": "11641"
+    "date": "2025-03-26 02:11",
+    "md5": "97d123e63efe08bd0a886f101095de1a",
+    "count": "11637"
   },
   "apple_china": {
     "name": "apple_china.txt",
@@ -82,14 +82,14 @@
   },
   "google_china": {
     "name": "google_china.txt",
-    "date": "2025-03-11 02:11",
-    "md5": "103f16d9a5bcf700c5db7ed5c1a1b454",
-    "count": "142"
+    "date": "2025-03-26 02:11",
+    "md5": "00aa98609e66c68348dbae33f4762dff",
+    "count": "143"
   },
   "cdn_test": {
     "name": "cdn_test.txt",
-    "date": "2024-11-19 16:05",
-    "md5": "84b034525bca6b60fbffb68dc8fbb9cd",
-    "count": "87"
+    "date": "2025-03-26 02:11",
+    "md5": "c1ab83af87ac0bb0dab8511d14260c73",
+    "count": "0"
   }
 }
