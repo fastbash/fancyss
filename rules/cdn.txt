@@ -807,6 +807,7 @@
 07890.com
 07908.com
 0791abc.com
+0791br.com
 0791fuwu.com
 0791look.com
 0791quanquan.com
@@ -4238,7 +4239,6 @@
 36kr.net
 36.la
 36nl.com
-36pn.com
 36qp.com
 36tw.com
 36ve.net
@@ -5340,7 +5340,6 @@
 51djqu.com
 51dmq.com
 51dns.com
-51docc.com
 51docs.com
 51dojoy.com
 51dongshi.com
@@ -6096,7 +6095,6 @@
 52kdm.com
 52kfly.com
 52kmh.com
-52kshu.info
 52leho.com
 52liaoshen.com
 52liezheng.com
@@ -7415,6 +7413,7 @@
 688ct.com
 688dns.com
 688mob.com
+688wz.net
 6895588.com
 68955.com
 68978.net
@@ -7969,7 +7968,6 @@
 79-79.com
 7979u.com
 797sun.com
-7988wan.com
 798com.com
 798edu.com
 798tiyu.com
@@ -8461,7 +8459,6 @@
 867867jh.com
 8682.cc
 8684.com
-868519.com
 8686c.com
 8688g.com
 86909.com
@@ -9026,7 +9023,6 @@
 91lsf.com
 91lx.com
 91maibiao.com
-91mariadb.com
 91maths.com
 91m.cc
 91m.co
@@ -9069,6 +9065,7 @@
 91student.com
 91suan.com
 91suke.com
+91switch.com
 91syun.com
 91taojin.com
 91taoke.com
@@ -10413,6 +10410,7 @@ adjtht.com
 adjucai.com
 adjuz.com
 adjwl.com
+adjyc.com
 adkjpx.com
 adkwai.com
 adl163.com
@@ -10518,6 +10516,7 @@ adutp.com
 advanced-microsemi.com
 advanced-pneumatics.com
 advertcn.com
+advich.com
 adview.com
 advisionhorizon.com
 advlion.com
@@ -11843,4 +11842,5 @@ alippm.com
 aliqiche.com
 aliqq.cc
 aliresearch.com
-aliresearch-internal.c
+aliresearch-internal.com
+ali-restore
