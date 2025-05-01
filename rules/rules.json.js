@@ -52,19 +52,19 @@
   },
   "chnroute_apnic": {
     "name": "chnroute_apnic.txt",
-    "date": "2025-04-23 02:11",
-    "md5": "33ec96ca6a540fc55ebc14c2b934ecfb",
+    "date": "2025-05-02 02:11",
+    "md5": "a5914fbae3e226ae887a73c84329e319",
     "count": "8675",
-    "count_ip": "343144704",
+    "count_ip": "343145728",
     "source": "apnic",
     "url": "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-05-01 02:11",
-    "md5": "fd2bcdcee665cb706b55ea331dddb04c",
-    "count": "8321",
-    "count_ip": "375777130",
+    "date": "2025-05-02 02:11",
+    "md5": "78d73a1e5f6d2f7fd0432285fd61c3a8",
+    "count": "8322",
+    "count_ip": "375779178",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
