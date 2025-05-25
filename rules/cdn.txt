@@ -1278,7 +1278,6 @@
 114photo.com
 114piaowu.com
 114pinpai.com
-114px.com
 114qy.com
 114s.com
 114sf.com
@@ -3761,6 +3760,7 @@
 33trip.com
 33tui.com
 33yq.com
+340888.com
 342200.com
 342jinbo.com
 34347.com
@@ -9657,6 +9657,7 @@
 9aoduo.com
 9aola.com
 9appstore.com
+9b11b109-ab3d-4193-ac60-79cc19b3e76d.link
 9beike.com
 9bianli.com
 9.biz
@@ -11825,7 +11826,4 @@ aliyunbaike.com
 aliyuncdn.com
 aliyuncdn.net
 aliyunceng.com
-aliyuncname.xyz
-aliyun.com
-aliyuncs.com
-aliyuncsslb.co
+aliyuncname
