@@ -529,7 +529,6 @@
 0557100.com
 0558job.com
 0559jqdq.com
-0561house.com
 0564abc.com
 0564shw.com
 0566cn.net
@@ -621,6 +620,7 @@
 0635.com
 06362.com
 065201.com
+06555.com
 0660hf.com
 0663job.com
 0663.net
@@ -919,6 +919,7 @@
 09ge.com
 09k.net
 09shijue.com
+0a2d.com
 0baiwen.com
 0bug.org
 0car0.com
@@ -1107,6 +1108,7 @@
 100xin.com
 100xuexi.com
 100yangsheng.com
+100ycdn.com
 100ye.com
 100ye.net
 100yigui.com
@@ -1146,7 +1148,6 @@
 1024zx.com
 10260.com
 1026jz.com
-1028images.com
 102no.com
 102pay.com
 103153.com
@@ -1295,9 +1296,12 @@
 115800.com
 115cdn.com
 115cdn.net
+115cloud.com
+115cloud.net
 115.com
 115img.com
 115jk.com
+115meta.com
 115seo.com
 115vod.com
 115zb.com
@@ -2033,6 +2037,7 @@
 175club.com
 175game.com
 175ha.com
+175hd.com
 175kh.com
 175pt.com
 175pt.net
@@ -2540,7 +2545,6 @@
 1ggame.com
 1gjh.com
 1gmzo.icu
-1gongying.com
 1gow.net
 1gtp.icu
 1haigtm.com
@@ -4664,6 +4668,7 @@
 4008618618.com
 4008787706.com
 4008800016.com
+4008824365.com
 4008863456.com
 4008880999.com
 4008880999.net
@@ -5809,7 +5814,6 @@
 51zzl.com
 51zzyjs.com
 520038.com
-5200dyw.com
 5200tv.com
 520101.com
 520520520520520.com
@@ -6581,6 +6585,7 @@
 58q.org
 58qz.com
 58school.com
+58shangban.com
 58shuz.com
 58supin.com
 58task.com
@@ -10082,7 +10087,6 @@ academygkusa.com
 academypublication.com
 acadki.com
 acb365.com
-acbkjt.com
 acc3.net
 acc5.com
 accdisplay.com
@@ -10123,9 +10127,11 @@ acetar.com
 acewill.net
 acfechina.org
 acftu.org
+ac.fun
 acfunchina.com
 acfunchina.net
 acfun.com
+acfun.net
 acg169.com
 acg17.com
 acg183.com
@@ -10193,6 +10199,7 @@ acrel-znyf.com
 acrossmetals.com
 acroview.com
 acshoes.com
+acs.org
 acsrq.com
 actacams.com
 actamath.com
@@ -10719,6 +10726,7 @@ ahiib.com
 ah-inter.com
 ahinv.com
 ahipi.com
+ahitv.com
 ahjdq.com
 ahjgxy.com
 ahjiankong.com
@@ -11211,6 +11219,7 @@ aiotoolbox.com
 aipage.com
 aipai.com
 aipaike.com
+aipaixt.asia
 aipaiyinghua.com
 aipapi.com
 aipark.com
@@ -11347,6 +11356,7 @@ aislharrow.com
 aisoio.com
 aisojie.com
 aisou.club
+aisoutv.com
 aispeech.com
 aispreadtech.com
 aistar666.com
@@ -11432,6 +11442,7 @@ aixiezuobao.com
 aixiezuo.com
 aixifan.com
 aixigua.com
+aixinhaitun.com
 aixin-ins.com
 aixin-life.com
 aixin-life.net
@@ -11539,6 +11550,7 @@ ajwang.com
 ajxhgy.com
 ajyg.com
 ajylqio.com
+ajzq.com
 ak03150hou.com
 ak03211hou.com
 ak03220hou.com
@@ -11817,14 +11829,4 @@ aliwork.com
 aliwx.net
 alixiaomi.com
 alixiaoyouhui.com
-alixixi.com
-alixox.com
-alixv.com
-aliyiyao.com
-aliyizhan.com
-aliyu
-aliyue.net
-aliyunbaas.com
-aliyunbaike.com
-aliyuncdn.com
-aliyuncdn.net
+alixixi
