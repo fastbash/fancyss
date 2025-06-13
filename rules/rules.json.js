@@ -1,8 +1,8 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-06-08 02:11",
-    "md5": "1d0978c8b92df9ff1928842ac4f41e82",
+    "date": "2025-06-14 02:11",
+    "md5": "17a83190430ef220a9f8919a47e8fcb1",
     "count": "7397"
   },
   "chnroute_maxmind": {
@@ -52,27 +52,27 @@
   },
   "chnroute_apnic": {
     "name": "chnroute_apnic.txt",
-    "date": "2025-06-11 02:11",
-    "md5": "ecbd67c2a4f29a9e3fd38b819d9d0c0d",
-    "count": "8689",
-    "count_ip": "343154176",
+    "date": "2025-06-14 02:11",
+    "md5": "66ace3d87f5e92c41d43d54a15495303",
+    "count": "8690",
+    "count_ip": "343154688",
     "source": "apnic",
     "url": "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-06-13 02:11",
-    "md5": "e82409371b0ea81005c45a6d46212018",
-    "count": "8428",
-    "count_ip": "376010345",
+    "date": "2025-06-14 02:11",
+    "md5": "7e72b3083835be1c861ac28349c7d8b3",
+    "count": "8429",
+    "count_ip": "376010857",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2025-06-09 02:11",
-    "md5": "d3fba2ec729dec7a153e43f108560c02",
-    "count": "11832"
+    "date": "2025-06-14 02:11",
+    "md5": "eb866cd108cc07ad4bb559fc662902c9",
+    "count": "4493"
   },
   "apple_china": {
     "name": "apple_china.txt",
