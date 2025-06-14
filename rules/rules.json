@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-06-14 02:11",
-    "md5": "17a83190430ef220a9f8919a47e8fcb1",
-    "count": "7397"
+    "date": "2025-06-15 02:14",
+    "md5": "34220834fe0d64ce0809370650ed6e3f",
+    "count": "7206"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -34,9 +34,9 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-06-13 02:11",
-    "md5": "316dfc97bc0200b99d10c634b94579e7",
-    "count": "4261",
+    "date": "2025-06-15 02:14",
+    "md5": "983821ce445d3ce71552ca5aadcce0e6",
+    "count": "4260",
     "count_ip": "281996800",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
@@ -61,18 +61,18 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-06-14 02:11",
-    "md5": "7e72b3083835be1c861ac28349c7d8b3",
-    "count": "8429",
+    "date": "2025-06-15 02:14",
+    "md5": "1c16016f41f0d9406e48ea73aedf5916",
+    "count": "8428",
     "count_ip": "376010857",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
   "cdn_china": {
     "name": "cdn.txt",
-    "date": "2025-06-14 02:11",
-    "md5": "eb866cd108cc07ad4bb559fc662902c9",
-    "count": "4493"
+    "date": "2025-06-15 02:14",
+    "md5": "9d7876bb194f13bc919b46ec04eca342",
+    "count": "11808"
   },
   "apple_china": {
     "name": "apple_china.txt",
