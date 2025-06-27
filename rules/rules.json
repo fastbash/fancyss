@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-06-24 02:11",
-    "md5": "e9a5aacf25c343b9fec985b74dd05454",
-    "count": "7218"
+    "date": "2025-06-28 02:11",
+    "md5": "10c2da6371485b3ae4f6dda8c67893ce",
+    "count": "7220"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-06-27 02:11",
-    "md5": "7713c1d8ed41bf9a130cf90222e0fdc5",
-    "count": "4236",
-    "count_ip": "281888256",
+    "date": "2025-06-28 02:11",
+    "md5": "672213e8647e7e6d03db5a0dd6958f4d",
+    "count": "4241",
+    "count_ip": "282028544",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -61,8 +61,8 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-06-27 02:11",
-    "md5": "f99aa4c872c4218aac403e20aa7aa95b",
+    "date": "2025-06-28 02:11",
+    "md5": "bfe0e5f4113f965ca91e4ad0ca30d5ea",
     "count": "8381",
     "count_ip": "376003177",
     "source": "fancyss",
