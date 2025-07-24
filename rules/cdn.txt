@@ -220,7 +220,6 @@
 023dns.com
 023fyy.com
 023gmdk.com
-023sm.com
 023up.com
 023xfyy.com
 023xiaoyuan.com
@@ -579,7 +578,6 @@
 0598rc.com
 0598yu.com
 0599yx.com
-05bk.com
 05bq.com
 05.gd
 05idc.com
@@ -727,7 +725,6 @@
 0763f.com
 076650.com
 0768000.com
-0768.gd
 0769auto.com
 0769che.com
 0769net.com
@@ -1334,7 +1331,6 @@
 11sun.com
 11td123.com
 11wow.com
-11wyx.com
 11xotn7p.com
 11yinyuan.com
 11zhang.com
@@ -2563,7 +2559,6 @@
 1menjin.com
 1mfg.com
 1miba.com
-1mirrors.com
 1mishu.com
 1mit.com
 1mjz.com
@@ -2881,7 +2876,6 @@
 21xfbd.com
 21xianhua.com
 21xl.info
-21xrx.com
 21xuema.com
 21yangjie.com
 21yibiao.com
@@ -2907,7 +2901,6 @@
 222tt.icu
 222wy333bb.com
 22336699.xyz
-223600.com
 2238202.com
 223969ufy.com
 2239.com
@@ -3189,7 +3182,6 @@
 272955.com
 27399.com
 273u.com
-274500.com
 27492.com
 2755005.com
 275.com
@@ -3525,7 +3517,6 @@
 31xj.com
 31xs.net
 31yarn.com
-31yj.com
 31yr.com
 31zhi5f.xyz
 320921.com
@@ -3811,7 +3802,6 @@
 360dlcdn.com
 360doc18.net
 360doc1.net
-360doc21.net
 360doc25.net
 360doc2.net
 360doc4.net
@@ -4133,7 +4123,6 @@
 37163.com
 371bus.com
 371.com
-371house.com
 371love.com
 371.net
 37201.com
@@ -4908,7 +4897,6 @@
 4xiaoshuo.info
 4xseo.com
 4xx.me
-4y2rl.cc
 4y4.net
 4ye.cc
 4yt.net
@@ -5582,7 +5570,6 @@
 51trust.com
 51tuiyi.com
 51tunhuo.com
-51tuz.com
 51tvbao.com
 51tv.com
 51tv.net
@@ -6078,11 +6065,9 @@
 52zx.net
 52zxw.com
 52zy.com
-52zzl.com
 5300tv.com
 5306.com
 5308999.com
-530.co
 531314.com
 53155.vip
 531pool.com
@@ -6899,7 +6884,6 @@
 61bb.com
 61bbw.com
 61cloud.net
-61co.com
 61.com
 61diy.com
 61draw.com
@@ -7003,7 +6987,6 @@
 65650000.com
 65656564.com
 656gate.com
-6571n.com
 65875.com
 658.com
 659595.com
@@ -7629,7 +7612,6 @@
 777524.com
 77772121.com
 7777733.com
-777aa999aa.com
 777bb111ww.com
 777bb555ww.com
 777biubiu.com
@@ -8364,7 +8346,6 @@
 8896.com
 88993aaa.com
 88995799.com
-889995.cc
 88999.com
 8899.net
 8899yyy.vip
@@ -8428,7 +8409,6 @@
 8989jt.com
 8989u.com
 898.travel
-899973.cc
 8999.cc
 89dj.com
 89doc.com
@@ -9125,7 +9105,6 @@
 96459.com
 964yx.com
 96516.net
-96520.com
 96528.com
 96533.com
 965373.com
@@ -9815,7 +9794,6 @@ abddn.com
 abdstem.com
 abeacon.com
 abedu.net
-abeij.com
 abesmoke.com
 abe-sz.com
 abe-tech.com
@@ -10366,7 +10344,6 @@ agenge.com
 agenow.com
 agentyun.com
 agerk.com
-age-spa.com
 age.tv
 aggresmart.com
 aghcdn.com
@@ -10621,7 +10598,6 @@ ahxcyy.com
 ah-xichuang.com
 ahxmgk.com
 ahxunbu.com
-ahxuran.com
 ahxwkj.com
 ahxyol.com
 ahydnet.com
@@ -11750,3 +11726,20 @@ allawno.com
 allawntech.com
 allbrightlaw.com
 allchips.com
+allcitygo.com
+allcitysz.net
+allcombo.com
+alldk.com
+alldobetter.com
+alldragon.com
+alleadprint.com
+allenmarket.com
+allergy-iq.com
+allfang.com
+allfoodsg.com
+allfootballapp.com
+allfromspain.com
+allfunnies.com
+allgamesky.com
+allhistory.com
+alliancebrh.com
