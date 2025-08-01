@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-07-31 02:12",
-    "md5": "12b20beb108dbde115b12fd89278034d",
-    "count": "7241"
+    "date": "2025-08-02 02:12",
+    "md5": "7def5a709867243e4a3d51d6689035c7",
+    "count": "7242"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-08-01 02:12",
-    "md5": "cf8d5389ecd523017782028710868ed8",
-    "count": "3923",
-    "count_ip": "281271296",
+    "date": "2025-08-02 02:12",
+    "md5": "b56571b07f3c6917870cfb3705be32cd",
+    "count": "3919",
+    "count_ip": "281291008",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -61,10 +61,10 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-07-31 02:12",
-    "md5": "4d53bb56b1ca82f89abc62bdb299be24",
-    "count": "8091",
-    "count_ip": "375409770",
+    "date": "2025-08-02 02:12",
+    "md5": "7390e74f124704ffcd81e24d6d31156b",
+    "count": "8084",
+    "count_ip": "375404906",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
