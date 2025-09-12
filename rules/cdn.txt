@@ -8662,6 +8662,7 @@
 91weimi.com
 91wenmi.com
 91wenwen.net
+91wink.com
 91wllm.com
 91wujia.com
 91wutong.com
@@ -10062,6 +10063,7 @@ adxmax.com
 adxmq.com
 adx.ms
 adxpand.com
+adx.pw
 adxqd.com
 adxvip.com
 adxwork.com
@@ -11660,7 +11662,6 @@ alypw.com
 alyzq.com
 alzls.com
 alzscl.com
-am
 am1116.com
 am774.com
 am810.net
@@ -11699,5 +11700,4 @@ amchamchina.org
 amcvoyages.com
 amdotibet.com
 amec-inc.com
-amegroups.org
-ameisx.com
+amegroups
