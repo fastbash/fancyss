@@ -905,6 +905,7 @@
 0kkkkkt.com
 0ms.one
 0nu2yo.com
+0olut8.com
 0r17374.com
 0rl.cc
 0rz.ltd
@@ -1343,6 +1344,7 @@
 121588.com
 121ask.com
 121down.com
+121ghs.com
 121mai.com
 121mu.com
 121wty.com
@@ -3097,6 +3099,7 @@
 265.com
 265g.com
 265h.com
+265xh.com
 266.com
 266.la
 266wan.com
@@ -4409,6 +4412,7 @@
 3vjia.com
 3vjuyuan.com
 3vsheji.com
+3vyd.com
 3wads.com
 3wcoffee.com
 3wen.com
@@ -10440,6 +10444,7 @@ aianno.com
 aiao8.com
 aiaor.com
 aiappx.com
+ai-augmented.com
 aiba.com
 aibaimm.com
 aibangbaoxian.net
@@ -11687,8 +11692,5 @@ amp-api.media.apple.com
 amp-api-updates.apps.apple.com
 ampcn.com
 amperobots.com
+amphe
 amphenol-auto.com
-amphenol-industrial.com
-amphenol-jet.com
-amp-intl.com
-amplesky.
