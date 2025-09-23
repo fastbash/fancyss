@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-09-23 02:11",
-    "md5": "dfc61145780b770f68f6a4277a0cb853",
-    "count": "7287"
+    "date": "2025-09-24 02:11",
+    "md5": "b152cca62b61379e3b27922a92c56aed",
+    "count": "7286"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-09-23 02:11",
-    "md5": "d1af77b94f0e73d3084d26b62c6acccd",
-    "count": "3910",
-    "count_ip": "281829120",
+    "date": "2025-09-24 02:11",
+    "md5": "2f444b5c193d0726dc6ae838a55c8ff4",
+    "count": "3911",
+    "count_ip": "281829888",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -88,8 +88,8 @@
   },
   "cdn_test": {
     "name": "cdn_test.txt",
-    "date": "2025-04-12 02:11",
-    "md5": "30a3d664f7b134bcfdab2208c4804d48",
-    "count": "88"
+    "date": "2025-09-24 02:11",
+    "md5": "866e71a7b3c9f6062bf4c5b4d6818fea",
+    "count": "89"
   }
 }
