@@ -492,7 +492,7 @@ get_cdn(){
 	# 2.merge
 	cat "${CURR_PATH}"/{accelerated-domains.china.conf,apple.china.conf,google.china.conf} "${CURR_PATH}/../../../no_proxy_list.txt" | sed 's#^full:##g' | sed '/#/d' | sed "s/server=\/\.//g" | sed "s/server=\///g" | sed -r "s/\/\S{1,30}//g" | sed -r "s/\/\S{1,30}//g" > "${CURR_PATH}/cdn_download.txt"
 	cat "${CURR_PATH}"/{cdn_koolcenter.txt,cdn_download.txt} | sort -u > "${CURR_PATH}/cdn_tmp.txt"
-	cat "${CURR_PATH}/../../../ACL4SSR/Clash/{Apple.list,ChinaCompanyIp.list,ChinaIp.list,ChinaMedia.list,LocalAreaNetwork.list,Microsoft.list,ChinaDomain.list}" "${CURR_PATH}/cdn_tmp.txt" | sed '/#/d' | sort -u | tee "${CURR_PATH}/cdn_tmp.txt" >/dev/null
+	eval cat "${CURR_PATH}/../../../ACL4SSR/Clash/{Apple.list,ChinaCompanyIp.list,ChinaIp.list,ChinaMedia.list,LocalAreaNetwork.list,Microsoft.list,ChinaDomain.list}" "${CURR_PATH}/cdn_tmp.txt" | sed '/#/d' | sort -u | tee "${CURR_PATH}/cdn_tmp.txt" >/dev/null
 
 	# 3. compare
 	local md5sum1
