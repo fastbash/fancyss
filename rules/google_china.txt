@@ -26,6 +26,7 @@ cnappinstall.googleadapis.com
 cn.widevine.com
 connectivitycheck.gstatic.com
 content.googleadapis.com
+c.pki.goog
 crashlyticsreports-pa.googleapis.com
 crl.pki.goog
 csi.gstatic.com
