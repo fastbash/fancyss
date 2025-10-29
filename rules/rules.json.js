@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-10-23 02:11",
-    "md5": "4cab63da6af6e4f92ef144528324b660",
-    "count": "7374"
+    "date": "2025-10-30 02:11",
+    "md5": "43d5f8e9ee70748878867abf59e1668f",
+    "count": "7378"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
@@ -16,10 +16,10 @@
   },
   "chnroute_ipip": {
     "name": "chnroute_ipip.txt",
-    "date": "2025-02-11 02:11",
-    "md5": "eb10b35aefa24dd4fdca6a8e3ef025c7",
-    "count": "7449",
-    "count_ip": "354155170",
+    "date": "2025-10-30 02:11",
+    "md5": "bde108266596b70a2bedb26e61721daf",
+    "count": "7135",
+    "count_ip": "352840562",
     "source": "ipip",
     "url": "https://github.com/firehol/blocklist-ipsets/blob/master/ipip_country/ipip_country_cn.netset"
   },
@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2025-10-29 02:11",
-    "md5": "6b1740243121b475c3d89efc3848a4fe",
-    "count": "3934",
-    "count_ip": "281839616",
+    "date": "2025-10-30 02:11",
+    "md5": "43074b218cc5982389ce37009fce0159",
+    "count": "3941",
+    "count_ip": "281827328",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -61,10 +61,10 @@
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2025-10-24 02:11",
-    "md5": "d40c51dacd8e5daf8a3169937b429aa2",
-    "count": "8090",
-    "count_ip": "375380842",
+    "date": "2025-10-30 02:11",
+    "md5": "4a7c3881617e0bd354ec8c869a46597b",
+    "count": "8226",
+    "count_ip": "375382511",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
