@@ -1,9 +1,9 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2025-11-16 02:11",
-    "md5": "b4a6894576d3f60deb910fa15b44c0ee",
-    "count": "7415"
+    "date": "2025-11-18 02:11",
+    "md5": "f2eba9c3b5bdcf50debb4e96a58d3983",
+    "count": "7420"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
