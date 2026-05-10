@@ -31,6 +31,7 @@ certs.apple.com
 cl1.apple.com
 cl1-cdn.origin-apple.com.akadns.net
 cl2.apple.com
+cl2.apple.com.edgekey.net.globalredir.akadns.net
 cl2-cn.apple.com
 cl3.apple.com
 cl3-cdn.origin-apple.com.akadns.net
@@ -56,6 +57,7 @@ experiments.apple.com
 gs-loc.apple.com
 gs-loc-cn.apple.com
 gsp10-ssl-cn.ls.apple.com
+gsp11-cn.ls.apple.com
 gsp12-cn.ls.apple.com
 gsp13-cn.ls.apple.com
 gsp4-cn.ls.apple.com
@@ -74,8 +76,6 @@ guzzoni.apple.com
 guzzoni-apple-com.v.aaplimg.com
 guzzoni.smoot.apple.com
 iadsdk.apple.com
-icloud.cdn-apple.com
-icloud-cdn.icloud.com.akadns.net
 images.apple.com.edgekey.net.globalredir.akadns.net
 init.ess.apple.com
 init-kt.apple.com
@@ -109,19 +109,15 @@ mesu-china.apple.com.akadns.net
 ml.cdn-apple.com
 music.apple.com
 ocsp2.apple.com
-ocsp2-lb.apple.com.akadns.net
 ocsp.apple.com
-ocsp-lb.apple.com.akadns.net
 oscdn.apple.com
 oscdn.origin-apple.com.akadns.net
 osxapps.itunes.g.aaplimg.com
 pancake.apple.com
-pancake.cdn-apple.com.akadns.net
 pba0.apple.com
 probe.siri.apple.com
 prod-support.apple-support.akadns.net
 publicassets.cdn-apple.com
-reserve-prime.apple.com
 seed-sequoia.siri.apple.com
 seed.siri.apple.com
 seed-swallow.siri.apple.com
