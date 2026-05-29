@@ -1,16 +1,16 @@
 {
   "gfwlist": {
     "name": "gfwlist.conf",
-    "date": "2026-05-18 14:05",
-    "md5": "93a3b415497a7ca14e3aec73b45ee5c8",
-    "count": "6773"
+    "date": "2026-05-29 16:26",
+    "md5": "af2b16ca0db879e5b1167d0a5e565e47",
+    "count": "6780"
   },
   "chnroute_maxmind": {
     "name": "chnroute_maxmind.txt",
-    "date": "2024-11-19 16:05",
-    "md5": "41302df69ece45fe11d3e9ddcad2c47e",
-    "count": "7212",
-    "count_ip": "345532148",
+    "date": "2026-05-29 16:26",
+    "md5": "a8ad3867a3a8d6059916cc9e54bc9c7e",
+    "count": "6765",
+    "count_ip": "346116065",
     "source": "maxmind",
     "url": "https://github.com/firehol/blocklist-ipsets/blob/master/geolite2_country/country_cn.netset"
   },
@@ -34,10 +34,10 @@
   },
   "chnroute_misakaio": {
     "name": "chnroute_misakaio.txt",
-    "date": "2026-05-21 02:11",
-    "md5": "8cb2f90d17f735abdf07e3cd9af56480",
-    "count": "3871",
-    "count_ip": "282622976",
+    "date": "2026-05-29 16:26",
+    "md5": "8536206bd16a6d59dd53621f42ef0279",
+    "count": "3915",
+    "count_ip": "282480128",
     "source": "misakaio",
     "url": "https://github.com/misakaio/chnroutes2/blob/master/chnroutes.txt"
   },
@@ -52,19 +52,19 @@
   },
   "chnroute_apnic": {
     "name": "chnroute_apnic.txt",
-    "date": "2026-05-21 02:11",
-    "md5": "8fd00d4605e89311466c4008f38d92c4",
-    "count": "8784",
-    "count_ip": "342934272",
+    "date": "2026-05-29 16:26",
+    "md5": "c77cbd4190b7e452acb9bcd20cbb55d5",
+    "count": "8785",
+    "count_ip": "342934784",
     "source": "apnic",
     "url": "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
   },
   "chnroute": {
     "name": "chnroute.txt",
-    "date": "2026-05-20 02:11",
-    "md5": "44ee8fefd3c210e440033306b3399c53",
-    "count": "8295",
-    "count_ip": "375623228",
+    "date": "2026-05-29 16:26",
+    "md5": "703b13aa4769d89b7676d17e785cf415",
+    "count": "6897",
+    "count_ip": "374172088",
     "source": "fancyss",
     "url": "https://github.com/fastbash/fancyss_bak/tree/3.0/rules"
   },
